@@ -1,5 +1,6 @@
 <?php include("cms/module/conexion.php"); ?>
 <?php include("modules/session-core.php"); ?>
+<?php $cod_categoria = $_REQUEST['cod_categoria']; ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html class="ie8"> <![endif]-->
 <!--[if IE 9]> <html class="ie9"> <![endif]-->
@@ -12,13 +13,20 @@
     </head>
     <body>
         <div id="wrapper">
+            <?php
+                $consultarCatmenu = "SELECT * FROM productos_categorias WHERE cod_categoria='$cod_categoria' ORDER BY orden";
+                $resultadoCatmenu = mysqli_query($enlaces,$consultarCatmenu) or die('Consulta fallida: ' . mysqli_error($enlaces));
+                $filaCat = mysqli_fetch_array($resultadoCatmenu);
+                    $xCatmenu = $filaCat['categoria'];
+            ?>
             <?php include("includes/header.php"); ?>
             <section id="content">
             	<div id="breadcrumb-container">
                     <div class="container">
                         <ul class="breadcrumb">
                             <li><a href="index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
-                            <li class="active">Productos</li>
+                            <li><a hfref="productos.php">Productos</a></li>
+                            <li class="active">aa</li>
                         </ul>
                     </div>
                 </div>
