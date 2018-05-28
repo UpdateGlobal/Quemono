@@ -1,0 +1,238 @@
+#footer-bottom {
+    padding: 20px 0;
+    border-top: 1px solid #422211;
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    font: 13px/18px Arial, sans-serif;
+    background: #422211;
+}
+
+#footer-bottom p {
+	margin:14px 0;
+	color:#ffffff;
+}
+
+.header4 #header-top {
+    border-top: 3px solid #41200e;
+}
+
+#inner-footer {
+    padding: 20px 0 50px;
+    background: #422211;
+}
+
+#footer #newsletter-container {
+	background: #d6d6d6;
+	padding:27px 0;
+}
+
+.social-icon {
+	background-color: #9e5c06;
+}
+
+#quick-access {
+    margin-top: 12px;
+}
+
+#main-nav-container #main-nav .menu li {
+    padding-top: 10px;
+}
+
+.discount-rect {
+    background: #f28d0a;
+}
+
+.btn-custom-alt {
+    background-color: #9e5c06;
+    border-color: #9e5c06;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.btn-custom-alt:hover {
+    background-color: #f5d1a1;
+    border-color: #9e5c06;
+    color: #422211;
+}
+
+.btn-custom-2 {
+    background-color: #422211;
+    border-color: #422211;
+    text-transform: uppercase;
+}
+
+.btn-custom-2:hover {
+    background-color: #9e5c06;
+    border-color: #9e5c06;
+}
+
+.btn-danger{
+    background: #ff0000;
+    text-transform: uppercase;
+}
+
+.tp-bullets.simplebullets .bullet:hover, .tp-bullets.simplebullets .bullet.selected {
+    background: #9e5c06 !important;
+}
+
+#main-nav-container.fixed #quick-access {
+    margin-top: 12px;
+}
+
+.tparrows:hover {
+    background-color: #422211 !important;
+    border-color:#422211;
+    box-shadow:none;
+    -webkit-box-shadow:none;
+}
+
+.header4 #main-nav-container.fixed .logo img {
+    height: 55px;
+    width: auto;
+}
+
+#main-nav-container #main-nav #responsive-nav ul {
+    border-top: 5px solid #422211;
+}
+
+.item-add-btn {
+    background-color: #422211;
+    border: 1px solid #422211;
+}
+
+.carousel-btn:hover {
+    background-color:#9E5D05;
+    border-color:#9E5D05;
+}
+
+#header .dropdown-cart .dropdown-cart-menu {
+    min-width: 300px;
+    margin-top: 8px;
+    border-top: 3px solid #9E5D05;
+    background: #fff;
+    padding: 20px;
+}
+
+.icon-cart-text i {
+    font-size: 18px;
+    top: -2px;
+    position: relative;
+}
+
+span.contact-icon i {
+    font-size: 25px;
+    color: #fff;
+    top: 7px;
+    position: relative;
+}
+
+#footer h3 {
+    color: #f1cd9d;
+}
+
+#footer a {
+    color: #ffffff;
+}
+
+#footer {
+	color: #ffffff;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + .checbox-container {
+    background: #9f5c0a !important;
+    border-color: #9e5b06;
+}
+
+.elastislide-wrapper nav span:hover {
+    background-color: #9e5b06;
+    border-color:#9e5b06;
+}
+
+.item-price-container .old-price {
+    color: #f5d1a1;
+}
+
+.item-name {
+    height: 48px;
+}
+
+.lista-contenido ul li {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+.lista-contenido ul ol {
+    list-style-type: decimal;
+    margin-left: 20px;
+}
+
+.custom-quantity-input {
+    padding-right: 0px;
+}
+
+.product .share-button-group {
+    margin-left: 0px;
+    width: 350px;
+}
+
+.elastislide-wrapper {
+    position: relative;
+    min-height: 404px;
+}
+
+#product-carousel{
+    min-height: 404px;
+}
+
+.category-toolbar .icon-button.active {
+    background-color: #9e5c06;
+    border-color: #9e5c06;
+}
+
+.category-toolbar .icon-button:hover {
+    background-color: #9e5c06;
+    border-color: #9e5c06;
+}
+
+.accordion-btn:hover,
+.accordion-btn.active {
+    background-color:#9e5c06;
+    border-color:#9e5c06;
+    background-position: -146px -318px;
+}
+
+ul.subcat {
+    margin-left: 20px;
+    list-style: square;
+}
+
+@media only screen and (max-width:425px){
+    .elastislide-wrapper {
+        position: relative;
+        min-height: auto;
+    }
+    #product-carousel{
+        min-height: auto;
+    }
+    .product-add .custom-quantity-input {
+        float: left;
+        margin-right: 20px;
+        margin-bottom: 20px;
+        width: 90px;
+    }
+}
+
+@media only screen and (max-width:320px){
+    .product-add .custom-quantity-input {
+        float: left;
+        margin-right: 10px;
+        margin-bottom: 0px;
+        width: 52px;
+        height: 46px;
+    }
+    .product-add .btn {
+        padding: 11.5px 19px;
+        font-weight: bold;
+        font-size: 15px;
+    }
+}
