@@ -37,7 +37,7 @@
                                         <?php 
                                         }else{
 
-                                        $registros_por_paginas = 9;
+                                        $registros_por_paginas = 3;
                                         $total_paginas = ceil($total_registros/$registros_por_paginas);
                                         $pagina = intval($_GET['p']);
                                         if($pagina<1 or $pagina>$total_paginas){
@@ -53,10 +53,9 @@
                                                 <span class="separator"><strong>Visualizaci&oacute;n:</strong></span>
                                             </div>
     										<div class="view-box">
-    											<a href="productos.php" class="active icon-button icon-grid"><i class="fa fa-th-large"></i></a>
-    											<a href="productos-list.php" class="icon-button icon-list"><i class="fa fa-th-list"></i></a>
-    										</div><!-- End .view-box -->
-    										
+    											<a href="productos.php" class="icon-button icon-grid"><i class="fa fa-th-large"></i></a>
+    											<a href="productos-list.php" class="active icon-button icon-list"><i class="fa fa-th-list"></i></a>
+    										</div><!-- End .view-box -->	
     									</div><!-- End .toolbox-filter -->
     									<div class="toolbox-pagination clearfix">
     										<?php
@@ -83,9 +82,7 @@
                                                     echo "</ul>";
                                                 }
                                             ?>
-    									
                                         </div><!-- End .toolbox-pagination -->
-            	                        
             						</div><!-- End .category-toolbar -->
             						<div class="md-margin"></div><!-- .space -->
             						<div class="category-item-container">
@@ -99,14 +96,16 @@
                                                     $xPrecio_oferta   = number_format($filaPro['precio_oferta'],2);
                                                     $xPrecio_normal   = number_format($filaPro['precio_normal'],2);
                                                     $xImagen          = $filaPro['imagen'];
+                                                    $xDescripcion     = $filaPro['descripcion'];
                                                     $xDescuento       = $filaPro['descuento'];
                                                     $xHoverImagen     = $filaPro['h_imagen'];
                                                     $xFecha           = $filaPro['fecha_ing'];
                                             ?>
-                							<div class="col-md-4 col-sm-6 col-xs-12">
-                                                <div class="item item-hover">
-                                                    <div class="item-image-wrapper">
-                                                        <figure class="item-image-container">
+                                            <div class="category-item-container category-list-container">
+
+                                                <div class="item item-list clearfix">
+                                                    <div class="item-image-container">
+                                                        <figure>
                                                             <a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>">
                                                                 <img src="cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>" class="item-image">
                                                                 <?php
@@ -126,12 +125,12 @@
                                                         <?php
                                                             if($xPrecio_oferta!=0){
                                                         ?>
-                                                            <span class="old-price"><?php echo $xPrecio_normal; ?></span>
-                                                            <span class="item-price"><?php echo $xPrecio_oferta; ?></span>
+                                                            <span class="old-price"><?php echo $xPrecio_normal; ?></span></span>
+                                                            <span class="item-price"><?php echo $xPrecio_oferta; ?></span></span>
                                                         <?php }else{ ?>
-                                                            <span class="item-price"><?php echo $xPrecio_normal; ?></span>
+                                                            <span class="item-price"><?php echo $xPrecio_normal; ?></span></span>
                                                         <?php } ?>
-                                                        </div><!-- End .item-price-container -->
+                                                        </div>
                                                         <?php
                                                             $today = date("Y-m-d");
                                                             if($xFecha == $today){
@@ -146,17 +145,23 @@
                                                         ?>
                                                         <span class="discount-rect">-25%</span>
                                                         <?php } ?>
-                                                    </div><!-- End .item-image-wrapper -->
+                                                    </div><!-- End .item-image -->
                                                     <div class="item-meta-container">
                                                         <h3 class="item-name"><a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>"><?php echo $xNom_producto; ?></a></h3>
+                                                        <p><?php
+                                                                $xDescripcion_r = strip_tags($xDescripcion);
+                                                                $strCut = substr($xDescripcion_r,0,280);
+                                                                $xDescripcion_r = substr($strCut,0,strrpos($strCut, ' ')).'...';
+                                                                echo $xDescripcion_r;
+                                                        ?></p>
                                                         <div class="item-action">
                                                             <a href="#" class="item-add-btn">
                                                                 <span class="icon-cart-text"><i class="fa fa-shopping-cart" aria-hidden="true"></i> A&ntilde;adir</span>
                                                             </a>
                                                         </div><!-- End .item-action -->
-                                                    </div><!-- End .item-meta-container -->
+                                                    </div><!-- End .item-meta-container --> 
                                                 </div><!-- End .item -->
-                                            </div><!-- End .col-md-4 -->
+                                            </div>
                                             <?php
                                                 }
                                                 mysqli_free_result($resultadoPro);

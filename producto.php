@@ -78,7 +78,7 @@
 
                 					<div id="product-image-container">
                 						<figure>
-                                            <img src="cms/assets/img/productos/<?php echo $xImagen; ?>" data-zoom-image="cms/assets/img/productos/<?php echo $xImagen; ?>" alt="Product Big image" id="product-image">
+                                            <img src="cms/assets/img/productos/<?php echo $xImagen; ?>" data-zoom-image="cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>" id="product-image">
                 							<figcaption class="item-price-container">
                                                 <?php
                                                     if($xPrecio_oferta!=0){

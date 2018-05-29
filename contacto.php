@@ -11,7 +11,7 @@
     </head>
     <body>
         <div id="wrapper">
-            <?php include("includes/header.php"); ?>
+            <?php $menu="contacto"; include("includes/header.php"); ?>
             <section id="content">
             	<div id="breadcrumb-container">
             		<div class="container">

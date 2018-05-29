@@ -138,6 +138,11 @@ if($proceso == "Actualizar"){
           document.fcms.nom_producto.focus();
           return;
         }
+        if(document.fcms.descripcion.value==""){
+          alert("Debe escribir una descripción");
+          document.fcms.descripcion.focus();
+          return;
+        }
         if(document.fcms.imagen.value==""){
           alert("Debe subir una imagen");
           document.fcms.imagen.focus();
@@ -325,7 +330,7 @@ if($proceso == "Actualizar"){
 
               <div class="form-group row">
                 <div class="col-4 col-lg-2">
-                  <label class="col-form-label" for="descripcion">Descripci&oacute;n:</label>
+                  <label class="col-form-label required" for="descripcion">Descripci&oacute;n:</label>
                 </div>
                 <div class="col-8 col-lg-10">
                   <textarea class="form-control" name="descripcion" id="descripcion" data-toolbar="full" data-provide="summernote" data-min-height="150"><?php echo $descripcion; ?></textarea>

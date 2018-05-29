@@ -11,7 +11,7 @@
     </head>
     <body>
         <div id="wrapper">
-            <?php include("includes/header.php"); ?>
+            <?php $menu="inicio"; include("includes/header.php"); ?>
             <section id="content">
             	<div id="slider-rev-container">
                     <div id="slider-rev">
@@ -288,7 +288,7 @@
                             </div><!-- End .row -->
 
                             <div class="lg-margin"></div><!-- Space -->
-            				
+            				cod_categoria='$cod_categoria'
             				<div id="brand-slider-container" class="carousel-wrapper">
             					<header class="content-title">
     								<div class="title-bg">

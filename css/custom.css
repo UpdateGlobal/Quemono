@@ -206,6 +206,11 @@ ul.subcat {
     list-style: square;
 }
 
+#main-nav-container #main-nav .menu li > a.active {
+    color:#9E5D05;
+}
+
+
 @media only screen and (max-width:425px){
     .elastislide-wrapper {
         position: relative;

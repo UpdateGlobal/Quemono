@@ -123,9 +123,9 @@
                                             </div><!-- responsive-nav-button -->
                                         </div>
                                         <ul class="menu clearfix">
-                                        <li><a class="active" href="index.php">Inicio</a></li>
-                                        <li><a href="#">Nosotros</a></li>
-                                        <li class="mega-menu-container"><a href="#">Productos</a>
+                                        <li><a class="<?php echo ($menu == "inicio" ? "active" : "")?>" href="index.php">Inicio</a></li>
+                                        <li><a class="<?php echo ($menu == "nosotros" ? "active" : "")?>" href="#">Nosotros</a></li>
+                                        <li class="mega-menu-container"><a class="<?php echo ($menu == "productos" ? "active" : "")?>" href="productos.php">Productos</a>
                                             <div class="mega-menu clearfix">
                                                 <?php
                                                     $num = 0;
@@ -164,7 +164,7 @@
                                                 ?>
                                             </div><!-- End .mega-menu -->
                                         </li>
-                                        <li><a href="#">Promociones</a>
+                                        <li><a class="<?php echo ($menu == "promociones" ? "active" : "")?>" href="#">Promociones</a>
                                             <ul>
                                                 <li><a href="product.html">Product</a></li>
                                                 <li><a href="cart.html">Cart</a></li>
@@ -226,7 +226,7 @@
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li><a href="contacto.php">Contacto</a></li>
+                                        <li><a class="<?php echo ($menu == "contacto" ? "active" : "")?>" href="contacto.php">Contacto</a></li>
                                     </ul>
                                     </nav>
                                    </div><!-- End #menu-right-side -->
