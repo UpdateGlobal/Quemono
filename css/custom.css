@@ -210,6 +210,32 @@ ul.subcat {
     color:#9E5D05;
 }
 
+#footer a:hover {
+    color:#f5d1a1;
+}
+
+@media only screen and (max-width:767px){
+    .item.item-list .item-image-container {
+        width: 100%;
+        margin-right: 30px;
+        display: block;
+    }
+    .item .item-image-wrapper, .item .item-image-container, .item .item-meta-container {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        clear: both;
+    }
+    .item-name {
+        height: auto;
+    }
+    .sort-box {
+        position: relative;
+        top: 0;
+        right: 0;
+    }
+}
+
 
 @media only screen and (max-width:425px){
     .elastislide-wrapper {

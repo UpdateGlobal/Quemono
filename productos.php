@@ -31,10 +31,16 @@
                                         $consultarPro = "SELECT * FROM productos WHERE estado='1'";
                                         $resultadoPro = mysqli_query($enlaces, $consultarPro);
                                         $total_registros = mysqli_num_rows($resultadoPro);
-                                        if($total_registros==0){ ?>
-                                            <h2>No hay productos en esta categor&iacute;a<br>
-                                            Puede usar el buscador para ubicar el producto que desee.</h2>
-                                        <?php 
+                                        if($total_registros==0){ 
+                                    ?>
+                                    <div class="lg-margin"></div><!-- .space -->
+                                    <div class="category-item-container">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <h3>No hay productos registrados<br>
+                                                Puede usar el buscador para ubicar el producto que desee.</h3>
+                                            </div>
+                                    <?php 
                                         }else{
 
                                         $registros_por_paginas = 9;

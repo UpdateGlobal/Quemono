@@ -151,7 +151,7 @@
                                                                 $xSlugc       = $filaSC['slug'];
                                                                 $numSubC++;
                                                         ?>
-                                                        <li><a href="subcategoria.php?cod_sub_categoria=<?php echo $xCodigoSubC; ?>"><?php echo $xSCategoria; ?></a></li>
+                                                        <li><a href="subcategorias.php?cod_sub_categoria=<?php echo $xCodigoSubC; ?>"><?php echo $xSCategoria; ?></a></li>
                                                         <?php
                                                             }
                                                             mysqli_free_result($resultadoSubCat);

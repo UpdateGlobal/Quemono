@@ -19,9 +19,9 @@ $filCat = mysqli_fetch_array($resCategoria);
     </head>
     <body>
         <div id="wrapper">
-            <?php $menu=$xCategoriax; include("includes/header.php"); ?>
+            <?php $menu="productos"; include("includes/header.php"); ?>
             <section id="content">
-                <div id="breadcrumb-container">
+            	<div id="breadcrumb-container">
                     <div class="container">
                         <ul class="breadcrumb">
                             <li><a href="index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
@@ -30,11 +30,11 @@ $filCat = mysqli_fetch_array($resCategoria);
                         </ul>
                     </div>
                 </div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-9 col-sm-8 col-xs-12 main-content">
+            	<div class="container">
+            		<div class="row">
+            			<div class="col-md-12">
+            				<div class="row">
+            					<div class="col-md-9 col-sm-8 col-xs-12 main-content">
                                     <h1 class="title"><?php echo $xCategoriax; ?></h1>
                                     <?php
                                         $consultarPro = "SELECT * FROM productos WHERE estado='1' AND cod_categoria='$cod_categoria'";
@@ -45,14 +45,14 @@ $filCat = mysqli_fetch_array($resCategoria);
                                     <div class="lg-margin"></div><!-- .space -->
                                     <div class="category-item-container">
                                         <div class="row">
-                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <div class="category-item-container category-list-container">
                                                 <h3>No hay productos en esta categor&iacute;a<br>
                                                 Puede usar el buscador para ubicar el producto que desee.</h3>
                                             </div>
                                     <?php 
                                         }else{
 
-                                        $registros_por_paginas = 9;
+                                        $registros_por_paginas = 3;
                                         $total_paginas = ceil($total_registros/$registros_por_paginas);
                                         $pagina = intval($_GET['p']);
                                         if($pagina<1 or $pagina>$total_paginas){
@@ -61,20 +61,19 @@ $filCat = mysqli_fetch_array($resCategoria);
                                         $posicion = ($pagina-1)*$registros_por_paginas;
                                         $limite = "LIMIT $posicion, $registros_por_paginas";
                                     ?>
-                                    
                                     <div class="lg-margin"></div><!-- space -->
-                                    <div class="category-toolbar clearfix">
-                                        <div class="toolbox-filter clearfix">
-                                            <div class="sort-box">
+            						<div class="category-toolbar clearfix">
+    									<div class="toolbox-filter clearfix">
+    										<div class="sort-box">
                                                 <span class="separator"><strong>Visualizaci&oacute;n:</strong></span>
                                             </div>
-                                            <div class="view-box">
-                                                <a href="categorias.php?cod_categoria=<?php echo $xCodCatx; ?>" class="active icon-button icon-grid"><i class="fa fa-th-large"></i></a>
-                                                <a href="categorias-list.php?cod_categoria=<?php echo $xCodCatx; ?>" class="icon-button icon-list"><i class="fa fa-th-list"></i></a>
-                                            </div><!-- End .view-box -->
-                                        </div><!-- End .toolbox-filter -->
-                                        <div class="toolbox-pagination clearfix">
-                                            <?php
+    										<div class="view-box">
+    											<a href="categorias.php?cod_categoria=<?php echo $xCodCatx; ?>" class="icon-button icon-grid"><i class="fa fa-th-large"></i></a>
+    											<a href="categorias-list.php?cod_categoria=<?php echo $xCodCatx; ?>" class="active icon-button icon-list"><i class="fa fa-th-list"></i></a>
+    										</div><!-- End .view-box -->	
+    									</div><!-- End .toolbox-filter -->
+    									<div class="toolbox-pagination clearfix">
+    										<?php
                                                 $paginas_mostrar = 5;
                                                 if ($total_paginas>1){
                                                     echo "
@@ -93,17 +92,16 @@ $filCat = mysqli_fetch_array($resCategoria);
                                                         echo "<li><a>...</a></li>";
                                                     }
                                                     if($pagina<$total_paginas){
-                                                        echo "<li><a href='?cod_categoria=".$xCodCatx."&p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
+                                                        echo "  <li><a href='?cod_categoria=".$xCodCatx."&p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
                                                     }
                                                     echo "</ul>";
                                                 }
                                             ?>
                                         </div><!-- End .toolbox-pagination -->
-                                        
-                                    </div><!-- End .category-toolbar -->
-                                    <div class="md-margin"></div><!-- .space -->
-                                    <div class="category-item-container">
-                                        <div class="row">
+            						</div><!-- End .category-toolbar -->
+            						<div class="md-margin"></div><!-- .space -->
+            						<div class="category-item-container">
+            						    <div class="row">
                                             <?php
                                                 $consultarPro = "SELECT * FROM productos WHERE cod_categoria='$cod_categoria' AND estado='1' ORDER BY orden ASC $limite";
                                                 $resultadoPro = mysqli_query($enlaces, $consultarPro);
@@ -113,14 +111,16 @@ $filCat = mysqli_fetch_array($resCategoria);
                                                     $xPrecio_oferta   = number_format($filaPro['precio_oferta'],2);
                                                     $xPrecio_normal   = number_format($filaPro['precio_normal'],2);
                                                     $xImagen          = $filaPro['imagen'];
+                                                    $xDescripcion     = $filaPro['descripcion'];
                                                     $xDescuento       = $filaPro['descuento'];
                                                     $xHoverImagen     = $filaPro['h_imagen'];
                                                     $xFecha           = $filaPro['fecha_ing'];
                                             ?>
-                                            <div class="col-md-4 col-sm-6 col-xs-12">
-                                                <div class="item item-hover">
-                                                    <div class="item-image-wrapper">
-                                                        <figure class="item-image-container">
+                                            <div class="category-item-container category-list-container">
+
+                                                <div class="item item-list clearfix">
+                                                    <div class="item-image-container">
+                                                        <figure>
                                                             <a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>">
                                                                 <img src="cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>" class="item-image">
                                                                 <?php
@@ -140,12 +140,12 @@ $filCat = mysqli_fetch_array($resCategoria);
                                                         <?php
                                                             if($xPrecio_oferta!=0){
                                                         ?>
-                                                            <span class="old-price"><?php echo $xPrecio_normal; ?></span>
-                                                            <span class="item-price"><?php echo $xPrecio_oferta; ?></span>
+                                                            <span class="old-price"><?php echo $xPrecio_normal; ?></span></span>
+                                                            <span class="item-price"><?php echo $xPrecio_oferta; ?></span></span>
                                                         <?php }else{ ?>
-                                                            <span class="item-price"><?php echo $xPrecio_normal; ?></span>
+                                                            <span class="item-price"><?php echo $xPrecio_normal; ?></span></span>
                                                         <?php } ?>
-                                                        </div><!-- End .item-price-container -->
+                                                        </div>
                                                         <?php
                                                             $today = date("Y-m-d");
                                                             if($xFecha == $today){
@@ -160,26 +160,32 @@ $filCat = mysqli_fetch_array($resCategoria);
                                                         ?>
                                                         <span class="discount-rect">-25%</span>
                                                         <?php } ?>
-                                                    </div><!-- End .item-image-wrapper -->
+                                                    </div><!-- End .item-image -->
                                                     <div class="item-meta-container">
                                                         <h3 class="item-name"><a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>"><?php echo $xNom_producto; ?></a></h3>
+                                                        <p class="text-justify"><?php
+                                                                $xDescripcion_r = strip_tags($xDescripcion);
+                                                                $strCut = substr($xDescripcion_r,0,280);
+                                                                $xDescripcion_r = substr($strCut,0,strrpos($strCut, ' ')).'...';
+                                                                echo $xDescripcion_r;
+                                                        ?></p>
                                                         <div class="item-action">
                                                             <a href="#" class="item-add-btn">
                                                                 <span class="icon-cart-text"><i class="fa fa-shopping-cart" aria-hidden="true"></i> A&ntilde;adir</span>
                                                             </a>
                                                         </div><!-- End .item-action -->
-                                                    </div><!-- End .item-meta-container -->
+                                                    </div><!-- End .item-meta-container --> 
                                                 </div><!-- End .item -->
-                                            </div><!-- End .col-md-4 -->
+                                            </div>
                                             <?php
                                                 }
                                                 mysqli_free_result($resultadoPro);
                                             ?>
                                         </div><!-- End .row -->
-                                    </div><!-- End .category-item-container -->
-                                    
-                                    <div class="pagination-container clearfix">
-                                        <div class="pull-right">
+            					    </div><!-- End .category-item-container -->
+            						
+            						<div class="pagination-container clearfix">
+            							<div class="pull-right">
                                             <?php
                                                 $paginas_mostrar = 5;
                                                 if ($total_paginas>1){
@@ -205,15 +211,15 @@ $filCat = mysqli_fetch_array($resCategoria);
                                                 }
                                             }
                                             ?>
-                                            </ul>
-                                        </div><!-- End .pull-right -->
-                                    </div><!-- End pagination-container -->
-                                </div><!-- End .col-md-9 -->
+    										</ul>
+            							</div><!-- End .pull-right -->
+            						</div><!-- End pagination-container -->
+            					</div><!-- End .col-md-9 -->
                                 <?php include("includes/sidebar.php"); ?>
-                            </div><!-- End .row -->
-                        </div><!-- End .col-md-12 -->
-                    </div><!-- End .row -->
-                </div><!-- End .container -->
+            				</div><!-- End .row -->
+            			</div><!-- End .col-md-12 -->
+            		</div><!-- End .row -->
+    			</div><!-- End .container -->
             </section><!-- End #content -->
             <?php include("includes/footer.php"); ?>
         </div><!-- End #wrapper -->

@@ -31,10 +31,16 @@
                                         $consultarPro = "SELECT * FROM productos WHERE estado='1'";
                                         $resultadoPro = mysqli_query($enlaces, $consultarPro);
                                         $total_registros = mysqli_num_rows($resultadoPro);
-                                        if($total_registros==0){ ?>
-                                            <h2>No hay productos en esta categor&iacute;a<br>
-                                            Puede usar el buscador para ubicar el producto que desee.</h2>
-                                        <?php 
+                                        if($total_registros==0){ 
+                                    ?>
+                                    <div class="lg-margin"></div><!-- .space -->
+                                    <div class="category-item-container">
+                                        <div class="row">
+                                            <div class="category-item-container category-list-container">
+                                                <h3>No hay productos en esta categor&iacute;a<br>
+                                                Puede usar el buscador para ubicar el producto que desee.</h3>
+                                            </div>
+                                    <?php 
                                         }else{
 
                                         $registros_por_paginas = 3;
@@ -148,7 +154,7 @@
                                                     </div><!-- End .item-image -->
                                                     <div class="item-meta-container">
                                                         <h3 class="item-name"><a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>"><?php echo $xNom_producto; ?></a></h3>
-                                                        <p><?php
+                                                        <p class="text-justify"><?php
                                                                 $xDescripcion_r = strip_tags($xDescripcion);
                                                                 $strCut = substr($xDescripcion_r,0,280);
                                                                 $xDescripcion_r = substr($strCut,0,strrpos($strCut, ' ')).'...';

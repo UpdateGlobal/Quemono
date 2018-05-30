@@ -288,7 +288,6 @@
                             </div><!-- End .row -->
 
                             <div class="lg-margin"></div><!-- Space -->
-            				cod_categoria='$cod_categoria'
             				<div id="brand-slider-container" class="carousel-wrapper">
             					<header class="content-title">
     								<div class="title-bg">

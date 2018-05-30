@@ -1,12 +1,14 @@
 <?php include("cms/module/conexion.php"); ?>
 <?php include("modules/session-core.php"); ?>
-<?php $cod_categoria = $_REQUEST['cod_categoria']; ?>
+<?php $cod_sub_categoria = $_REQUEST['cod_sub_categoria']; ?>
 <?php 
-$conCategoria = "SELECT * FROM productos_categorias WHERE cod_categoria='$cod_categoria' ORDER BY orden";
+$conCategoria = "SELECT cp.cod_categoria, cp.categoria, scp.* FROM productos_categorias as cp, productos_sub_categorias as scp WHERE scp.cod_sub_categoria='$cod_sub_categoria' AND scp.cod_categoria=cp.cod_categoria ORDER BY orden";
 $resCategoria = mysqli_query($enlaces,$conCategoria) or die('Consulta fallida: ' . mysqli_error($enlaces));
-$filCat = mysqli_fetch_array($resCategoria);
-    $xCodCatx        = $filCat['cod_categoria'];
-    $xCategoriax     = $filCat['categoria'];
+$filSCat = mysqli_fetch_array($resCategoria);
+    $xCodCatx       = $filSCat['cod_categoria'];
+    $xCodSCatx      = $filSCat['cod_sub_categoria'];
+    $xCategoriax    = $filSCat['categoria'];
+    $xSubCategoriax = $filSCat['subcategoria'];
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html class="ie8"> <![endif]-->
@@ -15,18 +17,20 @@ $filCat = mysqli_fetch_array($resCategoria);
     <head>
         <?php include("includes/head.php"); ?>
         <style id="custom-style">
+        
         </style>
     </head>
     <body>
         <div id="wrapper">
-            <?php $menu=$xCategoriax; include("includes/header.php"); ?>
+            <?php $menu="productos"; include("includes/header.php"); ?>
             <section id="content">
                 <div id="breadcrumb-container">
                     <div class="container">
                         <ul class="breadcrumb">
                             <li><a href="index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
                             <li><a href="productos.php">Productos</a></li>
-                            <li class="active"><?php echo $xCategoriax; ?></li>
+                            <li><a href="categorias.php?cod_categoria=<?php echo $xCodCatx; ?>"><?php echo $xCategoriax; ?></a></li>
+                            <li class="active"><?php echo $xSubCategoriax; ?></li>
                         </ul>
                     </div>
                 </div>
@@ -35,9 +39,9 @@ $filCat = mysqli_fetch_array($resCategoria);
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-9 col-sm-8 col-xs-12 main-content">
-                                    <h1 class="title"><?php echo $xCategoriax; ?></h1>
+                                    <h1 class="title"><?php echo $xSubCategoriax; ?></h1>
                                     <?php
-                                        $consultarPro = "SELECT * FROM productos WHERE estado='1' AND cod_categoria='$cod_categoria'";
+                                        $consultarPro = "SELECT * FROM productos WHERE estado='1' AND cod_sub_categoria='$cod_sub_categoria'";
                                         $resultadoPro = mysqli_query($enlaces, $consultarPro);
                                         $total_registros = mysqli_num_rows($resultadoPro);
                                         if($total_registros==0){ 
@@ -46,7 +50,7 @@ $filCat = mysqli_fetch_array($resCategoria);
                                     <div class="category-item-container">
                                         <div class="row">
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <h3>No hay productos en esta categor&iacute;a<br>
+                                                <h3>No hay productos en esta Sub-Categor&iacute;a<br>
                                                 Puede usar el buscador para ubicar el producto que desee.</h3>
                                             </div>
                                     <?php 
@@ -61,7 +65,6 @@ $filCat = mysqli_fetch_array($resCategoria);
                                         $posicion = ($pagina-1)*$registros_por_paginas;
                                         $limite = "LIMIT $posicion, $registros_por_paginas";
                                     ?>
-                                    
                                     <div class="lg-margin"></div><!-- space -->
                                     <div class="category-toolbar clearfix">
                                         <div class="toolbox-filter clearfix">
@@ -69,43 +72,41 @@ $filCat = mysqli_fetch_array($resCategoria);
                                                 <span class="separator"><strong>Visualizaci&oacute;n:</strong></span>
                                             </div>
                                             <div class="view-box">
-                                                <a href="categorias.php?cod_categoria=<?php echo $xCodCatx; ?>" class="active icon-button icon-grid"><i class="fa fa-th-large"></i></a>
-                                                <a href="categorias-list.php?cod_categoria=<?php echo $xCodCatx; ?>" class="icon-button icon-list"><i class="fa fa-th-list"></i></a>
+                                                <a href="subcategorias.php?cod_sub_categoria=<?php echo $xCodCatx; ?>" class="active icon-button icon-grid"><i class="fa fa-th-large"></i></a>
+                                                <a href="subcategorias-list.php?cod_sub_categoria=<?php echo $xCodSCatx; ?>" class="icon-button icon-list"><i class="fa fa-th-list"></i></a>
                                             </div><!-- End .view-box -->
                                         </div><!-- End .toolbox-filter -->
                                         <div class="toolbox-pagination clearfix">
                                             <?php
                                                 $paginas_mostrar = 5;
                                                 if ($total_paginas>1){
-                                                    echo "
-                                                        <ul class='pagination'>";
+                                                    echo "<ul class='pagination'>";
                                                     if($pagina>1){
-                                                        echo "<li><a href='?cod_categoria=".$xCodCatx."&p=".($pagina-1)."'><i class='fa fa-angle-left'></i></a></li>";
+                                                        echo "<li><a href='?cod_sub_categoria=".$xCodSCatx."&p=".($pagina-1)."'><i class='fa fa-angle-left'></i></a></li>";
                                                     }
                                                     for($i=$pagina; $i<=$total_paginas && $i<=($pagina+$paginas_mostrar); $i++){
                                                         if($i==$pagina){
                                                             echo "<li class='active'><a>$i</a></li>";
                                                         }else{
-                                                            echo "<li><a href='?cod_categoria=".$xCodCatx."&p=$i'>$i</a></li>";
+                                                            echo "<li><a href='?cod_sub_categoria=".$xCodSCatx."&p=$i'>$i</a></li>";
                                                         }
                                                     }
                                                     if(($pagina+$paginas_mostrar)<$total_paginas){
                                                         echo "<li><a>...</a></li>";
                                                     }
                                                     if($pagina<$total_paginas){
-                                                        echo "<li><a href='?cod_categoria=".$xCodCatx."&p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
+                                                        echo "<li><a href='?cod_sub_categoria=".$xCodSCatx."&p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
                                                     }
                                                     echo "</ul>";
                                                 }
                                             ?>
                                         </div><!-- End .toolbox-pagination -->
-                                        
                                     </div><!-- End .category-toolbar -->
                                     <div class="md-margin"></div><!-- .space -->
                                     <div class="category-item-container">
                                         <div class="row">
                                             <?php
-                                                $consultarPro = "SELECT * FROM productos WHERE cod_categoria='$cod_categoria' AND estado='1' ORDER BY orden ASC $limite";
+                                                $consultarPro = "SELECT * FROM productos WHERE cod_sub_categoria='$cod_sub_categoria' AND estado='1' ORDER BY orden ASC $limite";
                                                 $resultadoPro = mysqli_query($enlaces, $consultarPro);
                                                 while($filaPro = mysqli_fetch_array($resultadoPro)){
                                                     $xCod_producto    = $filaPro['cod_producto'];
@@ -186,20 +187,20 @@ $filCat = mysqli_fetch_array($resCategoria);
                                                     echo "
                                                         <ul class='pagination'>";
                                                     if($pagina>1){
-                                                        echo "<li><a href='?cod_categoria=".$xCodCatx."&p=".($pagina-1)."'><i class='fa fa-angle-left'></i></a></li>";
+                                                        echo "<li><a href='?p=".($pagina-1)."'><i class='fa fa-angle-left'></i></a></li>";
                                                     }
                                                     for($i=$pagina; $i<=$total_paginas && $i<=($pagina+$paginas_mostrar); $i++){
                                                         if($i==$pagina){
                                                             echo "<li class='active'><a>$i</a></li>";
                                                         }else{
-                                                            echo "<li><a href='?cod_categoria=".$xCodCatx."&p=$i'>$i</a></li>";
+                                                            echo "<li><a href='?p=$i'>$i</a></li>";
                                                         }
                                                     }
                                                     if(($pagina+$paginas_mostrar)<$total_paginas){
                                                         echo "<li><a>...</a></li>";
                                                     }
                                                     if($pagina<$total_paginas){
-                                                        echo "  <li><a href='?cod_categoria=".$xCodCatx."&p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
+                                                        echo "  <li><a href='?p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
                                                     }
                                                     echo "</ul>";
                                                 }
