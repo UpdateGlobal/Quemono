@@ -117,7 +117,6 @@ $filCat = mysqli_fetch_array($resCategoria);
                                                     $xFecha           = $filaPro['fecha_ing'];
                                             ?>
                                             <div class="category-item-container category-list-container">
-
                                                 <div class="item item-list clearfix">
                                                     <div class="item-image-container">
                                                         <figure>
@@ -131,7 +130,7 @@ $filCat = mysqli_fetch_array($resCategoria);
                                                                     }else{
                                                                 ?>
                                                                 <img src="cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?> Hover" class="item-image-hover">
-                                                                <?php    
+                                                                <?php
                                                                     }
                                                                 ?>
                                                             </a>

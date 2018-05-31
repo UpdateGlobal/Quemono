@@ -7,17 +7,17 @@ if (isset($_REQUEST['eliminar'])) {
   $eliminar = "";
 }
 if ($eliminar == "true") {
-  $sqlEliminar = "SELECT cod_categoria FROM productos_categorias ORDER BY orden";
+  $sqlEliminar = "SELECT cod_principal FROM productos_principal ORDER BY orden";
   $sqlResultado = mysqli_query($enlaces,$sqlEliminar);
   $x = 0;
   while($filaElim = mysqli_fetch_array($sqlResultado)){
-    $id_categoria = $filaElim["cod_categoria"];
-    if ($_REQUEST["chk" . $id_categoria] == "on") {
+    $id_principal = $filaElim["cod_principal"];
+    if ($_REQUEST["chk" . $id_principal] == "on") {
       $x++;
       if ($x == 1) {
-          $sql = "DELETE FROM productos_categorias WHERE cod_categoria=$id_categoria";
+          $sql = "DELETE FROM productos_principal WHERE cod_principal=$id_principal";
         } else {
-          $sql = $sql . " OR cod_categoria=$id_categoria";
+          $sql = $sql . " OR cod_principal=$id_principal";
         }
     }
   }
@@ -25,7 +25,7 @@ if ($eliminar == "true") {
   if ($x > 0) { 
     $rs = mysqli_query($enlaces,$sql);
   }
-  header ("Location:productos-categorias.php");
+  header ("Location:productos-principal.php");
 }
 ?>
 <!DOCTYPE html>
@@ -34,8 +34,8 @@ if ($eliminar == "true") {
     <?php include("module/head.php"); ?>
     <style>
       @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
-        td:nth-of-type(1):before { content: "Principal"; }
-        td:nth-of-type(2):before { content: "Categoría"; }
+        td:nth-of-type(1):before { content: "Categoría Principal"; }
+        td:nth-of-type(2):before { content: "Menú"; }
         td:nth-of-type(3):before { content: "Orden"; }
         td:nth-of-type(4):before { content: "Estado"; }
         td:nth-of-type(5):before { content: ""; }
@@ -87,7 +87,7 @@ if ($eliminar == "true") {
             <small></small>
           </h1>
         </div>
-        <?php $page="productoscategorias"; include("module/menu-productos.php"); ?>
+        <?php $page="productosprincipal"; include("module/menu-productos.php"); ?>
       </header><!--/.header -->
       <div class="main-content">
         <div class="row">
@@ -95,17 +95,17 @@ if ($eliminar == "true") {
             <div class="card card-bordered">
               <h4 class="card-title"><strong>Lista de Categorias Principales</strong></h4>
               <div class="card-body">
-                <a class="btn btn-info" href="<?php if($xVisitante=="0"){ ?>productos-categorias-nuevo.php<?php }else{ ?>javascript:visitante();<?php } ?>"><i class="fa fa-plus"></i> A&ntilde;adir nuevo</a>
+                <a class="btn btn-info" href="<?php if($xVisitante=="0"){ ?>productos-principal-nuevo.php<?php }else{ ?>javascript:visitante();<?php } ?>"><i class="fa fa-plus"></i> A&ntilde;adir nuevo</a>
                 <hr>
                 <form name="fcms" method="post" action="">
                   <table class="table" data-provide="datatables">
                     <thead>
                       <tr>
-                        <th width="40%" scope="col">Categor&iacute;a Principal
+                        <th width="60%" scope="col">Categor&iacute;a Principal
                           <input type="hidden" name="proceso">
                           <input type="hidden" name="eliminar" value="false">
                         </th>
-                        <th width="30%" scope="col">Categor&iacute;a</th>
+                        <th width="10%" scope="col">Men&uacute;</th>
                         <th width="5%" scope="col">Orden</th>
                         <th width="10%" scope="col">Estado</th>
                         <th width="5%" scope="col">&nbsp;</th>
@@ -115,26 +115,26 @@ if ($eliminar == "true") {
                     </thead>
                     <tbody>
                       <?php
-                        $consultarCategoria = "SELECT pc.cod_principal, pc.principal, cp.* FROM productos_categorias as cp, productos_principal as pc WHERE cp.cod_principal=pc.cod_principal ORDER BY orden ASC"; /* "SELECT * FROM productos_categorias ORDER BY orden" */
+                        $consultarCategoria = "SELECT * FROM productos_principal ORDER BY orden";
                         $resultadoCategoria = mysqli_query($enlaces,$consultarCategoria) or die('Consulta fallida: ' . mysqli_error($enlaces));
                         while($filaCat = mysqli_fetch_array($resultadoCategoria)){
-                          $xPrincipal = $filaCat['principal'];
-                          $xCodigo    = $filaCat['cod_categoria'];
-                          $xCategoria = $filaCat['categoria'];
+                          $xCodigo    = $filaCat['cod_principal'];
+                          $xCategoria = $filaCat['principal'];
+                          $xMenu      = $filaCat['menu'];
                           $xOrden     = $filaCat['orden'];
                           $xEstado    = $filaCat['estado'];
                       ?>
                       <tr>
-                        <td><?php echo $xPrincipal; ?></td>
                         <td><?php echo $xCategoria; ?></td>
+                        <td><?php if($xMenu=="1"){ echo "[Si]"; }else{ echo "[No]";} ?></td>
                         <td><?php echo $xOrden; ?></td>
                         <td><?php if($xCodigo!="0"){?>
                           <strong><?php if($xEstado=="1"){ echo "[Activo]"; }else{ echo "[Inactivo]";} ?></strong>
                         <?php }?></td>
                         <td><?php if($xCodigo!="0"){?>
-                          <?php if($xVisitante=="0"){ ?><a class="boton-eliminar" href="productos-categorias-delete.php?cod_categoria=<?php echo $xCodigo; ?>"><i class="fa fa-trash"></i></a><?php }else{ ?><a class="boton-eliminar boton-eliminar-bloqueado" href="javascript:visitante();"><i class="fa fa-trash"></i></a><?php } ?><?php }?>
+                          <?php if($xVisitante=="0"){ ?><a class="boton-eliminar" href="productos-principal-delete.php?cod_principal=<?php echo $xCodigo; ?>"><i class="fa fa-trash"></i></a><?php }else{ ?><a class="boton-eliminar boton-eliminar-bloqueado" href="javascript:visitante();"><i class="fa fa-trash"></i></a><?php } ?><?php }?>
                         </td>
-                        <td><?php if($xCodigo!="0"){?><a class="boton-editar" href="productos-categorias-edit.php?cod_categoria=<?php echo $xCodigo; ?>"><i class="fa fa-pencil-square"></i></a><?php }?></td>
+                        <td><?php if($xCodigo!="0"){?><a class="boton-editar" href="productos-principal-edit.php?cod_principal=<?php echo $xCodigo; ?>"><i class="fa fa-pencil-square"></i></a><?php }?></td>
                         <td><?php if($xVisitante=="0"){?>
                           <?php if($xCodigo!="0"){?>
                           <div class="hidden">

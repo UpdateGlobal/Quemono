@@ -1,16 +1,27 @@
 <?php include("module/conexion.php"); ?>
 <?php include("module/verificar.php"); ?>
 <?php
-$mensaje = "";
+$cod_principal  = $_REQUEST['cod_principal'];
 if (isset($_REQUEST['proceso'])) {
   $proceso = $_POST['proceso'];
 } else {
   $proceso = "";
 }
-if($proceso == "Registrar"){
-  $cod_principal = $_POST['cod_principal'];
-  $categoria    = $_POST['categoria'];
-  $slug         = $categoria;
+if($proceso == ""){
+  $consultaCategoria = "SELECT * FROM productos_principal WHERE cod_principal='$cod_principal'";
+  $ejecutarCategoria = mysqli_query($enlaces,$consultaCategoria) or die('Consulta fallida: ' . mysqli_error($enlaces));
+  $filaCat = mysqli_fetch_array($ejecutarCategoria);
+  $cod_principal  = $filaCat['cod_principal'];
+  $principal    = htmlspecialchars($filaCat['principal']);
+  $menux      = $filaCat['menu'];
+  $orden      = $filaCat['orden'];
+  $estado     = $filaCat['estado'];
+}
+
+if($proceso=="Actualizar"){
+  $cod_principal  = $_POST['cod_principal'];
+  $principal      = mysqli_real_escape_string($enlaces, $_POST['principal']);
+  $slug           = $principal;
   $slug         = preg_replace('~[^\pL\d]+~u', '-', $slug);
   $slug         = iconv('utf-8', 'us-ascii//TRANSLIT', $slug);
   $slug         = preg_replace('~[^-\w]+~', '', $slug);
@@ -20,15 +31,13 @@ if($proceso == "Registrar"){
   if (empty($slug)){
       return 'n-a';
   }
-  if(isset($_POST['orden'])){$orden = $_POST['orden'];}else{$orden = 0;}
-  if(isset($_POST['estado'])){$estado = $_POST['estado'];}else{$estado = 0;}
+  $menu           = $_POST['menu'];
+  $orden          = $_POST['orden'];
+  $estado         = $_POST['estado'];
+  $actualizarCategoria  = "UPDATE productos_principal SET cod_principal='$cod_principal', principal='$principal', slug='$slug', menu='$menu', orden='$orden', estado='$estado' WHERE cod_principal='$cod_principal'";
+  $resultadoActualizar = mysqli_query($enlaces,$actualizarCategoria) or die('Consulta fallida: ' . mysqli_error($enlaces));
   
-  $insertarCategoria = "INSERT INTO productos_categorias(cod_principal, categoria, slug, orden, estado)VALUE('$cod_principal', '$categoria', '$slug', '$orden', '$estado')";
-  $resultadoInsertar = mysqli_query($enlaces,$insertarCategoria);
-  $mensaje = "<div class='alert alert-success' role='alert'>
-          <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-          <strong>Nota:</strong> La categor&iacute;a se registr&oacute; con exitosamente. <a href='productos-categorias.php'>Ir a Categorias de Productos</a>
-        </div>";
+  header("Location:productos-principal.php");
 }
 ?>
 <!DOCTYPE html>
@@ -38,19 +47,15 @@ if($proceso == "Registrar"){
     <script type="text/javascript" src="assets/js/rutinas.js"></script>
     <script>
       function Validar(){
-        if(document.fcms.cod_principal.value=="default"){
-          alert("Debe elegir una categoría principal");
+        if(document.fcms.principal.value==""){
+          alert("Debe escribir un nombre para la categoria");
+          document.fcms.principal.focus();
           return;
         }
-        if(document.fcms.categoria.value==""){
-          alert("Debes ingresar un nombre a la categoria");
-          document.fcms.categoria.focus();
-          return;
-        }
-        document.fcms.action = "productos-categorias-nuevo.php";
-        document.fcms.proceso.value="Registrar";
+        document.fcms.action = "productos-principal-edit.php";
+        document.fcms.proceso.value = "Actualizar";
         document.fcms.submit();
-      }
+      } 
       function Imagen(codigo){
         url = "agregar-foto.php?id=" + codigo;
         AbrirCentro(url,'Agregar', 475, 180, 'no', 'no');
@@ -85,38 +90,27 @@ if($proceso == "Registrar"){
       </header><!--/.header -->
       <div class="main-content">
         <div class="card">
-          <h4 class="card-title"><strong>Nueva Categor&iacute;a</strong></h4>
+          <h4 class="card-title"><strong>Editar Categoría Principal</strong></h4>
           <form class="fcms" name="fcms" method="post" action="" data-provide="validation" data-disable="false">
             <div class="card-body">
               <?php if(isset($mensaje)){ echo $mensaje; } else {}; ?>
 
               <div class="form-group row">
                 <div class="col-4 col-lg-2">
-                  <label class="col-form-label required" for="principal">Categor&iacute;a Principal:</label>
+                  <label class="col-form-label required" for="principal">Categor&iacute;a principal:</label>
                 </div>
                 <div class="col-8 col-lg-10">
-                  <select class="form-control" id="principal" name="cod_principal">
-                    <option value="0">Sin Categor&iacute;a Principal</option>
-                    <?php
-                      $consultaCat = "SELECT * FROM productos_principal ORDER BY orden ASC";
-                      $resultadoCat = mysqli_query($enlaces, $consultaCat);
-                      while($filaCat = mysqli_fetch_array($resultadoCat)){
-                        $xCodprin = $filaCat['cod_principal'];
-                        $xPrincipal = $filaCat['principal'];
-                    ?>
-                    <option value="<?php echo $xCodprin; ?>"><?php echo $xPrincipal; ?></option>
-                    <?php } ?>
-                  </select>
+                  <input class="form-control" name="principal" type="text" id="principal" value="<?php echo $principal; ?>" required />
+                  <div class="invalid-feedback"></div>
                 </div>
               </div>
 
               <div class="form-group row">
                 <div class="col-4 col-lg-2">
-                  <label class="col-form-label required" for="categoria">Categor&iacute;a:</label>
+                  <label class="col-form-label" for="menu">Men&uacute;:</label>
                 </div>
-                <div class="col-8 col-lg-10">
-                  <input class="form-control" name="categoria" type="text" id="categoria" required />
-                  <div class="invalid-feedback"></div>
+                <div class="col-8 col-lg-4">
+                  <input type="checkbox" name="menu" data-color="#f2a654" data-size="small" data-provide="switchery" value="1" <?php if($menux=="1"){echo "checked";} ?> />
                 </div>
               </div>
 
@@ -125,7 +119,7 @@ if($proceso == "Registrar"){
                   <label class="col-form-label" for="orden">Orden:</label>
                 </div>
                 <div class="col-2 col-lg-1">
-                  <input class="form-control" name="orden" type="text" id="orden" onKeyPress="return soloNumeros(event)" />
+                  <input class="form-control" name="orden" type="text" id="orden" value="<?php echo $orden; ?>" onKeyPress="return soloNumeros(event)" />
                 </div>
               </div>
 
@@ -134,15 +128,16 @@ if($proceso == "Registrar"){
                   <label class="col-form-label" for="estado">Estado:</label>
                 </div>
                 <div class="col-8 col-lg-10">
-                  <input type="checkbox" name="estado" data-size="small" data-provide="switchery" value="1" checked>
+                  <input type="checkbox" name="estado" data-size="small" data-provide="switchery" value="1" <?php if($estado=="1"){echo "checked";} ?> />
                 </div>
               </div>
             </div>
 
             <footer class="card-footer">
-              <a href="productos-categorias.php" class="btn btn-secondary"><i class="fa fa-times"></i> Cancelar</a>
-              <button class="btn btn-bold btn-primary" type="button" name="boton" onClick="javascript:Validar();" /><i class="fa fa-chevron-circle-right"></i> Publicar Categor&iacute;a</button>
-              <input type="hidden" name="proceso">
+              <a href="productos-principal.php" class="btn btn-secondary"><i class="fa fa-times"></i> Cancelar</a>
+              <button class="btn btn-bold btn-primary" type="button" name="boton" onClick="javascript:Validar();" /><i class="fa fa-refresh"></i> Editar Categor&iacute;a Principal</button>
+              <input type="hidden" name="proceso" />
+              <input type="hidden" name="cod_principal" value="<?php echo $cod_principal; ?>" />
             </footer>
 
           </form>

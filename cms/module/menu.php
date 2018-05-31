@@ -69,6 +69,13 @@
 
             <ul class="menu-submenu" <?php echo ($menu == "productos" ? "style='display:block;'" : "")?>>
               <li class="menu-item">
+                <a class="menu-link" href="productos-principal.php">
+                  <span class="dot"></span>
+                  <span class="title">Principal</span>
+                </a>
+              </li>
+
+              <li class="menu-item">
                 <a class="menu-link" href="productos-categorias.php">
                   <span class="dot"></span>
                   <span class="title">Categor&iacute;a</span>

@@ -12,15 +12,17 @@ if($proceso == ""){
   $ejecutarCategoria = mysqli_query($enlaces,$consultaCategoria) or die('Consulta fallida: ' . mysqli_error($enlaces));
   $filaCat = mysqli_fetch_array($ejecutarCategoria);
   $cod_categoria  = $filaCat['cod_categoria'];
+  $cod_principal  = $filaCat['cod_principal'];
   $categoria    = htmlspecialchars($filaCat['categoria']);
   $orden      = $filaCat['orden'];
   $estado     = $filaCat['estado'];
 }
 
 if($proceso=="Actualizar"){
-  $cod_categoria      = $_POST['cod_categoria'];
-  $categoria        = mysqli_real_escape_string($enlaces, $_POST['categoria']);
-  $slug           = $categoria;
+  $cod_categoria  = $_POST['cod_categoria'];
+  $cod_principal  = $_POST['cod_principal'];
+  $categoria      = mysqli_real_escape_string($enlaces, $_POST['categoria']);
+  $slug          = $categoria;
   $slug         = preg_replace('~[^\pL\d]+~u', '-', $slug);
   $slug         = iconv('utf-8', 'us-ascii//TRANSLIT', $slug);
   $slug         = preg_replace('~[^-\w]+~', '', $slug);
@@ -32,7 +34,7 @@ if($proceso=="Actualizar"){
   }
   $orden          = $_POST['orden'];
   $estado         = $_POST['estado'];
-  $actualizarCategoria  = "UPDATE productos_categorias SET cod_categoria='$cod_categoria', categoria='$categoria', slug='$slug', orden='$orden', estado='$estado' WHERE cod_categoria='$cod_categoria'";
+  $actualizarCategoria  = "UPDATE productos_categorias SET cod_categoria='$cod_categoria', cod_principal='$cod_principal', categoria='$categoria', slug='$slug', orden='$orden', estado='$estado' WHERE cod_categoria='$cod_categoria'";
   $resultadoActualizar = mysqli_query($enlaces,$actualizarCategoria) or die('Consulta fallida: ' . mysqli_error($enlaces));
   
   header("Location:productos-categorias.php");
@@ -45,6 +47,10 @@ if($proceso=="Actualizar"){
     <script type="text/javascript" src="assets/js/rutinas.js"></script>
     <script>
       function Validar(){
+        if(document.fcms.cod_principal.value=="default"){
+          alert("Debe elegir una categoría principal");
+          return;
+        }
         if(document.fcms.categoria.value==""){
           alert("Debe escribir un nombre para la categoria");
           document.fcms.categoria.focus();
@@ -92,6 +98,34 @@ if($proceso=="Actualizar"){
           <form class="fcms" name="fcms" method="post" action="" data-provide="validation" data-disable="false">
             <div class="card-body">
               <?php if(isset($mensaje)){ echo $mensaje; } else {}; ?>
+              
+              <div class="form-group row">
+                <div class="col-4 col-lg-2">
+                  <label class="col-form-label required" for="principal">Categor&iacute;a Principal:</label>
+                </div>
+                <div class="col-8 col-lg-10">
+                  <select class="form-control" id="principal" name="cod_principal">
+                    <?php
+                      $consultaCat = "SELECT * FROM productos_principal WHERE cod_principal='$cod_principal'";
+                      $resultadoCat = mysqli_query($enlaces, $consultaCat);
+                      while($filaCat = mysqli_fetch_array($resultadoCat)){
+                        $xCodprin = $filaCat['cod_principal'];
+                        $xPrincipal = $filaCat['principal'];
+                    ?>
+                      <option value="<?php echo $xCodprin; ?>"><?php echo $xPrincipal; ?> (Actual)</option>
+                    <?php } ?>
+                    <?php
+                      $consultaCat = "SELECT * FROM productos_principal WHERE cod_principal!='$cod_principal'";
+                      $resultadoCat = mysqli_query($enlaces, $consultaCat);
+                      while($filaCat = mysqli_fetch_array($resultadoCat)){
+                        $xCodprin = $filaCat['cod_principal'];
+                        $xPrincipal = $filaCat['principal'];
+                    ?>
+                    <option value="<?php echo $xCodprin; ?>"><?php echo $xPrincipal; ?></option>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
 
               <div class="form-group row">
                 <div class="col-4 col-lg-2">
