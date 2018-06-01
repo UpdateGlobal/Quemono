@@ -7,7 +7,7 @@ if (isset($_REQUEST['eliminar'])) {
   $eliminar = "";
 }
 if ($eliminar == "true") {
-  $sqlEliminar = "SELECT cod_sub_categoria FROM productos_sub_categorias ORDER BY cod_sub_categoria";
+  $sqlEliminar = "SELECT cod_sub_categoria FROM productos_sub_categorias ORDER BY orden";
   $sqlResultado = mysqli_query($enlaces, $sqlEliminar);
   $x = 0;
   while($filaElim = mysqli_fetch_array($sqlResultado)){
@@ -34,12 +34,14 @@ if ($eliminar == "true") {
     <?php include("module/head.php"); ?>
     <style>
       @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
-        td:nth-of-type(1):before { content: "Categoría"; }
-        td:nth-of-type(2):before { content: "Sub-Categoría"; }
-        td:nth-of-type(3):before { content: "Estado"; }
-        td:nth-of-type(4):before { content: ""; }
-        td:nth-of-type(5):before { content: ""; }
+        td:nth-of-type(1):before { content: "Principal"; }
+        td:nth-of-type(2):before { content: "Categoría"; }
+        td:nth-of-type(3):before { content: "Sub-Categoría"; }
+        td:nth-of-type(4):before { content: "Orden"; }
+        td:nth-of-type(5):before { content: "Estado"; }
         td:nth-of-type(6):before { content: ""; }
+        td:nth-of-type(7):before { content: ""; }
+        td:nth-of-type(8):before { content: ""; }
       }
     </style>
     <script>
@@ -102,11 +104,12 @@ if ($eliminar == "true") {
                   <table class="table" data-provide="datatables">
                     <thead>
                       <tr>
-                        <th width="30%" scope="col">Categor&iacute;a
+                        <th width="25%" scope="col">Principal
                           <input type="hidden" name="proceso">
                           <input type="hidden" name="eliminar" value="false">
                         </th>
-                        <th width="30%" scope="col">Sub-Categor&iacute;a</th>
+                        <th width="25%" scope="col">Categor&iacute;a</th>
+                        <th width="25%" scope="col">Sub-Categor&iacute;a</th>
                         <th width="5%" scope="col">Orden</th>
                         <th width="5%" scope="col">Estado</th>
                         <th width="5%" scope="col">&nbsp;</th>
@@ -116,16 +119,18 @@ if ($eliminar == "true") {
                     </thead>
                     <tbody>
                       <?php
-                        $consultarSubCat = "SELECT cp.cod_categoria, cp.categoria, scp.* FROM productos_categorias as cp, productos_sub_categorias as scp WHERE scp.cod_categoria=cp.cod_categoria ORDER BY categoria ASC";
+                        $consultarSubCat = "SELECT pp.cod_principal, pp.principal, cp.cod_categoria, cp.categoria, scp.* FROM productos_principal as pp, productos_categorias as cp, productos_sub_categorias as scp WHERE scp.cod_principal=pp.cod_principal AND scp.cod_categoria=cp.cod_categoria ORDER BY orden ASC";
                         $resultadoSubCat = mysqli_query($enlaces, $consultarSubCat);
                         while($filaSC = mysqli_fetch_array($resultadoSubCat)){
                           $xCodigo      = $filaSC['cod_sub_categoria'];
+                          $xPrincipal   = $filaSC['principal'];
                           $xCategoria   = $filaSC['categoria'];
                           $xSCategoria  = $filaSC['subcategoria'];
                           $xOrden       = $filaSC['orden'];
                           $xEstado      = $filaSC['estado'];
                       ?>
                       <tr>
+                        <td><?php echo $xPrincipal; ?></td>
                         <td><?php echo $xCategoria; ?></td>
                         <td><?php echo $xSCategoria; ?></td>
                         <td><?php echo $xOrden; ?></td>

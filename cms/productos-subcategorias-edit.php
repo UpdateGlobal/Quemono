@@ -47,6 +47,14 @@ if($proceso == "Actualizar"){
     <script type="text/javascript" src="assets/js/rutinas.js"></script>
     <script>
       function Validar(){
+        if(document.fcms.cod_principal.value=="default"){
+          alert("Debe elegir una categoría principal");
+          return;
+        }
+        if(document.fcms.cod_categoria.value=="default"){
+          alert("Debe elegir una categoría principal");
+          return;
+        }
         if(document.fcms.subcategoria.value==""){
           alert("Debe escribir un nombre para la Categoria");
           document.fcms.subcategoria.focus();
@@ -91,10 +99,38 @@ if($proceso == "Actualizar"){
       </header><!--/.header -->
       <div class="main-content">
         <div class="card">
-          <h4 class="card-title"><strong>Editar Categor&iacute;a</strong></h4>
+          <h4 class="card-title"><strong>Editar Sub-Categor&iacute;a</strong></h4>
           <form class="fcms" name="fcms" method="post" action="" data-provide="validation" data-disable="false">
             <div class="card-body">
               <?php if(isset($mensaje)){ echo $mensaje; } else {}; ?>
+
+              <div class="form-group row">
+                <div class="col-4 col-lg-2">
+                  <label class="col-form-label" for="principal">Categor&iacute;a Principal:</label>
+                </div>
+                <div class="col-8 col-lg-10">
+                  <select class="form-control" id="principal" name="cod_principal">
+                    <?php
+                      $consultaPri = "SELECT * FROM productos_principal WHERE cod_principal='$cod_principal'";
+                      $resultadoPri = mysqli_query($enlaces, $consultaPri);
+                      while($filaPri = mysqli_fetch_array($resultadoPri)){
+                        $xCodprin = $filaPri['cod_principal'];
+                        $xPrincipal = $filaPri['principal'];
+                      ?>
+                      <option value="<?php echo $xCodprin; ?>"><?php echo $xPrincipal; ?> (Actual)</option>
+                      <?php } ?>
+                      <?php
+                        $consultaCat = "SELECT * FROM productos_principal WHERE cod_principal!='$cod_principal'";
+                        $resultadoCat = mysqli_query($enlaces, $consultaCat);
+                        while($filaCat = mysqli_fetch_array($resultadoCat)){
+                          $xCodprin = $filaCat['cod_principal'];
+                          $xPrincipal = $filaCat['principal'];
+                      ?>
+                      <option value="<?php echo $xCodprin; ?>"><?php echo $xPrincipal; ?></option>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
 
               <div class="form-group row">
                 <div class="col-4 col-lg-2">

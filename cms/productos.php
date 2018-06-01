@@ -34,16 +34,17 @@
     <?php include("module/head.php"); ?>
     <style>
       @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
-        td:nth-of-type(1):before { content: "Categoría"; }
-        td:nth-of-type(2):before { content: "Sub-categoría"; }
-        td:nth-of-type(3):before { content: "Producto"; }
-        td:nth-of-type(4):before { content: "Imagen"; }
-        td:nth-of-type(5):before { content: "Marca"; }
-        td:nth-of-type(6):before { content: "Orden"; }
-        td:nth-of-type(7):before { content: "Estado"; }
-        td:nth-of-type(8):before { content: ""; }
+        td:nth-of-type(1):before { content: "Principal"; }
+        td:nth-of-type(2):before { content: "Categoría"; }
+        td:nth-of-type(3):before { content: "Sub-categoría"; }
+        td:nth-of-type(4):before { content: "Producto"; }
+        td:nth-of-type(5):before { content: "Imagen"; }
+        td:nth-of-type(6):before { content: "Marca"; }
+        td:nth-of-type(7):before { content: "Orden"; }
+        td:nth-of-type(8):before { content: "Estado"; }
         td:nth-of-type(9):before { content: ""; }
         td:nth-of-type(10):before { content: ""; }
+        td:nth-of-type(11):before { content: ""; }
       }
     </style>
     <script>
@@ -104,14 +105,15 @@
                   <table class="table" data-provide="datatables">
                     <thead>
                       <tr>
+                        <th width="15%" scope="col">Principal</th>
                         <th width="15%" scope="col">Categor&iacute;a</th>
-                        <th width="20%" scope="col">Sub-Categor&iacute;a</th>
-                        <th width="15%" scope="col">Producto</th>
+                        <th width="15%" scope="col">Sub-Categor&iacute;a</th>
+                        <th width="10%" scope="col">Producto</th>
                         <th width="10%" scope="col">Imagen
                           <input type="hidden" name="proceso">
                           <input type="hidden" name="eliminar" value="false">
                         </th>
-                        <th width="15%" scope="col">Marca</th>
+                        <th width="10%" scope="col">Marca</th>
                         <th width="5%" scope="col">Orden</th>
                         <th width="5%" scope="col">Estado</th>
                         <th width="5%" scope="col">&nbsp;</th>
@@ -121,10 +123,11 @@
                     </thead>
                     <tbody>
                       <?php
-                        $consultarPro = "SELECT cp.cod_categoria, cp.categoria, scp.cod_sub_categoria, scp.subcategoria, mp.cod_carrusel, mp.marca, p.* FROM productos_categorias as cp, productos_sub_categorias as scp, carrusel as mp, productos as p WHERE p.cod_categoria=cp.cod_categoria AND p.cod_sub_categoria=scp.cod_sub_categoria AND p.cod_carrusel=mp.cod_carrusel ORDER BY orden ASC";
+                        $consultarPro = "SELECT pp.cod_principal, pp.principal, cp.cod_categoria, cp.categoria, scp.cod_sub_categoria, scp.subcategoria, mp.cod_carrusel, mp.marca, p.* FROM productos_principal as pp, productos_categorias as cp, productos_sub_categorias as scp, carrusel as mp, productos as p WHERE p.cod_principal=pp.cod_principal AND p.cod_categoria=cp.cod_categoria AND p.cod_sub_categoria=scp.cod_sub_categoria AND p.cod_carrusel=mp.cod_carrusel ORDER BY orden ASC";
                         $resultadoPro = mysqli_query($enlaces, $consultarPro);
                         while($filaPro = mysqli_fetch_array($resultadoPro)){
                           $xCodigo        = $filaPro['cod_producto'];
+                          $xPrincipal     = $filaPro['principal'];
                           $xCategoria     = $filaPro['categoria'];
                           $xSCategoria    = $filaPro['subcategoria'];
                           $xProducto      = $filaPro['nom_producto'];
@@ -134,6 +137,7 @@
                           $xEstado        = $filaPro['estado'];
                       ?>
                       <tr>
+                        <td><?php echo $xPrincipal; ?></td>
                         <td><?php echo $xCategoria; ?></td>
                         <td><?php echo $xSCategoria; ?></td>
                         <td><?php echo $xProducto; ?></td>

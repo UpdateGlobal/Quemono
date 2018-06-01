@@ -8,6 +8,7 @@ if (isset($_REQUEST['proceso'])) {
   $proceso = "";
 }
 if($proceso == "Registrar"){
+  $cod_principal  = $_POST['cod_principal'];
   $cod_categoria  = $_POST['cod_categoria'];
   $subcategoria   = mysqli_real_escape_string($enlaces, $_POST['subcategoria']);
   $slug         = $subcategoria;
@@ -23,7 +24,7 @@ if($proceso == "Registrar"){
   $orden          = $_POST['orden'];
   $estado         = $_POST['estado'];
 
-  $insertarSubCategoria = "INSERT INTO productos_sub_categorias(cod_categoria, slug, subcategoria, orden, estado)VALUE('$cod_categoria', '$slug', '$subcategoria', '$orden', '$estado')";
+  $insertarSubCategoria = "INSERT INTO productos_sub_categorias(cod_principal, cod_categoria, slug, subcategoria, orden, estado)VALUE('$cod_principal', '$cod_categoria', '$slug', '$subcategoria', '$orden', '$estado')";
   $resultadoInsertar = mysqli_query($enlaces, $insertarSubCategoria);
   $mensaje = "<div class='alert alert-success' role='alert'>
             <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
@@ -38,6 +39,14 @@ if($proceso == "Registrar"){
     <script type="text/javascript" src="assets/js/rutinas.js"></script>
     <script>
       function Validar(){
+        if(document.fcms.cod_principal.value=="default"){
+          alert("Debe elegir una categoría principal");
+          return;
+        }
+        if(document.fcms.cod_categoria.value=="default"){
+          alert("Debe elegir una categoría principal");
+          return;
+        }
         if(document.fcms.subcategoria.value==""){
           alert("Debe escribir un nombre para la Sub-Categoria");
           document.fcms.subcategoria.focus();

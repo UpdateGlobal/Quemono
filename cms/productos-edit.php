@@ -1,42 +1,69 @@
 <?php include("module/conexion.php"); ?>
 <?php include("module/verificar.php"); ?>
 <?php
+$cod_principal = "";
 $cod_categoria = "";
 $cod_sub_categoria = "";
+
 $cod_producto = $_REQUEST['cod_producto'];
+
 if (isset($_REQUEST['proceso'])){
   $proceso = $_POST['proceso'];
 } else {
   $proceso = "";
 }
-$cod_producto = $_REQUEST['cod_producto'];
 
 if($proceso == ""){
   $consultaPro            = "SELECT * FROM productos WHERE cod_producto='$cod_producto'";
   $resultadoPro           = mysqli_query($enlaces, $consultaPro);
   $filaPro                = mysqli_fetch_array($resultadoPro);
-  $cod_producto           = $filaPro['cod_producto'];
-  $cod_categoria          = $filaPro['cod_categoria'];
-  $cod_sub_categoria      = $filaPro['cod_sub_categoria'];
-  $nom_producto           = mysqli_real_escape_string($enlaces, $filaPro['nom_producto']);
-  $descripcion            = mysqli_real_escape_string($enlaces, $filaPro['descripcion']);
-  $caracteristicas        = mysqli_real_escape_string($enlaces, $filaPro['caracteristicas']);
-  $info_adicional         = mysqli_real_escape_string($enlaces, $filaPro['info_adicional']);
-  $video                  = $filaPro['video'];
-  $stock                  = $filaPro['stock'];
-  $codigo                 = $filaPro['codigo'];
-  $precio_oferta          = number_format($filaPro['precio_oferta'],2);
-  $precio_normal          = number_format($filaPro['precio_normal'],2);
-  $descuento              = $filaPro['descuento'];
-  $promocion              = $filaPro['promocion'];
-  $fecha_ing              = $filaPro['fecha_ing'];
-  $imagen                 = $filaPro['imagen'];
-  $hoverimagen            = $filaPro['h_imagen'];
-  $cod_carrusel           = $filaPro['cod_carrusel'];
-  $orden                  = $filaPro['orden'];
-  $estado                 = $filaPro['estado'];
+    $cod_producto         = $filaPro['cod_producto'];
+    $cod_principal        = $filaPro['cod_principal'];
+    $cod_categoria        = $filaPro['cod_categoria'];
+    $cod_sub_categoria    = $filaPro['cod_sub_categoria'];
+    $nom_producto         = mysqli_real_escape_string($enlaces, $filaPro['nom_producto']);
+    $descripcion          = mysqli_real_escape_string($enlaces, $filaPro['descripcion']);
+    $caracteristicas      = mysqli_real_escape_string($enlaces, $filaPro['caracteristicas']);
+    $info_adicional       = mysqli_real_escape_string($enlaces, $filaPro['info_adicional']);
+    $video                = $filaPro['video'];
+    $stock                = $filaPro['stock'];
+    $codigo               = $filaPro['codigo'];
+    $precio_oferta        = number_format($filaPro['precio_oferta'],2);
+    $precio_normal        = number_format($filaPro['precio_normal'],2);
+    $descuento            = $filaPro['descuento'];
+    $promocion            = $filaPro['promocion'];
+    $fecha_ing            = $filaPro['fecha_ing'];
+    $imagen               = $filaPro['imagen'];
+    $hoverimagen          = $filaPro['h_imagen'];
+    $cod_carrusel         = $filaPro['cod_carrusel'];
+    $orden                = $filaPro['orden'];
+    $estado               = $filaPro['estado'];
 }
 if($proceso == "Filtrar"){
+  $cod_principal          = $_POST['cod_principal'];
+  $cod_categoria          = $_POST['cod_categoria'];
+  $cod_sub_categoria      = $_POST['cod_sub_categoria'];
+  $nom_producto           = mysqli_real_escape_string($enlaces, $_POST['nom_producto']);
+  $descripcion            = mysqli_real_escape_string($enlaces, $_POST['descripcion']);
+  $caracteristicas        = mysqli_real_escape_string($enlaces, $_POST['caracteristicas']);
+  $info_adicional         = mysqli_real_escape_string($enlaces, $_POST['info_adicional']);
+  $video                  = $_POST['video'];
+  $stock                  = $_POST['stock'];
+  $codigo                 = $_POST['codigo'];
+  $precio_oferta          = number_format($_POST['precio_oferta'],2);
+  $precio_normal          = number_format($_POST['precio_normal'],2);
+  $descuento              = $_POST['descuento'];
+  $promocion              = $_POST['promocion'];
+  if(isset($_POST['fecha_ing'])){$fecha_ing = $_POST['fecha_ing'];}else{$fecha_ing = date("Y-m-d");}
+  $imagen                 = $_POST['imagen'];
+  $hoverimagen            = $_POST['h_imagen'];
+  $cod_carrusel           = $_POST['cod_carrusel'];
+  if(isset($_POST['orden'])){$orden = $_POST['orden'];}else{$orden = 0;}
+  if(isset($_POST['estado'])){$estado = $_POST['estado'];}else{$estado = 0;}
+}
+
+if($proceso == "Filtrar_p"){
+  $cod_principal          = $_POST['cod_principal'];
   $cod_categoria          = $_POST['cod_categoria'];
   $cod_sub_categoria      = $_POST['cod_sub_categoria'];
   $nom_producto           = mysqli_real_escape_string($enlaces, $_POST['nom_producto']);
@@ -59,6 +86,7 @@ if($proceso == "Filtrar"){
 }
 
 if($proceso == "Actualizar"){
+  $cod_principal          = $_POST['cod_principal'];
   $cod_categoria          = $_POST['cod_categoria'];
   $cod_sub_categoria      = $_POST['cod_sub_categoria'];
   $nom_producto           = mysqli_real_escape_string($enlaces, $_POST['nom_producto']);
@@ -92,6 +120,7 @@ if($proceso == "Actualizar"){
   //Validar si el registro existe
   $actualizarProductos = "UPDATE productos SET
     cod_producto='$cod_producto', 
+    cod_principal='$cod_principal', 
     cod_categoria='$cod_categoria', 
     cod_sub_categoria='$cod_sub_categoria', 
     nom_producto='$nom_producto', 
@@ -125,6 +154,10 @@ if($proceso == "Actualizar"){
     <script type="text/javascript" src="assets/js/rutinas.js"></script>
     <script>
       function Validar(){
+        if(document.fcms.cod_principal.value=="default"){
+          alert("Elegir una categoría principal");
+          return;
+        }
         if(document.fcms.cod_categoria.value=="default"){
           alert("Elegir una categoría");
           return;
@@ -204,10 +237,46 @@ if($proceso == "Actualizar"){
 
               <div class="form-group row">
                 <div class="col-4 col-lg-2">
+                  <label class="col-form-label required" for="cod_principal">Categor&iacute;as Principal:</label>
+                </div>
+                <div class="col-8 col-lg-10">
+                  <select class="form-control" name="cod_principal" id="cod_principal" onChange="Filtrar();">
+                    <?php 
+                      if($cod_principal == ""){
+                        $consultaPri = "SELECT * FROM productos_principal WHERE estado='1'";
+                        $resultaPri = mysqli_query($enlaces, $consultaPri);
+                        while($filaPri = mysqli_fetch_array($resultaPri)){
+                          $xcodPri = $filaPri['cod_principal'];
+                          $xnomPri = $filaPri['principal'];
+                          echo '<option value='.$xcodPri.'>'.$xnomPri.'</option>';
+                        }
+                      }else{
+                        $consultaPri = "SELECT * FROM productos_principal WHERE cod_principal='$cod_principal'";
+                        $resultaPri = mysqli_query($enlaces, $consultaPri);
+                        while($filaPri = mysqli_fetch_array($resultaPri)){
+                          $xcodPri = $filaPri['cod_principal'];
+                          $xnomPri = $filaPri['principal'];
+                          echo '<option value='.$xcodPri.' selected="selected">'.$xnomPri.'</option>';
+                        }
+                        $consultaPri = "SELECT * FROM productos_principal WHERE cod_principal!='$cod_principal'";
+                        $resultaPri = mysqli_query($enlaces, $consultaPri);
+                        while($filaPri = mysqli_fetch_array($resultaPri)){
+                          $xcodPri = $filaPri['cod_principal'];
+                          $xnomPri = $filaPri['principal'];
+                          echo '<option value='.$xcodPri.'>'.$xnomPri.'</option>';
+                        }
+                      }
+                    ?>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-4 col-lg-2">
                   <label class="col-form-label required" for="cod_categoria">Categor&iacute;as:</label>
                 </div>
                 <div class="col-8 col-lg-10">
-                  <select class="form-control" name="cod_categoria" id="cod_categoria" onChange="Filtrar();">
+                  <select class="form-control" name="cod_categoria" id="cod_categoria" onChange="Filtrar_p();">
                     <?php 
                       if($cod_categoria == ""){
                         $consultaCat = "SELECT * FROM productos_categorias WHERE estado='1'";
