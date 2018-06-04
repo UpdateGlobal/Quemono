@@ -7,9 +7,9 @@
     $filaPro       = mysqli_fetch_array($resultadoPro);
         $xCod_producto      = $filaPro['cod_producto'];
         $xCod_categoria     = $filaPro['cod_categoria'];
-        $xCategoria         = $filaPro['categoria'];
+        $xCategoriap        = $filaPro['categoria'];
         $xCod_sub_categoria = $filaPro['cod_sub_categoria'];
-        $xSubCategoria      = $filaPro['subcategoria'];
+        $xSubCategoriap     = $filaPro['subcategoria'];
         $xNom_producto      = mysqli_real_escape_string($enlaces, $filaPro['nom_producto']);
         $xDescripcion       = mysqli_real_escape_string($enlaces, $filaPro['descripcion']);
         $xCaracteristicas   = mysqli_real_escape_string($enlaces, $filaPro['caracteristicas']);
@@ -46,8 +46,8 @@
     					<ul class="breadcrumb">
     						<li><a href="index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
                             <li><a href="productos.php">Productos</a></li>
-                            <li><a href="categorias.php?cod_categoria=<?php echo $xCod_categoria; ?>"><?php echo $xCategoria; ?></a></li>
-                            <li><a href="sub-categorias.php?cod_sub_categoria=<?php echo $xCod_sub_categoria; ?>"><?php echo $xSubCategoria; ?></a></li>
+                            <li><a href="categorias.php?cod_categoria=<?php echo $xCod_categoria; ?>"><?php echo $xCategoriap; ?></a></li>
+                            <li><a href="subcategorias.php?cod_sub_categoria=<?php echo $xCod_sub_categoria; ?>"><?php echo $xSubCategoriap; ?></a></li>
     						<li class="active"><?php echo $xNom_producto; ?></li>
     					</ul>
             		</div>

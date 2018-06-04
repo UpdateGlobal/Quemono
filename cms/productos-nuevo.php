@@ -10,6 +10,7 @@ if (isset($_REQUEST['proceso'])){
 } else {
   $proceso = "";
 }
+
 if($proceso == "Filtrar"){
   $cod_principal    = $_POST['cod_principal'];
   $cod_categoria    = $_POST['cod_categoria'];
@@ -107,6 +108,11 @@ if($proceso == "Registrar"){
         document.fcms.proceso.value = "Filtrar";
         document.fcms.submit();
       }
+      function Filtrar_p(){
+        document.fcms.action = "productos-nuevo.php";
+        document.fcms.proceso.value = "Filtrar_p";
+        document.fcms.submit();
+      }
       function Imagen(codigo){
         url = "agregar-foto.php?id=" + codigo;
         AbrirCentro(url,'Agregar', 475, 180, 'no', 'no');
@@ -198,8 +204,8 @@ if($proceso == "Registrar"){
                           $resulCat = mysqli_query($enlaces, $consultaCat);
                           echo '<option value="0">Seleccione una Categor&iacute;a</option>';
                           while($fsb=mysqli_fetch_array($resulCat)){
-                            $xcodCat = $fsb['cod_sub_categoria'];
-                            $xnomCat = $fsb['subcategoria'];
+                            $xcodCat = $fsb['cod_categoria'];
+                            $xnomCat = $fsb['categoria'];
                             echo '<option value='.$xcodCat.'>'.$xnomCat.'</option>';
                           }
                         }else{
@@ -237,7 +243,7 @@ if($proceso == "Registrar"){
                         echo '<option value="0">Seleccione una Categor&iacute;a</option>';
                       }else{
                         if(($cod_categoria=="")or($cod_categoria=="0")){
-                          $consultaSubCat = "SELECT * FROM productos_sub_categoria WHERE estado='1' AND cod_categoria='$cod_categoria'";
+                          $consultaSubCat = "SELECT * FROM productos_sub_categorias WHERE estado='1' AND cod_categoria='$cod_categoria'";
                           $resulSubCat = mysqli_query($enlaces, $consultaSubCat);
                           while($fsb=mysqli_fetch_array($resulSubCat)){
                             $xcodSubCat = $fsb['cod_sub_categoria'];
@@ -245,7 +251,7 @@ if($proceso == "Registrar"){
                             echo '<option value='.$xcodSubCat.'>'.$xnomSubCat.'</option>';
                           }
                         }else{
-                          $consultaSubCat = "SELECT * FROM productos_sub_categoria WHERE estado='1' AND cod_categoria='$cod_categoria' AND cod_sub_categoria='$cod_sub_categoria'";
+                          $consultaSubCat = "SELECT * FROM productos_sub_categorias WHERE estado='1' AND cod_categoria='$cod_categoria' AND cod_sub_categoria='$cod_sub_categoria'";
                           $resulSubCat = mysqli_query($enlaces, $consultaSubCat);
                           while($fsb=mysqli_fetch_array($resulSubCat)){
                             $xcodSubCat = $fsb['cod_sub_categoria'];
@@ -253,7 +259,7 @@ if($proceso == "Registrar"){
                             echo '<option value='.$xcodSubCat.' selected="selected">'.$xnomSubCat.'</option>';
                           }
 
-                          $consultaSubCat = "SELECT * FROM productos_sub_categoria WHERE estado='1' AND cod_categoria='$cod_categoria' AND cod_sub_categoria!='$cod_sub_categoria'";
+                          $consultaSubCat = "SELECT * FROM productos_sub_categorias WHERE estado='1' AND cod_categoria='$cod_categoria' AND cod_sub_categoria!='$cod_sub_categoria'";
                           $resulSubCat = mysqli_query($enlaces, $consultaSubCat);
                           while($fsb=mysqli_fetch_array($resulSubCat)){
                             $xcodSubCat = $fsb['cod_sub_categoria'];
@@ -269,11 +275,11 @@ if($proceso == "Registrar"){
 
               <div class="form-group row">
                 <div class="col-4 col-lg-2">
-                  <label class="col-form-label" for="cod_carrusel">Marca:</label>
+                  <label class="col-form-label required" for="cod_carrusel">Marca:</label>
                 </div>
                 <div class="col-8 col-lg-10">
                   <select class="form-control" name="cod_carrusel" id="cod_carrusel">
-                    <option value="default">Sin Marca</option>
+                    <option value="default">Seleccione Marca</option>
                     <?php
                       if($cod_carrusel == ""){
                         $consultaCar = "SELECT * FROM carrusel WHERE estado='1'";
@@ -316,7 +322,7 @@ if($proceso == "Registrar"){
 
               <div class="form-group row">
                 <div class="col-4 col-lg-2">
-                  <label class="col-form-label" for="descripcion">Descripci&oacute;n:</label>
+                  <label class="col-form-label required" for="descripcion">Descripci&oacute;n:</label>
                 </div>
                 <div class="col-8 col-lg-10">
                   <textarea class="form-control" name="descripcion" id="descripcion" data-toolbar="full" data-provide="summernote" data-min-height="150"></textarea>
@@ -374,7 +380,7 @@ if($proceso == "Registrar"){
 
               <div class="form-group row">
                 <div class="col-4 col-lg-2">
-                  <label class="col-form-label">Precio Oferta:</label>
+                  <label class="col-form-label" for="precio_oferta">Precio Oferta:</label>
                 </div>
                 <div class="col-4 col-lg-3">
                   <input class="form-control" name="precio_oferta" type="text" id="precio_oferta" />
@@ -383,7 +389,7 @@ if($proceso == "Registrar"){
 
               <div class="form-group row">
                 <div class="col-4 col-lg-2">
-                  <label class="col-form-label">Precio Normal:</label>
+                  <label class="col-form-label" for="precio_normal">Precio Normal:</label>
                 </div>
                 <div class="col-4 col-lg-3">
                   <input class="form-control" name="precio_normal" type="text" id="precio_normal" />

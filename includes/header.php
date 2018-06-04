@@ -125,20 +125,37 @@
                                         <ul class="menu clearfix">
                                         <li><a class="<?php echo ($menu == "inicio" ? "active" : "")?>" href="index.php">Inicio</a></li>
                                         <li><a class="<?php echo ($menu == "nosotros" ? "active" : "")?>" href="#">Nosotros</a></li>
-                                        <li class="mega-menu-container"><a class="<?php echo ($menu == "productos" ? "active" : "")?>" href="productos.php">Productos</a>
+                                        <?php
+                                            $consultarPrincipal = "SELECT * FROM productos_principal WHERE menu=1 ORDER BY orden";
+                                            $resultadoPrincipal = mysqli_query($enlaces,$consultarPrincipal) or die('Consulta fallida: ' . mysqli_error($enlaces));
+                                            while($filaPri = mysqli_fetch_array($resultadoPrincipal)){
+                                                $xCodigoPri = $filaPri['cod_principal'];
+                                                $xPrincipal = $filaPri['principal'];
+                                                $xMenu      = $filaPri['menu'];
+                                                $xSlug      = $filaPri['slug'];
+                                        ?>
+                                        <li class="mega-menu-container"><a class="<?php echo ($menu == $xPrincipal ? "active" : "")?>" href="catalogo.php?cod_principal=<?php echo $xCodigoPri; ?>"><?php echo $xPrincipal; ?></a>
+                                            <?php 
+                                                $consultarCat = "SELECT * FROM productos_categorias WHERE cod_principal='$xCodigoPri'";
+                                                $resultadoCat = mysqli_query($enlaces, $consultarCat);
+                                                $Totalprincipal = mysqli_num_rows($resultadoCat);
+                                                if($Totalprincipal==0){
+
+                                                }else{
+                                            ?>
                                             <div class="mega-menu clearfix">
                                                 <?php
-                                                    $num = 0;
-                                                    $consultarCategoria = "SELECT * FROM productos_categorias WHERE estado='1' ORDER BY orden";
+                                                    $consultarCategoria = "SELECT * FROM productos_categorias WHERE cod_principal='$xCodigoPri' ORDER BY orden";
                                                     $resultadoCategoria = mysqli_query($enlaces,$consultarCategoria) or die('Consulta fallida: ' . mysqli_error($enlaces));
                                                     while($filaCat = mysqli_fetch_array($resultadoCategoria)){
                                                         $xCodigoCat = $filaCat['cod_categoria'];
+                                                        $xCodigoPri = $filaCat['cod_principal'];
                                                         $xCategoria = $filaCat['categoria'];
                                                         $xSlug      = $filaCat['slug'];
-                                                        $num++;
                                                 ?>
                                                 <div class="col-5">
                                                     <a href="categorias.php?cod_categoria=<?php echo $xCodigoCat; ?>" class="mega-menu-title"><?php echo $xCategoria; ?></a><!-- End .mega-menu-title -->
+
                                                     <ul class="mega-menu-list clearfix">
                                                         <?php
                                                             $numSubC = 0;
@@ -146,7 +163,7 @@
                                                             $resultadoSubCat = mysqli_query($enlaces, $consultarSubCat);
                                                             while($filaSC = mysqli_fetch_array($resultadoSubCat)){
                                                                 $xCodigoSubC  = $filaSC['cod_sub_categoria'];
-                                                                $xCategoria   = $filaSC['cod_categoria'];
+                                                                $xCodigoCat   = $filaSC['cod_categoria'];
                                                                 $xSCategoria  = $filaSC['subcategoria'];
                                                                 $xSlugc       = $filaSC['slug'];
                                                                 $numSubC++;
@@ -163,7 +180,14 @@
                                                     mysqli_free_result($resultadoCategoria);
                                                 ?>
                                             </div><!-- End .mega-menu -->
+                                            <?php 
+                                                }
+                                            ?>
                                         </li>
+                                        <?php
+                                            }
+                                            mysqli_free_result($resultadoPrincipal);
+                                        ?>
                                         <li><a class="<?php echo ($menu == "promociones" ? "active" : "")?>" href="#">Promociones</a>
                                             <ul>
                                                 <li><a href="product.html">Product</a></li>

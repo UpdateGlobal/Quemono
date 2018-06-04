@@ -8,10 +8,20 @@
 											</div><!-- End .accordion-header -->
 								
 											<div id="category-list-1" class="collapse in">
+
 												<div class="panel-body">
+													<?php
+							                            $consultarPri = "SELECT * FROM productos_principal WHERE estado='1' ORDER BY orden";
+							                            $resultadoPri = mysqli_query($enlaces, $consultarPri);
+							                            while($filaP = mysqli_fetch_array($resultadoPri)){
+							                                $xCod_principal = $filaP['cod_principal'];
+							                                $xSlugPri 		= $filaP['slug'];
+							                                $xPrincipal 	= $filaP['principal'];
+							                        ?>
+													<h5><?php echo $xPrincipal; ?></h5>
 													<ul class="category-filter-list jscrollpane">
 														<?php
-							                                $consultarCat = "SELECT * FROM productos_categorias WHERE estado='1' ORDER BY orden";
+							                                $consultarCat = "SELECT * FROM productos_categorias WHERE estado='1' AND cod_principal='$xCod_principal' ORDER BY orden";
 							                                $resultadoCat = mysqli_query($enlaces, $consultarCat);
 							                                while($filaC = mysqli_fetch_array($resultadoCat)){
 							                                    $xCod_categoria = $filaC['cod_categoria'];
@@ -41,6 +51,11 @@
 															mysqli_free_result($resultadoCat);
 														?>
 													</ul>
+													<div style="height: 30px;"></div>
+													<?php 
+														}
+														mysqli_free_result($resultadoPri); 
+													?>
 												</div><!-- End .panel-body -->
 											</div><!-- #collapse -->
 										</div><!-- End .panel -->
