@@ -2,14 +2,20 @@
 <?php include("modules/session-core.php"); ?>
 <?php 
     $cod_producto  = $_REQUEST['cod_producto'];
-    $consultaPro   = "SELECT cp.cod_categoria, cp.categoria, scp.cod_sub_categoria, scp.subcategoria, mp.cod_carrusel, mp.marca, p.* FROM productos_categorias as cp, productos_sub_categorias as scp, carrusel as mp, productos as p WHERE p.cod_categoria=cp.cod_categoria AND p.cod_sub_categoria=scp.cod_sub_categoria AND p.cod_carrusel=mp.cod_carrusel AND cod_producto=$cod_producto ORDER BY orden ASC";
+    $consultaPro   = "SELECT pp.cod_principal, pp.principal, cp.cod_categoria, cp.categoria, scp.cod_sub_categoria, scp.subcategoria, mp.cod_carrusel, mp.marca, p.* FROM productos_principal as pp, productos_categorias as cp, productos_sub_categorias as scp, carrusel as mp, productos as p WHERE p.cod_principal=pp.cod_principal AND p.cod_categoria=cp.cod_categoria AND p.cod_sub_categoria=scp.cod_sub_categoria AND p.cod_carrusel=mp.cod_carrusel AND cod_producto=$cod_producto ORDER BY orden ASC";
     $resultadoPro  = mysqli_query($enlaces, $consultaPro);
     $filaPro       = mysqli_fetch_array($resultadoPro);
         $xCod_producto      = $filaPro['cod_producto'];
+
+        $xCod_principal     = $filaPro['cod_principal'];
+        $xPrincipalp        = $filaPro['principal'];
+
         $xCod_categoria     = $filaPro['cod_categoria'];
         $xCategoriap        = $filaPro['categoria'];
+
         $xCod_sub_categoria = $filaPro['cod_sub_categoria'];
         $xSubCategoriap     = $filaPro['subcategoria'];
+        
         $xNom_producto      = mysqli_real_escape_string($enlaces, $filaPro['nom_producto']);
         $xDescripcion       = mysqli_real_escape_string($enlaces, $filaPro['descripcion']);
         $xCaracteristicas   = mysqli_real_escape_string($enlaces, $filaPro['caracteristicas']);
@@ -24,15 +30,34 @@
         $xFecha             = $filaPro['fecha_ing'];
         $xImagen            = $filaPro['imagen'];
         $xH_Imagen          = $filaPro['h_imagen'];
+        
         $xCod_carrusel      = $filaPro['cod_carrusel'];
-        $xMarca             = $filaPro['marca'];
+        $xMarcax            = $filaPro['marca'];
+
+        $xCodProx = $xCod_producto;
+        $xCodPrix = $xCod_principal;
+        $xCodCatx = $xCod_categoria;
+        $xCodSCatx = $xCod_sub_categoria;
 ?>
+
+
 <!DOCTYPE html>
 <!--[if IE 8]> <html class="ie8"> <![endif]-->
 <!--[if IE 9]> <html class="ie9"> <![endif]-->
 <!--[if !IE]><!--> <html> <!--<![endif]-->
     <head>
         <?php include("includes/head.php"); ?>
+        <script>
+            function Agregarp(){
+                document.fcarritop.action="verificar.php";
+                valor=document.fcarritop.cantidad.value;
+                if(isNaN(valor)||(valor=="")||(valor==0)){
+                    alert("Insertar una cantidad valida");
+                    return;
+                }
+                document.fcarritop.submit();
+            }
+        </script>
         <style id="custom-style">
             
         </style>
@@ -46,6 +71,7 @@
     					<ul class="breadcrumb">
     						<li><a href="index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
                             <li><a href="productos.php">Productos</a></li>
+                            <li><a href="catalogo.php?cod_principal=<?php echo $xCod_principal; ?>"><?php echo $xPrincipalp; ?></a></li>
                             <li><a href="categorias.php?cod_categoria=<?php echo $xCod_categoria; ?>"><?php echo $xCategoriap; ?></a></li>
                             <li><a href="subcategorias.php?cod_sub_categoria=<?php echo $xCod_sub_categoria; ?>"><?php echo $xSubCategoriap; ?></a></li>
     						<li class="active"><?php echo $xNom_producto; ?></li>
@@ -73,7 +99,7 @@
                                                 }
 
                                             ?>
-                					   </ul><!-- End product-carousel -->
+                					    </ul><!-- End product-carousel -->
                 					</div>
 
                 					<div id="product-image-container">
@@ -99,14 +125,22 @@
                     				<ul class="product-list">
                                         <li><span>Disponibilidad:</span> <?php echo $xStock; ?></li>
                                         <li><span>C&oacute;digo de Producto:</span> <?php echo $xCodigox; ?></li>
-                                        <li><span>Marca:</span> <?php echo $xMarca; ?></li>
+                                        <li><span>Marca:</span> <?php echo $xMarcax; ?></li>
                                     </ul>
                 				    <hr>
                                     <div class="product-add clearfix">
-        								<div class="custom-quantity-input">
-        									<input type="text" name="quantity" value="1">
-        								</div>
-        								<button class="btn btn-custom-2"><i class="fa fa-shopping-cart" aria-hidden="true"></i> A&ntilde;adir al Carrito</button>
+
+                                        <form name="fcarritop" id="fcarritop" action="" method="post">
+                                            <input type="hidden" name="cod_producto" id="cod_producto" value="<?php echo $xCodProx; ?>" />
+                                            <input type="hidden" name="cod_principal" id="cod_principal" value="<?php echo $xCodPrix; ?>" />
+                                            <input type="hidden" name="cod_categoria" id="cod_categoria" value="<?php echo $xCodCatx; ?>" />
+                                            <input type="hidden" name="cod_sub_categoria" id="cod_sub_categoria" value="<?php echo $xCodSCatx; ?>" />
+                                            <div class="custom-quantity-input">
+                                                <input type="text" name="cantidad" id="cantidad" maxlength="3" value="1">
+            								</div>
+                                            <button class="btn btn-custom-2" type="input" onclick="javascript:Agregarp();"><i class="fa fa-shopping-cart" aria-hidden="true"></i> A&Ntilde;ADIR AL CARRITO</button>
+                                        </form>
+
         							</div><!-- .product-add -->
                                     <div class="md-margin"></div><!-- Space -->
                 					<div class="product-extra clearfix">
@@ -130,7 +164,7 @@
             				<div class="lg-margin2x"></div><!-- End .space -->
             				
             				<div class="row">
-            					<div class="col-md-9 col-sm-12 col-xs-12">		
+            					<div class="col-md-12 col-sm-12 col-xs-12">		
             						<div class="tab-container left product-detail-tab clearfix">
             							<ul class="nav-tabs">
                                             <?php
@@ -199,127 +233,7 @@
             				        <div class="lg-margin visible-xs"></div>
             				    </div><!-- End .col-md-9 -->
             				    <div class="lg-margin2x visible-sm visible-xs"></div><!-- Space -->
-            					<div class="col-md-3 col-sm-12 col-xs-12 sidebar">
-                                    <div class="widget related">
-                                        <h3>Productos Relacionados</h3>
-            							
-                						<div class="related-slider flexslider sidebarslider">
-                							<ul class="related-list clearfix">
-                								<li>
-                									
-                                                    <div class="related-product clearfix">
-                										<figure>
-                											<img src="images/products/thumbnails/item1.jpg" alt="item1">
-                										</figure>
-                										<h5><a href="#">Jacket Suiting Blazer</a></h5>
-                										<div class="ratings-container">
-        													<div class="ratings">
-        														<div class="ratings-result" data-result="84"></div>
-        													</div><!-- End .ratings -->
-        												</div><!-- End .rating-container -->
-                										<div class="related-price">$40</div><!-- End .related-price -->
-                									</div><!-- End .related-product -->
-                										
-                									<div class="related-product clearfix">
-                										<figure>
-                											<img src="images/products/thumbnails/item2.jpg" alt="item2">
-                										</figure>
-                										<h5><a href="#">Gap Graphic Cuffed</a></h5>
-                										<div class="ratings-container">
-        													<div class="ratings">
-        														<div class="ratings-result" data-result="84"></div>
-        													</div><!-- End .ratings -->
-        												</div><!-- End .rating-container -->
-                										<div class="related-price">18$</div><!-- End .related-price -->
-                									</div><!-- End .related-product -->
-                										
-                									<div class="related-product clearfix">
-                										<figure>
-                											<img src="images/products/thumbnails/item3.jpg" alt="item3">
-                										</figure>
-                										<h5><a href="#">Women's Lauren Dress</a></h5>
-                										<div class="ratings-container">
-        													<div class="ratings">
-        														<div class="ratings-result" data-result="84"></div>
-        													</div><!-- End .ratings -->
-        												</div><!-- End .rating-container -->
-                    									<div class="related-price">$30</div><!-- End .related-price -->
-                    								</div><!-- End .related-product -->
-                    							
-                                                </li>
-                								<li>
-                									<div class="related-product clearfix">
-                										<figure>
-                											<img src="images/products/thumbnails/item4.jpg" alt="item4">
-                										</figure>
-                										<h5><a href="#">Swiss Mobile Phone</a></h5>
-                										<div class="ratings-container">
-        													<div class="ratings">
-        														<div class="ratings-result" data-result="64"></div>
-        													</div><!-- End .ratings -->
-        												</div><!-- End .rating-container -->
-                										<div class="related-price">$39</div><!-- End .related-price -->
-                									</div><!-- End .related-product -->
-                										
-                									<div class="related-product clearfix">
-                										<figure>
-                											<img src="images/products/thumbnails/item5.jpg" alt="item5">
-                										</figure>
-                										<h5><a href="#">Zwinzed HeadPhones</a></h5>
-                										<div class="ratings-container">
-        													<div class="ratings">
-        														<div class="ratings-result" data-result="94"></div>
-        													</div><!-- End .ratings -->
-        												</div><!-- End .rating-container -->
-                										<div class="related-price">$18.99</div><!-- End .related-price -->
-                									</div><!-- End .related-product -->
-                										
-                									<div class="related-product clearfix">
-                										<figure>
-                											<img src="images/products/thumbnails/item6.jpg" alt="item6">
-                										</figure>
-                										<h5><a href="#">Kless Man Suit</a></h5>
-                										<div class="ratings-container">
-        													<div class="ratings">
-        														<div class="ratings-result" data-result="74"></div>
-        													</div><!-- End .ratings -->
-        												</div><!-- End .rating-container -->
-                										<div class="related-price">$99</div><!-- End .related-price -->
-                									</div><!-- End .related-product -->
-                								</li>
-                								<li>	
-                									<div class="related-product clearfix">
-                										<figure>
-                											<img src="images/products/thumbnails/item2.jpg" alt="item2">
-                										</figure>
-                										<h5><a href="#">Gap Graphic Cuffed</a></h5>
-                										<div class="ratings-container">
-        													<div class="ratings">
-        														<div class="ratings-result" data-result="84"></div>
-        													</div><!-- End .ratings -->
-        												</div><!-- End .rating-container -->
-                										<div class="related-price">$17</div><!-- End .related-price -->
-                									</div><!-- End .related-product -->
-                										
-                									<div class="related-product clearfix">
-                										<figure>
-                											<img src="images/products/thumbnails/item4.jpg" alt="item4">
-                										</figure>
-                										<h5><a href="#">Women's Lauren Dress</a></h5>
-                										<div class="ratings-container">
-        													<div class="ratings">
-        														<div class="ratings-result" data-result="84"></div>
-        													</div><!-- End .ratings -->
-        												</div><!-- End .rating-container -->
-                										<div class="related-price">$30</div><!-- End .related-price -->
-                									</div><!-- End .related-product -->
-
-                								</li>
-                							</ul>
-                						</div><!-- End .related-slider -->
-                					</div><!-- End .widget -->
-                						
-            					</div><!-- End .col-md-4 -->
+            					
             				</div><!-- End .row -->
                             <div class="lg-margin2x"></div><!-- Space -->
             				<div class="purchased-items-container carousel-wrapper">
@@ -383,7 +297,7 @@
                                         <div class="item-meta-container">
                                             <h3 class="item-name"><a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>"><?php echo $xNom_producto; ?></a></h3>
                                             <div class="item-action">
-                                                <a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>" class="item-add-btn">
+                                                <a  href="producto.php?cod_producto=<?php echo $xCod_producto; ?>" class="item-add-btn">
                                                     <span class="icon-cart-text"><i class="fa fa-shopping-cart" aria-hidden="true"></i> A&ntilde;adir</span>
                                                 </a>
                                             </div><!-- End .item-action -->

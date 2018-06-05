@@ -107,7 +107,7 @@
 
 #header .dropdown-cart .dropdown-cart-menu {
     min-width: 300px;
-    margin-top: 8px;
+    margin-top: 0px;
     border-top: 3px solid #9E5D05;
     background: #fff;
     padding: 20px;
