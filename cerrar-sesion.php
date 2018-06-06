@@ -3,6 +3,17 @@
 session_start();
 session_destroy();
 
+if(isset($_SESSION['IdOrden'])){
+  $varOrden   = $_SESSION['IdOrden'];
+}else{
+  $varOrden   = 0;
+}
+if(isset($_SESSION['IdCliente'])){
+  $varCliente = $_SESSION['IdCliente'];
+}else{
+  $varCliente = "";
+}
+
 //Borrando registros de la tabla carrito
 $xCliente = $_SESSION['IdCliente'];
 $xOrden = $_SESSION['IdOrden'];

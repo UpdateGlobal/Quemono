@@ -191,12 +191,12 @@
                                             <header class="content-title">
                                                 <h2 class="title"><?php echo $xTitulo; ?></h2>
                                             </header>
-                                            <?php
+                                            <!-- < ?php
                                                 $xContenido_r = strip_tags($xContenido);
                                                 $strCut = substr($xContenido_r,0,840);
                                                 $xContenido_r = substr($strCut,0,strrpos($strCut, ' ')).'...';
-                                            ?>
-                                            <p class="text-justify"><?php echo $xContenido_r; ?> <a href="nosotros.php"><strong>[+] Ver M&aacute;s</strong></a></p>
+                                            ?> -->
+                                            <?php echo $xContenido; ?>
                                         </div><!-- End .col-md-6 -->
     									<div class="col-md-6 col-sm-6 col-xs-12">
                                             <div class="sm-margin visible-xs"></div><!-- space -->

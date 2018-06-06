@@ -14,6 +14,17 @@ $filCat = mysqli_fetch_array($resCategoria);
 <!--[if !IE]><!--> <html> <!--<![endif]-->
     <head>
         <?php include("includes/head.php"); ?>
+        <script>
+            function ValidarBus(){
+                if(document.bus.buscador.value==""){
+                    alert("Debes ingresar datos para la búsqueda");
+                    document.bus.buscador.focus();
+                    return;
+                }
+                document.bus.action="buscar.php";
+                document.bus.submit();
+            }
+        </script>
         <style id="custom-style">
         </style>
     </head>
@@ -25,7 +36,7 @@ $filCat = mysqli_fetch_array($resCategoria);
                     <div class="container">
                         <ul class="breadcrumb">
                             <li><a href="index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
-                            <li><a href="productos.php">Productos</a></li>
+                            <li><a href="productos-list.php">Productos</a></li>
                             <li class="active"><?php echo $xCategoriax; ?></li>
                         </ul>
                     </div>
@@ -48,6 +59,18 @@ $filCat = mysqli_fetch_array($resCategoria);
                                             <div class="category-item-container category-list-container">
                                                 <h3>No hay productos en esta categor&iacute;a<br>
                                                 Puede usar el buscador para ubicar el producto que desee.</h3>
+                                                <div>
+                                                    <form name="bus" id="form">
+                                                        <div class="row">
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                <input class="form-control" type="text" name="buscador" onkeypress="if(event.keyCode==13){ValidarBus();}" id="busc" placeholder="Buscar Productos">
+                                                            </div>
+                                                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12">
+                                                                <input class="btn btn-success" name="btnbus" type="button" id="btnbus" value="BUSCAR" onclick="javascript:ValidarBus();">
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                     <?php 
                                         }else{

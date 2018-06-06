@@ -14,6 +14,17 @@ $filPri = mysqli_fetch_array($resPrincipal);
 <!--[if !IE]><!--> <html> <!--<![endif]-->
     <head>
         <?php include("includes/head.php"); ?>
+        <script>
+            function ValidarBus(){
+                if(document.bus.buscador.value==""){
+                    alert("Debes ingresar datos para la búsqueda");
+                    document.bus.buscador.focus();
+                    return;
+                }
+                document.bus.action="buscar.php";
+                document.bus.submit();
+            }
+        </script>
         <style id="custom-style">
         </style>
     </head>

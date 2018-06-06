@@ -16,7 +16,7 @@ if(isset($_SESSION['IdCliente'])){
 }
 
 $sql = "DELETE FROM carrito WHERE cod_orden='$varOrden' AND cod_cliente='$varCliente'";
-$result = mysqli_query(mysqli_connect("localhost","root","", "update_naricitas"),$sql);
+$result = mysqli_query(mysqli_connect("localhost","root","", "update_quemono"),$sql);
 
 header("Location:index.php");
 ?>

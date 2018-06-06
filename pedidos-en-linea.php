@@ -1,22 +1,18 @@
-<?php include("cms/module/conexion.php"); ?>
-<?php include("modules/verificar-ingreso-cliente.php"); ?>
+<?php include "cms/modulos/conexion.php"; ?>
+<?php include "modulos/verificar-ingreso-cliente.php"; ?>
 <?php
-    if(isset($_SESSION['IdOrden'])){
-      $varOrden   = $_SESSION['IdOrden'];
-    }else{
-      $varOrden   = 0;
-    }
-    if(isset($_SESSION['IdCliente'])){
-      $varCliente = $_SESSION['IdCliente'];
-    }else{
-      $varCliente = "";
-    }
-    $totalC = 0;
+$varOrden   = $_SESSION['IdOrden'];
+$varCliente = $_SESSION['IdCliente'];
+$total = "";
+$carrito = "SELECT * FROM productos as p, carrito as c WHERE c.cod_orden='$varOrden' AND c.cod_cliente='$varCliente' AND p.cod_producto=c.cod_producto";
+$resultado = mysqli_query($enlaces, $carrito);
+$fila = mysqli_fetch_assoc($resultado);
+$totalCarrito=mysqli_num_rows($resultado);
 
-    $carritoC = "SELECT * FROM productos as p, carrito as c WHERE c.cod_orden='$varOrden' AND c.cod_cliente='$varCliente' AND p.cod_producto=c.cod_producto";
-    $resultadoC = mysqli_query($enlaces,$carritoC);
-    $filaC = mysqli_fetch_assoc($resultadoC);
-    $totalCarritoC=mysqli_num_rows($resultadoC);
+/*-- Consulta para mostra datos del cliente ---*/
+$clientes = "SELECT * FROM clientes WHERE cod_cliente='$xCodCliente'";
+$resultCli = mysqli_query($enlaces, $clientes);
+$filaCli = mysqli_fetch_array($resultCli);
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html class="ie8"> <![endif]-->
@@ -48,7 +44,8 @@
             		<div class="container">
     					<ul class="breadcrumb">
                             <li><a href="index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
-                            <li class="active">Carrito</li>
+                            <li><a href="carrito-compras.php">Carrito de Compras</a></li>
+                            <li class="active">Pedidos en L&iacute;nea</li>
     					</ul>
             		</div>
             	</div>

@@ -1,13 +1,5 @@
 <?php include("cms/module/conexion.php"); ?>
 <?php include("modules/session-core.php"); ?>
-<?php $cod_carrusel = $_REQUEST['cod_carrusel']; ?>
-<?php 
-$conCarrusel = "SELECT m.cod_carrusel, m.marca, p.* FROM productos as p, carrusel as m WHERE p.cod_carrusel='$cod_carrusel' AND m.cod_carrusel=m.cod_carrusel ORDER BY orden";
-$resCarrusel = mysqli_query($enlaces,$conCarrusel) or die('Consulta fallida: ' . mysqli_error($enlaces));
-$filCar = mysqli_fetch_array($resCarrusel);
-    $xCodCarx  = $filCar['cod_carrusel'];
-    $xMarcax   = $filCar['marca'];
-?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html class="ie8"> <![endif]-->
 <!--[if IE 9]> <html class="ie9"> <![endif]-->
@@ -30,14 +22,14 @@ $filCar = mysqli_fetch_array($resCarrusel);
     </head>
     <body>
         <div id="wrapper">
-            <?php $menu="productos"; include("includes/header.php"); ?>
+            <?php $menu="promociones"; include("includes/header.php"); ?>
             <section id="content">
             	<div id="breadcrumb-container">
                     <div class="container">
                         <ul class="breadcrumb">
                             <li><a href="index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
                             <li><a href="productos-list.php">Productos</a></li>
-                            <li class="active"><?php echo $xMarcax; ?></li>
+                            <li class="active">Promociones</li>
                         </ul>
                     </div>
                 </div>
@@ -46,9 +38,9 @@ $filCar = mysqli_fetch_array($resCarrusel);
             			<div class="col-md-12">
             				<div class="row">
             					<div class="col-md-9 col-sm-8 col-xs-12 main-content">
-                                    <h1 class="title"><?php echo $xMarcax; ?></h1>
+                                    <h1 class="title">Promociones</h1>
                                     <?php
-                                        $consultarPro = "SELECT * FROM productos WHERE estado='1' AND cod_carrusel='$cod_carrusel'";
+                                        $consultarPro = "SELECT * FROM productos WHERE estado='1'";
                                         $resultadoPro = mysqli_query($enlaces, $consultarPro);
                                         $total_registros = mysqli_num_rows($resultadoPro);
                                         if($total_registros==0){ 
@@ -57,7 +49,7 @@ $filCar = mysqli_fetch_array($resCarrusel);
                                     <div class="category-item-container">
                                         <div class="row">
                                             <div class="category-item-container category-list-container">
-                                                <h3>No hay productos en esta marca<br>
+                                                <h3>No hay productos en esta categor&iacute;a<br>
                                                 Puede usar el buscador para ubicar el producto que desee.</h3>
                                                 <div>
                                                     <form name="bus" id="form">
@@ -91,8 +83,8 @@ $filCar = mysqli_fetch_array($resCarrusel);
                                                 <span class="separator"><strong>Visualizaci&oacute;n:</strong></span>
                                             </div>
     										<div class="view-box">
-    											<a href="marcas.php?cod_carrusel=<?php echo $xCodCarx; ?>" class="icon-button icon-grid"><i class="fa fa-th-large"></i></a>
-    											<a href="marcas-list.php?cod_carrusel=<?php echo $xCodCarx; ?>" class="active icon-button icon-list"><i class="fa fa-th-list"></i></a>
+    											<a href="promociones.php" class="icon-button icon-grid"><i class="fa fa-th-large"></i></a>
+    											<a href="promociones-list.php" class="active icon-button icon-list"><i class="fa fa-th-list"></i></a>
     										</div><!-- End .view-box -->	
     									</div><!-- End .toolbox-filter -->
     									<div class="toolbox-pagination clearfix">
@@ -102,20 +94,20 @@ $filCar = mysqli_fetch_array($resCarrusel);
                                                     echo "
                                                         <ul class='pagination'>";
                                                     if($pagina>1){
-                                                        echo "<li><a href='?cod_carrusel=".$xCodCarx."&p=".($pagina-1)."'><i class='fa fa-angle-left'></i></a></li>";
+                                                        echo "<li><a href='?p=".($pagina-1)."'><i class='fa fa-angle-left'></i></a></li>";
                                                     }
                                                     for($i=$pagina; $i<=$total_paginas && $i<=($pagina+$paginas_mostrar); $i++){
                                                         if($i==$pagina){
                                                             echo "<li class='active'><a>$i</a></li>";
                                                         }else{
-                                                            echo "<li><a href='?cod_carrusel=".$xCodCarx."&p=$i'>$i</a></li>";
+                                                            echo "<li><a href='?p=$i'>$i</a></li>";
                                                         }
                                                     }
                                                     if(($pagina+$paginas_mostrar)<$total_paginas){
                                                         echo "<li><a>...</a></li>";
                                                     }
                                                     if($pagina<$total_paginas){
-                                                        echo "  <li><a href='?cod_carrusel=".$xCodCarx."&p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
+                                                        echo "  <li><a href='?p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
                                                     }
                                                     echo "</ul>";
                                                 }
@@ -215,20 +207,20 @@ $filCar = mysqli_fetch_array($resCarrusel);
                                                     echo "
                                                         <ul class='pagination'>";
                                                     if($pagina>1){
-                                                        echo "<li><a href='?cod_carrusel=".$xCodCarx."&p=".($pagina-1)."'><i class='fa fa-angle-left'></i></a></li>";
+                                                        echo "<li><a href='?p=".($pagina-1)."'><i class='fa fa-angle-left'></i></a></li>";
                                                     }
                                                     for($i=$pagina; $i<=$total_paginas && $i<=($pagina+$paginas_mostrar); $i++){
                                                         if($i==$pagina){
                                                             echo "<li class='active'><a>$i</a></li>";
                                                         }else{
-                                                            echo "<li><a href='?cod_carrusel=".$xCodCarx."&p=$i'>$i</a></li>";
+                                                            echo "<li><a href='?p=$i'>$i</a></li>";
                                                         }
                                                     }
                                                     if(($pagina+$paginas_mostrar)<$total_paginas){
                                                         echo "<li><a>...</a></li>";
                                                     }
                                                     if($pagina<$total_paginas){
-                                                        echo "  <li><a href='?cod_carrusel=".$xCodCarx."&p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
+                                                        echo "  <li><a href='?p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
                                                     }
                                                     echo "</ul>";
                                                 }
