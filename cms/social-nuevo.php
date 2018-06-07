@@ -10,9 +10,33 @@ if (isset($_REQUEST['proceso'])) {
 if($proceso == "Registrar"){
   $type       = $_POST['type'];
   $links      = mysqli_real_escape_string($enlaces, $_POST['links']);
+  if($type=="fa-facebook"){
+    $valor = "icon-facebook";
+  }
+  if($type=="fa-twitter"){
+    $valor = "icon-twitter";
+  }
+  if($type=="fa-rss"){
+    $valor = "icon-rss";
+  }
+  if($type=="fa-delicious"){
+    $valor = "icon-delicious";
+  }
+  if($type=="fa-linkedin"){
+    $valor = "icon-linkedin";
+  }
+  if($type=="fa-flickr"){
+    $valor = "icon-flickr";
+  }
+  if($type=="fa-skype"){
+    $valor = "icon-skype";
+  }
+  if($type=="fa-youtube"){
+    $valor = "icon-email";
+  }
   if(isset($_POST['orden'])){$orden = $_POST['orden'];}else{$orden = 0;}
   if(isset($_POST['estado'])){$estado = $_POST['estado'];}else{$estado = 0;}
-  $insertarBanner = "INSERT INTO social (type, links, orden, estado)VALUE('$type', '$links', '$orden', '$estado')";
+  $insertarBanner = "INSERT INTO social (type, links, valor, orden, estado)VALUE('$type', '$links', '$valor', '$orden', '$estado')";
   $resultadoInsertar = mysqli_query($enlaces,$insertarBanner);
   $mensaje = "<div class='alert alert-success' role='alert'>
           <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
@@ -74,21 +98,15 @@ if($proceso == "Registrar"){
                   <label class="col-form-label require" for="social">Bot&oacute;n de Red Social:</label>
                 </div>
                 <div class="col-8 col-lg-10">
-                  <select name="type" id="type" class="form-control" id="social">
+                  <select name="type" id="type" class="form-control">
                     <option value="fa-facebook">Facebook</option>
                     <option value="fa-twitter">Twitter</option>
-                    <option value="fa-google-plus">Google+</option>
+                    <option value="fa-rss">RSS</option>
+                    <option value="fa-delicious">Delicious</option>
                     <option value="fa-linkedin">Linkedin</option>
-                    <option value="fa-behance">Behance</option>
-                    <option value="fa-blogger">Blogger</option>
-                    <option value="fa-youtube">Youtube</option>
-                    <option value="fa-vimeo">Vimeo</option>
-                    <option value="fa-wordpress">Wordpress</option>
-                    <option value="fa-tumblr">Tumblr</option>
-                    <option value="fa-pinterest">Pinterest</option>
-                    <option value="fa-instagram">Instagram</option>
                     <option value="fa-flickr">Flickr</option>
-                    <option value="fa-github">Github</option>
+                    <option value="fa-skype">Skype</option>
+                    <option value="fa-youtube">Youtube</option>
                   </select>
                 </div>
               </div>

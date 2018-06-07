@@ -39,8 +39,6 @@
         $xCodCatx = $xCod_categoria;
         $xCodSCatx = $xCod_sub_categoria;
 ?>
-
-
 <!DOCTYPE html>
 <!--[if IE 8]> <html class="ie8"> <![endif]-->
 <!--[if IE 9]> <html class="ie9"> <![endif]-->
@@ -64,7 +62,7 @@
     </head>
     <body>
         <div id="wrapper">
-            <?php include("includes/header.php"); ?>
+            <?php $menu="productos"; include("includes/header.php"); ?>
             <section id="content">
             	<div id="breadcrumb-container">
             		<div class="container">

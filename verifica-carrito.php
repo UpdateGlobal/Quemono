@@ -45,7 +45,7 @@ switch ($varAccion) {
 /*----------------------------------------------------------------*/
 header("Location: carrito.php");
 /*----------------------------------------------------------------*/
-function Verifica_Pedido($varCliente,$varOrden, $enlace) {
+function Verifica_Pedido($varCliente,$varOrden,$enlace) {
 	if ($varCliente != "x") {
 		$varOrden = ExistePedidoUsuario($varCliente, $enlace);
 	}
@@ -62,7 +62,7 @@ function Verifica_Pedido($varCliente,$varOrden, $enlace) {
 	return $IdOrden;
 }
 /*----------------------------------------------------------------*/
-function ExistePedidoUsuario($varCliente, $enlace) {
+function ExistePedidoUsuario($varCliente,$enlace) {
 	$sqlPedido = "select cod_orden from carrito where cod_cliente='$varCliente'";
 	/*$rsPedido = mysqli_query(mysqli_connect("localhost","quemono_update","-}CWe@[Mk.;V", "quemono_update"), $sqlPedido);*/
 	$rsPedido = mysqli_query(mysqli_connect("localhost","root","", "update_quemono"), $sqlPedido);
@@ -119,7 +119,7 @@ function ActualizarItem($varOrden,$IdCliente,$IdProducto,$IdCantidad) {
 	$result = mysqli_query(mysqli_connect("localhost","root","", "update_quemono"), $sql);
 }
 /*----------------------------------------------------------------*/
-function ActualizarProductos($varOrden,$varCliente, $enlace) {
+function ActualizarProductos($varOrden,$varCliente,$enlace) {
 	$sqlProductos = "SELECT cod_producto FROM carrito WHERE cod_orden='$varOrden' AND cod_cliente='$varCliente'";
 	/*$rsProductos = mysqli_query(mysqli_connect("localhost","quemono_update","-}CWe@[Mk.;V", "quemono_update"), $sqlProductos);*/
 	$rsProductos = mysqli_query(mysqli_connect("localhost","root","", "update_quemono"), $sqlProductos);
@@ -136,7 +136,7 @@ function ActualizarProductos($varOrden,$varCliente, $enlace) {
 	}
 }
 /*----------------------------------------------------------------*/
-function EliminarProductos($varOrden,$varCliente, $enlace) {
+function EliminarProductos($varOrden,$varCliente,$enlace) {
 	$sqlProductos = "SELECT cod_producto FROM carrito WHERE cod_orden='$varOrden' AND cod_cliente='$varCliente'";
 	/*$rsProductos = mysqli_query(mysqli_connect("localhost","quemono_update","-}CWe@[Mk.;V", "quemono_update"), $sqlProductos);*/
 	$rsProductos = mysqli_query(mysqli_connect("localhost","root","", "update_quemono"), $sqlProductos);

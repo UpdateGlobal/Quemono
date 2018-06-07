@@ -36,6 +36,7 @@ $filPri = mysqli_fetch_array($resPrincipal);
                     <div class="container">
                         <ul class="breadcrumb">
                             <li><a href="index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                            <li><a href="productos-list.php">Productos</a></li>
                             <li class="active"><?php echo $xPrincipalx; ?></li>
                         </ul>
                     </div>

@@ -7,7 +7,6 @@
                             <h3>MAPA DEL SITIO</h3>
                             <ul class="links">
                                 <li><a href="index.php">Inicio</a></li>
-                                <li><a href="nosotros.php">Nosotros</a></li>
                                 <li><a href="productos.php">Productos</a></li>
                                 <li><a href="promociones.php">Promociones</a></li>
                                 <li><a href="contacto.php">Contacto</a></li>
@@ -18,17 +17,17 @@
                             <h3>CATEGOR&Iacute;AS</h3>
                             <ul class="links">
                                 <?php
-                                    $consultarCategoria = "SELECT * FROM productos_categorias WHERE estado='1' ORDER BY orden LIMIT 5";
-                                    $resultadoCategoria = mysqli_query($enlaces,$consultarCategoria) or die('Consulta fallida: ' . mysqli_error($enlaces));
-                                    while($filaCat = mysqli_fetch_array($resultadoCategoria)){
-                                        $xCod_categoria = $filaCat['cod_categoria'];
-                                        $xCategoria     = $filaCat['categoria'];
-                                        $xSlug          = $filaCat['slug'];
+                                    $consultarPrincipal = "SELECT * FROM productos_principal WHERE estado='1' ORDER BY orden LIMIT 4";
+                                    $resultadoPrincipal = mysqli_query($enlaces,$consultarPrincipal) or die('Consulta fallida: ' . mysqli_error($enlaces));
+                                    while($filaPri = mysqli_fetch_array($resultadoPrincipal)){
+                                        $xCod_principal = $filaPri['cod_principal'];
+                                        $xPrincipal     = $filaPri['principal'];
+                                        $xSlug          = $filaPri['slug'];
                                 ?>
-                                <li><a href="categorias.php?cod_categoria=<?php echo $xCod_categoria; ?>"><?php echo $xCategoria; ?></a></li>
+                                <li><a href="catalogo.php?cod_principal=<?php echo $xCod_principal; ?>"><?php echo $xPrincipal; ?></a></li>
                                 <?php
                                     }
-                                    mysqli_free_result($resultadoCategoria);
+                                    mysqli_free_result($resultadoPrincipal);
                                 ?>
                             </ul>
                         </div><!-- End .widget -->
@@ -81,14 +80,20 @@
                     <div class="row">
                         <div class="col-md-7 col-sm-7 col-xs-12 footer-social-links-container">
                             <ul class="social-links clearfix">
-                                <li><a href="#" class="social-icon icon-facebook"></a></li>
-                                <li><a href="#" class="social-icon icon-twitter"></a></li>
-                                <li><a href="#" class="social-icon icon-rss"></a></li>
-                                <li><a href="#" class="social-icon icon-delicious"></a></li>
-                                <li><a href="#" class="social-icon icon-linkedin"></a></li>
-                                <li><a href="#" class="social-icon icon-flickr"></a></li>
-                                <li><a href="#" class="social-icon icon-skype"></a></li>
-                                <li><a href="#" class="social-icon icon-email"></a></li>
+                                <?php
+                                    $consultarSol = 'SELECT * FROM social WHERE estado=1 ORDER BY orden';
+                                    $resultadoSol = mysqli_query($enlaces,$consultarSol) or die('Consulta fallida: ' . mysqli_error($enlaces));
+                                    while($filaSol = mysqli_fetch_array($resultadoSol)){
+                                        $xType      = $filaSol['type'];
+                                        $xLinks     = $filaSol['links'];
+                                        $xValor     = $filaSol['valor'];
+                                ?>
+                                <li><a href="<?php echo $xLinks; ?>" class="social-icon <?php echo $xValor; ?>"></a></li>
+                                <?php
+                                    }
+                                    mysqli_free_result($resultadoSol);
+                                ?>
+                                
                             </ul>
                         </div><!-- End .col-md-7 -->
                         <div class="col-md-5 col-sm-5 col-xs-12 footer-text-container">

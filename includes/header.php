@@ -153,7 +153,7 @@
                                                 <div class="form-group">
                                                     <input type="text" name="buscador" class="form-control" placeholder="Buscar producto..." onkeypress="if(event.keyCode==13){ValidarBusca();}" >
                                                 </div><!-- End .form-inline -->
-                                                <input class="btn btn-custom" value="" name="btnbus" type="submit" id="quick-search" />
+                                                <input class="btn btn-custom" value="" name="" type="submit" id="quick-search" />
                                             </form>
 
                                         </div><!-- End #quick-access -->

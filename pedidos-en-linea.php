@@ -1,13 +1,13 @@
-<?php include "cms/modulos/conexion.php"; ?>
-<?php include "modulos/verificar-ingreso-cliente.php"; ?>
+<?php include "cms/module/conexion.php"; ?>
+<?php include "modules/verificar-ingreso-cliente.php"; ?>
 <?php
 $varOrden   = $_SESSION['IdOrden'];
 $varCliente = $_SESSION['IdCliente'];
-$total = "";
-$carrito = "SELECT * FROM productos as p, carrito as c WHERE c.cod_orden='$varOrden' AND c.cod_cliente='$varCliente' AND p.cod_producto=c.cod_producto";
-$resultado = mysqli_query($enlaces, $carrito);
-$fila = mysqli_fetch_assoc($resultado);
-$totalCarrito=mysqli_num_rows($resultado);
+$totalC = 0;
+$carritoC = "SELECT * FROM productos as p, carrito as c WHERE c.cod_orden='$varOrden' AND c.cod_cliente='$varCliente' AND p.cod_producto=c.cod_producto";
+$resultadoC = mysqli_query($enlaces, $carritoC);
+$filaC = mysqli_fetch_assoc($resultadoC);
+$totalCarritoC=mysqli_num_rows($resultadoC);
 
 /*-- Consulta para mostra datos del cliente ---*/
 $clientes = "SELECT * FROM clientes WHERE cod_cliente='$xCodCliente'";
@@ -21,14 +21,9 @@ $filaCli = mysqli_fetch_array($resultCli);
     <head>
         <?php include("includes/head.php"); ?>
         <script>
-            function Procesar(strAccion){
-                if(strAccion=="Ordenar"){
-                    document.ftienda.action="pedidos-en-linea.php";
-                }else{
-                    document.ftienda.action="verifica-carrito.php";
-                }
-                document.ftienda.method="POST";
-                document.ftienda.proceso.value=strAccion;
+            function Enviar(){
+                document.ftienda.action="envia-pedido.php";
+                document.ftienda.metod="POST";
                 document.ftienda.submit();
             }
         </script>
@@ -57,7 +52,7 @@ $filaCli = mysqli_fetch_array($resultCli);
                                     if($totalCarritoC>0){
                                 ?>
         						<header class="content-title">
-        							<h1 class="title">Carrito</h1>
+        							<h1 class="title">Pedidos en L&iacute;nea</h1>
         							<p class="title-desc">Quisque sed cursus ipsum. Proin dictum at nisi quis condimentum.</p>
         						</header>
                 				<div class="xs-margin"></div><!-- space -->
@@ -67,33 +62,24 @@ $filaCli = mysqli_fetch_array($resultCli);
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <p><strong>Usuario : </strong><?php echo utf8_decode($xAlias); ?></p>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <p><strong>Email : </strong><?php echo $xEmail; ?></p>
-                                    </div>
-                                </div>
-                				<div class="row">
                 					<div class="col-md-12 table-responsive">
                                         <table class="table cart-table">
                     						<thead>
                     							<tr>
-            										<th width="5%" scope="col">&nbsp;</th>
                                                     <th width="20%" scope="col">Producto</th>
                                                     <th width="15%" scope="col">C&oacute;digo</th>
                                                     <th width="20%" scope="col">Imagen</th>
-                                                    <th width="5%" scope="col">Cantidad</th>
+                                                    <th width="10%" scope="col">Cantidad</th>
                                                     <th width="15%" scope="col">Precio</th>
                                                     <th width="20%" scope="col">Total</th>
                     							</tr>
                     						</thead>
                                             <?php
                                                 do{
-                                                    $xCodproC = $filaC['cod_producto'];
-                                                    $xNombreC = $filaC['nom_producto'];
-                                                    $xCodigoC = $filaC['codigo'];
-                                                    $xImagenC = $filaC['imagen'];
+                                                    $xCodproC   = $filaC['cod_producto'];
+                                                    $xNombreC   = $filaC['nom_producto'];
+                                                    $xCodigoC   = $filaC['codigo'];
+                                                    $xImagenC   = $filaC['imagen'];
                                                     $xCantidadC = $filaC['cantidad'];
                                                     if($filaC['precio_oferta']!= 0){
                                                         $pmostrarC = $filaC['precio_oferta'];
@@ -105,8 +91,7 @@ $filaCli = mysqli_fetch_array($resultCli);
                                             ?>
             								<tbody>
             									<tr>
-                                                    <td><input type="checkbox" name="chk<?php echo $xCodproC; ?>"></td>
-            										<td class="item-name-col">
+                                                    <td class="item-name-col">
             											<header class="item-name"><?php echo $xNombreC; ?></header>
                                                     </td>
                                                     <td><?php echo $xCodigoC; ?></td>
@@ -118,9 +103,7 @@ $filaCli = mysqli_fetch_array($resultCli);
                                                         </p>
             										</td>
                                                     <td>
-                                                        <div class="custom-quantity-input">
-                                                            <input type="text" class="form-control" id="txt<?php echo $xCodproC; ?>" name="txt<?php echo $xCodproC; ?>" value="<?php echo $xCantidadC; ?>" size="2">
-                                                        </div>
+                                                        <?php echo $xCantidadC; ?>
                                                     </td>
                                                     <td class="item-price-col">
                                                         <span class="item-price-special"><?php echo number_format($pmostrarC,2); ?></span>
@@ -144,11 +127,7 @@ $filaCli = mysqli_fetch_array($resultCli);
                 				<div class="lg-margin"></div><!-- End .space -->
                 				<div class="row">
                 					<div class="col-md-8 col-sm-12 col-xs-12 lg-margin">
-                                        <a class="btn btn-custom-2" href="productos.php"><i class="fa fa-shopping-cart"></i> Seguir Comprando</a>
-                                        <a class="btn btn-warning" href="javascript:Procesar('Actualizar')"><i class="fa fa-refresh"></i> Actualizar</a>
-                                        <a class="btn btn-danger" href="javascript:Procesar('Eliminar')"><i class="fa fa-trash"></i> Borrar</a>
-                                        <a class="btn btn-success" href="javascript:Procesar('Ordenar')"><i class="fa fa-paper-plane"></i> Ordenar Pedido</a>
-                                        <input type="hidden" name="proceso">
+                                        
                 					</div><!-- End .col-md-8 -->
                 					<div class="col-md-4 col-sm-12 col-xs-12">
                 						<table class="table total-table">
@@ -165,20 +144,79 @@ $filaCli = mysqli_fetch_array($resultCli);
                 							<tfoot>
                 								<tr>
         											<td>Total neto a pagar:</td>
-        											<td>$<?php echo number_format(($totalC+$igvC),2); ?></td>
+        											<td><?php echo number_format(($totalC+$igvC),2); ?></td>
                 								</tr>
                 							</tfoot>
                 						</table>
                 						<div class="md-margin"></div><!-- End .space -->
                 					</div><!-- End .col-md-4 -->
                 				</div><!-- End .row -->
-                                <?php }else{ ?>
-                                    <p>En estos momentos el carrito esta sin productos, por favor seleccione uno o mas productos desde el cat&aacute;logo</p>
-                                <?php } ?>
-                				<div class="md-margin2x"></div><!-- Space -->
-                			</div><!-- End .col-md-12 -->
-                		</div><!-- End .row -->
-                    </form>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <h3>Datos del Cliente</h3>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <p><strong>Nombres :</strong></p>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <p><?php echo $filaCli['nombres'] ?></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <p><strong>Direcci&oacute;n :</strong></p>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <p><?php echo $filaCli['direccion'] ?></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <p><strong>Tel&eacute;fono :</strong></p>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <p><?php echo $filaCli['telefono'] ?></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <p><strong>Email :</strong></p>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <p><?php echo $filaCli['email'] ?></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <p><strong>Comentarios :</strong></p>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <textarea class="form-control" name="comentarios" cols="60" rows="5"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="sm-margin"></div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <a class="btn btn-danger" href="cerrar-sesion.php">Cerrar Sesi&oacute;n</a>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <a class="btn btn-success" href="javascript:Enviar();">Enviar Pedido *</a>
+                                    <br><span>* Se env&iacute;a un pedido para pagar despu&eacute;s en presencial</span>
+                                    <?php
+                                        }else{
+                                    ?>
+                                    <p>En estos momentos el carrito esta sin productos, por favor seleccione uno o mas productos desde el cat&aacute;logo para hacer su pedido en linea</p>
+                                    <?php
+                                        }
+                                    ?>
+                                </div>
+                            </div>
+                            <div class="md-margin2x"></div><!-- Space -->
+                        </div>
+                    </div>
     			</div><!-- End .container -->
             </section><!-- End #content -->
             <?php include("includes/footer.php"); ?>

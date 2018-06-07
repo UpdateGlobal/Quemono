@@ -32,7 +32,7 @@ $filSCat = mysqli_fetch_array($resCategoria);
     </head>
     <body>
         <div id="wrapper">
-            <?php $menu="productos"; include("includes/header.php"); ?>
+            <?php $menu=$xSubCategoriax; include("includes/header.php"); ?>
             <section id="content">
             	<div id="breadcrumb-container">
                     <div class="container">
