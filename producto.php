@@ -15,7 +15,7 @@
 
         $xCod_sub_categoria = $filaPro['cod_sub_categoria'];
         $xSubCategoriap     = $filaPro['subcategoria'];
-        
+
         $xNom_producto      = mysqli_real_escape_string($enlaces, $filaPro['nom_producto']);
         $xDescripcion       = mysqli_real_escape_string($enlaces, $filaPro['descripcion']);
         $xCaracteristicas   = mysqli_real_escape_string($enlaces, $filaPro['caracteristicas']);
@@ -30,14 +30,14 @@
         $xFecha             = $filaPro['fecha_ing'];
         $xImagen            = $filaPro['imagen'];
         $xH_Imagen          = $filaPro['h_imagen'];
-        
+
         $xCod_carrusel      = $filaPro['cod_carrusel'];
         $xMarcax            = $filaPro['marca'];
 
-        $xCodProx = $xCod_producto;
-        $xCodPrix = $xCod_principal;
-        $xCodCatx = $xCod_categoria;
-        $xCodSCatx = $xCod_sub_categoria;
+        $xCodProx           = $xCod_producto;
+        $xCodPrix           = $xCod_principal;
+        $xCodCatx           = $xCod_categoria;
+        $xCodSCatx          = $xCod_sub_categoria;
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html class="ie8"> <![endif]-->
@@ -251,6 +251,9 @@
                                         $resultadoPro = mysqli_query($enlaces, $consultaPro);
                                         while($filaPro = mysqli_fetch_array($resultadoPro)){
                                             $xCod_producto    = $filaPro['cod_producto'];
+                                            $xCod_principal     = $filaPro['cod_principal'];
+                                            $xCod_categoria     = $filaPro['cod_categoria'];
+                                            $xCod_sub_categoria = $filaPro['cod_sub_categoria'];
                                             $xNom_producto    = mysqli_real_escape_string($enlaces, $filaPro['nom_producto']);
                                             $xPrecio_oferta   = number_format($filaPro['precio_oferta'],2);
                                             $xPrecio_normal   = number_format($filaPro['precio_normal'],2);
@@ -295,10 +298,17 @@
                                         <div class="item-meta-container">
                                             <h3 class="item-name"><a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>"><?php echo $xNom_producto; ?></a></h3>
                                             <div class="item-action">
-                                                <a  href="producto.php?cod_producto=<?php echo $xCod_producto; ?>" class="item-add-btn">
-                                                    <span class="icon-cart-text"><i class="fa fa-shopping-cart" aria-hidden="true"></i> A&ntilde;adir</span>
-                                                </a>
-                                            </div><!-- End .item-action -->
+                                                <form name="fcarrito<?php echo $xCodigo; ?>" id="fcarritop" action="verificar.php" method="post">
+                                                    <input type="hidden" name="cantidad" value="1" />
+                                                    <input type="hidden" name="cod_producto" value="<?php echo $xCod_producto; ?>" />
+                                                    <input type="hidden" name="cod_principal" value="<?php echo $xCod_principal; ?>" />
+                                                    <input type="hidden" name="cod_categoria" value="<?php echo $xCod_categoria; ?>" />
+                                                    <input type="hidden" name="cod_sub_categoria" value="<?php echo $xCod_sub_categoria; ?>" />
+                                                    <button type="input" class="item-add-btn">
+                                                        <span class="icon-cart-text"><i class="fa fa-shopping-cart" aria-hidden="true"></i> A&ntilde;adir</span>
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div><!-- End .item-meta-container -->
                                     </div><!-- End .item -->
                                     <?php

@@ -145,11 +145,11 @@
                                                         document.busca.buscador.focus();
                                                         return;
                                                     }
-                                                    document.bus.action="buscar.php";
-                                                    document.bus.submit();
+                                                    document.busca.action="buscar.php";
+                                                    document.busca.submit();
                                                 }
                                             </script>
-                                            <form class="form-inline quick-search-form" name="busca" role="form" action="#">
+                                            <form class="form-inline quick-search-form" name="busca" role="form" action="buscar.php">
                                                 <div class="form-group">
                                                     <input type="text" name="buscador" class="form-control" placeholder="Buscar producto..." onkeypress="if(event.keyCode==13){ValidarBusca();}" >
                                                 </div><!-- End .form-inline -->

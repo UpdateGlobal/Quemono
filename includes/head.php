@@ -52,7 +52,7 @@
         <link rel="apple-touch-icon" sizes="72x72" href="images/icons/apple-icon-72x72.png">
         
         <!--- jQuery -->
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="js/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
 
         <!--- Modernizr -->
@@ -62,3 +62,15 @@
             <script src="js/html5shiv.js"></script>
             <script src="js/respond.min.js"></script>
         <![endif]-->
+
+        <script>
+            function ValidarBus(){
+                if(document.bus.buscador.value==""){
+                    alert("Debes ingresar datos para la búsqueda");
+                    document.bus.buscador.focus();
+                    return;
+                }
+                document.bus.action="buscar.php";
+                document.bus.submit();
+            }
+        </script>

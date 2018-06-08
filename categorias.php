@@ -59,6 +59,18 @@ $filCat = mysqli_fetch_array($resCategoria);
                                             <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <h3>No hay productos en esta categor&iacute;a<br>
                                                 Puede usar el buscador para ubicar el producto que desee.</h3>
+                                                <div>
+                                                    <form name="bus" id="form">
+                                                        <div class="row">
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                <input class="form-control" type="text" name="buscador" onkeypress="if(event.keyCode==13){ValidarBus();}" id="busc" placeholder="Buscar Productos">
+                                                            </div>
+                                                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12">
+                                                                <input class="btn btn-success" name="btnbus" type="button" id="btnbus" value="BUSCAR" onclick="javascript:ValidarBus();">
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                     <?php 
                                         }else{
@@ -119,7 +131,10 @@ $filCat = mysqli_fetch_array($resCategoria);
                                                 $consultarPro = "SELECT * FROM productos WHERE cod_categoria='$cod_categoria' AND estado='1' ORDER BY orden ASC $limite";
                                                 $resultadoPro = mysqli_query($enlaces, $consultarPro);
                                                 while($filaPro = mysqli_fetch_array($resultadoPro)){
-                                                    $xCod_producto    = $filaPro['cod_producto'];
+                                                    $xCod_producto      = $filaPro['cod_producto'];
+                                                    $xCod_principal     = $filaPro['cod_principal'];
+                                                    $xCod_categoria     = $filaPro['cod_categoria'];
+                                                    $xCod_sub_categoria = $filaPro['cod_sub_categoria'];
                                                     $xNom_producto    = mysqli_real_escape_string($enlaces, $filaPro['nom_producto']);
                                                     $xPrecio_oferta   = number_format($filaPro['precio_oferta'],2);
                                                     $xPrecio_normal   = number_format($filaPro['precio_normal'],2);
@@ -175,10 +190,17 @@ $filCat = mysqli_fetch_array($resCategoria);
                                                     <div class="item-meta-container">
                                                         <h3 class="item-name"><a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>"><?php echo $xNom_producto; ?></a></h3>
                                                         <div class="item-action">
-                                                            <a href="#" class="item-add-btn">
-                                                                <span class="icon-cart-text"><i class="fa fa-shopping-cart" aria-hidden="true"></i> A&ntilde;adir</span>
-                                                            </a>
-                                                        </div><!-- End .item-action -->
+                                                            <form name="fcarrito<?php echo $xCodigo; ?>" id="fcarritop" action="verificar.php" method="post">
+                                                                <input type="hidden" name="cantidad" value="1" />
+                                                                <input type="hidden" name="cod_producto" value="<?php echo $xCod_producto; ?>" />
+                                                                <input type="hidden" name="cod_principal" value="<?php echo $xCod_principal; ?>" />
+                                                                <input type="hidden" name="cod_categoria" value="<?php echo $xCod_categoria; ?>" />
+                                                                <input type="hidden" name="cod_sub_categoria" value="<?php echo $xCod_sub_categoria; ?>" />
+                                                                <button type="input" class="item-add-btn">
+                                                                    <span class="icon-cart-text"><i class="fa fa-shopping-cart" aria-hidden="true"></i> A&ntilde;adir</span>
+                                                                </button>
+                                                            </form>
+                                                        </div>
                                                     </div><!-- End .item-meta-container -->
                                                 </div><!-- End .item -->
                                             </div><!-- End .col-md-4 -->

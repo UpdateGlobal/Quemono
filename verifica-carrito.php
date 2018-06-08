@@ -64,8 +64,8 @@ function Verifica_Pedido($varCliente,$varOrden,$enlace) {
 /*----------------------------------------------------------------*/
 function ExistePedidoUsuario($varCliente,$enlace) {
 	$sqlPedido = "select cod_orden from carrito where cod_cliente='$varCliente'";
-	/*$rsPedido = mysqli_query(mysqli_connect("localhost","quemono_update","-}CWe@[Mk.;V", "quemono_update"), $sqlPedido);*/
-	$rsPedido = mysqli_query(mysqli_connect("localhost","root","", "update_quemono"), $sqlPedido);
+	$rsPedido = mysqli_query(mysqli_connect("localhost","update_quemono","k$$#0&YZsIe4", "update_quemono"), $sqlPedido);
+	/*$rsPedido = mysqli_query(mysqli_connect("localhost","root","", "update_quemono"), $sqlPedido);*/
 	while($rowPedido = mysqli_fetch_array($rsPedido)) {
 		$Orden = $rowPedido['cod_orden'];
 	}
@@ -96,8 +96,8 @@ function GenCodOrden($varCliente) {
 /*----------------------------------------------------------------*/
 function ExisteProducto($varOrden, $varProducto, $enlace) {
 	$sqlProducto = "select cod_producto from carrito where cod_orden='$varOrden' and cod_producto='$varProducto'";
-	/*$rsProducto = mysqli_query(mysqli_connect("localhost","quemono_update","-}CWe@[Mk.;V", "quemono_update"), $sqlProducto);*/
-	$rsProducto = mysqli_query(mysqli_connect("localhost","root","", "update_quemono"), $sqlProducto);
+	$rsProducto = mysqli_query(mysqli_connect("localhost","update_quemono","k$$#0&YZsIe4", "update_quemono"), $sqlProducto);
+	/*$rsProducto = mysqli_query(mysqli_connect("localhost","root","", "update_quemono"), $sqlProducto);*/
 	$contador = mysqli_num_rows($rsProducto);
 	if ($contador  == 0) {
 		return 0;
@@ -109,20 +109,20 @@ function ExisteProducto($varOrden, $varProducto, $enlace) {
 /*----------------------------------------------------------------*/
 function AgregarItem($varOrden,$IdCliente,$IdProducto,$IdCantidad) {
 	$sql = "INSERT INTO carrito (cod_orden,cod_cliente,cod_producto,cantidad) VALUES('$varOrden','$IdCliente','$IdProducto','$IdCantidad')";
-	/*$result = mysqli_query(mysqli_connect("localhost","quemono_update","-}CWe@[Mk.;V", "quemono_update"), $sql);*/
-	$result = mysqli_query(mysqli_connect("localhost","root","", "update_quemono"), $sql);
+	$result = mysqli_query(mysqli_connect("localhost","update_quemono","k$$#0&YZsIe4", "update_quemono"), $sql);
+	/*$result = mysqli_query(mysqli_connect("localhost","root","", "update_quemono"), $sql);*/
 }
 /*----------------------------------------------------------------*/
 function ActualizarItem($varOrden,$IdCliente,$IdProducto,$IdCantidad) {
 	$sql = "UPDATE carrito SET cantidad=cantidad+'$IdCantidad' WHERE cod_orden='$varOrden' AND cod_cliente='$IdCliente' AND cod_producto='$IdProducto'";
-	/*$result = mysqli_query(mysqli_connect("localhost","quemono_update","-}CWe@[Mk.;V", "quemono_update"), $sql);*/
-	$result = mysqli_query(mysqli_connect("localhost","root","", "update_quemono"), $sql);
+	$result = mysqli_query(mysqli_connect("localhost","update_quemono","k$$#0&YZsIe4", "update_quemono"), $sql);
+	/*$result = mysqli_query(mysqli_connect("localhost","root","", "update_quemono"), $sql);*/
 }
 /*----------------------------------------------------------------*/
 function ActualizarProductos($varOrden,$varCliente,$enlace) {
 	$sqlProductos = "SELECT cod_producto FROM carrito WHERE cod_orden='$varOrden' AND cod_cliente='$varCliente'";
-	/*$rsProductos = mysqli_query(mysqli_connect("localhost","quemono_update","-}CWe@[Mk.;V", "quemono_update"), $sqlProductos);*/
-	$rsProductos = mysqli_query(mysqli_connect("localhost","root","", "update_quemono"), $sqlProductos);
+	$rsProductos = mysqli_query(mysqli_connect("localhost","update_quemono","k$$#0&YZsIe4", "update_quemono"), $sqlProductos);
+	/*$rsProductos = mysqli_query(mysqli_connect("localhost","root","", "update_quemono"), $sqlProductos);*/
 	while($rowProductos = mysqli_fetch_array($rsProductos)) {
 		$xproducto = $rowProductos['cod_producto'];
 		//actualizar
@@ -130,24 +130,24 @@ function ActualizarProductos($varOrden,$varCliente,$enlace) {
 		if ($_REQUEST[$codigo] != 0) {
 				$xcantidad = $_REQUEST[$codigo];
 				$sql = "UPDATE carrito SET cantidad='$xcantidad' WHERE cod_orden='$varOrden' AND cod_cliente='$varCliente' AND cod_producto='$xproducto'";
-				/*$result = mysqli_query(mysqli_connect("localhost","quemono_update","-}CWe@[Mk.;V", "quemono_update"), $sql);*/
-				$result = mysqli_query(mysqli_connect("localhost","root","", "update_quemono"), $sql);
+				$result = mysqli_query(mysqli_connect("localhost","update_quemono","k$$#0&YZsIe4", "update_quemono"), $sql);
+				/*$result = mysqli_query(mysqli_connect("localhost","root","", "update_quemono"), $sql);*/
 		}
 	}
 }
 /*----------------------------------------------------------------*/
 function EliminarProductos($varOrden,$varCliente,$enlace) {
 	$sqlProductos = "SELECT cod_producto FROM carrito WHERE cod_orden='$varOrden' AND cod_cliente='$varCliente'";
-	/*$rsProductos = mysqli_query(mysqli_connect("localhost","quemono_update","-}CWe@[Mk.;V", "quemono_update"), $sqlProductos);*/
-	$rsProductos = mysqli_query(mysqli_connect("localhost","root","", "update_quemono"), $sqlProductos);
+	$rsProductos = mysqli_query(mysqli_connect("localhost","update_quemono","k$$#0&YZsIe4", "update_quemono"), $sqlProductos);
+	/*$rsProductos = mysqli_query(mysqli_connect("localhost","root","", "update_quemono"), $sqlProductos);*/
 	while($rowProductos = mysqli_fetch_array($rsProductos)) {
 		$xproducto = $rowProductos['cod_producto'];
 		//eliminar
 		$codigo = 'chk' . $xproducto;
 		if ($_REQUEST[$codigo] == true) {
 			$sql = "DELETE FROM carrito WHERE cod_orden='$varOrden' AND cod_cliente='$varCliente' AND cod_producto='$xproducto'";
-			/*$result = mysqli_query(mysqli_connect("localhost","quemono_update","-}CWe@[Mk.;V", "quemono_update"), $sql);*/
-			$result = mysqli_query(mysqli_connect("localhost","root","", "update_quemono"), $sql);
+			$result = mysqli_query(mysqli_connect("localhost","update_quemono","k$$#0&YZsIe4", "update_quemono"), $sql);
+			/*$result = mysqli_query(mysqli_connect("localhost","root","", "update_quemono"), $sql);*/
 		}
 	}
 }
