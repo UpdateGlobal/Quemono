@@ -20,5 +20,5 @@ $xOrden = $_SESSION['IdOrden'];
 $borrar = "DELETE FROM carrito WHERE cod_orden='$xOrden' AND cod_cliente='$xCliente'";
 $resultado = mysqli_query($enlaces, $borrar);
 
-header("Location:index.php");
+header("Location:/index.php");
 ?>

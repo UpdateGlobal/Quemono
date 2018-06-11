@@ -85,7 +85,7 @@ if($proceso=="Actualizar"){
   $mailCabecera.= "Responder a: ".$xDesemail;
   $mensajeEmail = $mensaje;
   mail($emailDestino,$encabezado,$mensajeEmail,$mailcabecera);
-  header("Location:clave-cambiada.php");
+  header("Location:/clave-cambiada.php");
 }
 ?>
 <!DOCTYPE html>
@@ -104,7 +104,7 @@ if($proceso=="Actualizar"){
           document.perfil.clave.focus();
           return; 
         }
-        document.perfil.action = "clave-editar.php";
+        document.perfil.action = "/clave-editar.php";
         document.perfil.proceso.value="Actualizar";
         document.perfil.submit();
       }
@@ -117,8 +117,8 @@ if($proceso=="Actualizar"){
         	<div id="breadcrumb-container">
         		<div class="container">
     					<ul class="breadcrumb">
-                <li><a href="index.php">Inicio</a></li>
-                <li><a href="perfil.php">Perfil</a></li>
+                <li><a href="/index.php">Inicio</a></li>
+                <li><a href="/perfil.php">Perfil</a></li>
                 <li class="active">Editar Clave</li>
               </ul>
         		</div>
@@ -143,7 +143,7 @@ if($proceso=="Actualizar"){
               <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                   <p class="linea">
-                    <a href="perfil.php" class="btn btn-custom-alt">&laquo; Volver</a>
+                    <a href="/perfil.php" class="btn btn-custom-alt">&laquo; Volver</a>
                     <input type="button" value="Cambiar Datos" class="btn btn-custom-2" onClick="javascript:Validar();">
                   </p>
                 </div>

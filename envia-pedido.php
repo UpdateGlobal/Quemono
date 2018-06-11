@@ -17,7 +17,6 @@ $clientes = "SELECT * FROM clientes WHERE cod_cliente='$xCodCliente'";
 $resultCli = mysqli_query($enlaces, $clientes);
 $filaCli = mysqli_fetch_array($resultCli);
 
-
 /*---- Mensaje para el correo electronico ----*/
 $mensaje = '
 	<table width="100%" border=1 cellpadding=0 cellspacing=0 align=center>
@@ -66,7 +65,7 @@ $mensaje.= '
 	    </tr>
    		<tr>
    		    <td>&nbsp;</td>
-   		    <td><strong>+ IGV(18%) : </strong><br /></td>
+   		    <td><strong>+ IGV(10%) : </strong><br /></td>
    		    <td>S/.'.number_format($igv,2).'</td>
 	    </tr>
    		<tr>
@@ -155,5 +154,5 @@ $mailCabecera.= "Reply-To: ".$filaCli['email'];
 $mensajeEmail = $mensaje;
 mail($destino,$cabecera,$mensajeEmail,$mailCabecera);
 
-header("Location:confirmacion.php");		
+header("Location:/confirmacion.php");		
 ?>

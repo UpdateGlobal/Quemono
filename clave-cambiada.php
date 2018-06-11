@@ -15,7 +15,6 @@
   <head>
     <?php include("includes/head.php"); ?>
     <style id="custom-style">
-
     </style>
     <script>
       function Validae(){
@@ -24,7 +23,7 @@
           document.perfil.clave.focus();
           return; 
         }
-        document.perfil.action = "clave-editar.php";
+        document.perfil.action = "/clave-editar.php";
         document.perfil.proceso.value="Actualizar";
         document.perfil.submit();
       }
@@ -37,8 +36,8 @@
         	<div id="breadcrumb-container">
         		<div class="container">
     					<ul class="breadcrumb">
-                <li><a href="index.php">Inicio</a></li>
-                <li><a href="perfil.php">Perfil</a></li>
+                <li><a href="/index.php">Inicio</a></li>
+                <li><a href="/perfil.php">Perfil</a></li>
                 <li class="active">Editar Clave</li>
               </ul>
         		</div>
@@ -53,7 +52,7 @@
                   No olvide inciar sesi&oacute;n con su nueva contrase&ntilde;a</p>
                   <p>Atentamente</br>
                   Dtpo. Ventas</p>
-                  <p><a href="perfil.php" class="btn btn-custom-alt">Volver al Perfil</a> <a href="cerrar-sesion.php" class="btn btn-custom-2">CERRAR SESION</a></p>
+                  <p><a href="/perfil.php" class="btn btn-custom-alt">Volver al Perfil</a> <a href="/cerrar-sesion.php" class="btn btn-custom-2">CERRAR SESION</a></p>
                 </div>
               </div>
               <div class=""></div>

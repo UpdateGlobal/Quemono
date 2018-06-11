@@ -1,12 +1,13 @@
 <?php include("cms/module/conexion.php"); ?>
 <?php include("modules/session-core.php"); ?>
-<?php $cod_categoria = $_REQUEST['cod_categoria']; ?>
+<?php $slug = $_REQUEST['slug']; ?>
 <?php 
-$conCategoria = "SELECT * FROM productos_categorias WHERE cod_categoria='$cod_categoria' ORDER BY orden";
+$conCategoria = "SELECT * FROM productos_categorias WHERE slug='$slug' ORDER BY orden";
 $resCategoria = mysqli_query($enlaces,$conCategoria) or die('Consulta fallida: ' . mysqli_error($enlaces));
 $filCat = mysqli_fetch_array($resCategoria);
-    $xCodCatx        = $filCat['cod_categoria'];
-    $xCategoriax     = $filCat['categoria'];
+    $xCodCatx = $filCat['cod_categoria'];
+    $xCategoriax = $filCat['categoria'];
+    $cod_categoria = $xCodCatx; 
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html class="ie8"> <![endif]-->
@@ -21,7 +22,7 @@ $filCat = mysqli_fetch_array($resCategoria);
                     document.bus.buscador.focus();
                     return;
                 }
-                document.bus.action="buscar.php";
+                document.bus.action="/buscar.php";
                 document.bus.submit();
             }
         </script>
@@ -35,8 +36,8 @@ $filCat = mysqli_fetch_array($resCategoria);
                 <div id="breadcrumb-container">
                     <div class="container">
                         <ul class="breadcrumb">
-                            <li><a href="index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
-                            <li><a href="productos.php">Productos</a></li>
+                            <li><a href="/index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                            <li><a href="/productos.php">Productos</a></li>
                             <li class="active"><?php echo $xCategoriax; ?></li>
                         </ul>
                     </div>
@@ -92,8 +93,8 @@ $filCat = mysqli_fetch_array($resCategoria);
                                                 <span class="separator"><strong>Visualizaci&oacute;n:</strong></span>
                                             </div>
                                             <div class="view-box">
-                                                <a href="categorias.php?cod_categoria=<?php echo $xCodCatx; ?>" class="active icon-button icon-grid"><i class="fa fa-th-large"></i></a>
-                                                <a href="categorias-list.php?cod_categoria=<?php echo $xCodCatx; ?>" class="icon-button icon-list"><i class="fa fa-th-list"></i></a>
+                                                <a href="/categorias/<?php echo $xCodCatx; ?>" class="active icon-button icon-grid"><i class="fa fa-th-large"></i></a>
+                                                <a href="/categoria/<?php echo $xCodCatx; ?>" class="icon-button icon-list"><i class="fa fa-th-list"></i></a>
                                             </div><!-- End .view-box -->
                                         </div><!-- End .toolbox-filter -->
                                         <div class="toolbox-pagination clearfix">
@@ -103,20 +104,20 @@ $filCat = mysqli_fetch_array($resCategoria);
                                                     echo "
                                                         <ul class='pagination'>";
                                                     if($pagina>1){
-                                                        echo "<li><a href='?cod_categoria=".$xCodCatx."&p=".($pagina-1)."'><i class='fa fa-angle-left'></i></a></li>";
+                                                        echo "<li><a href='/categorias/".$slug."&p=".($pagina-1)."'><i class='fa fa-angle-left'></i></a></li>";
                                                     }
                                                     for($i=$pagina; $i<=$total_paginas && $i<=($pagina+$paginas_mostrar); $i++){
                                                         if($i==$pagina){
                                                             echo "<li class='active'><a>$i</a></li>";
                                                         }else{
-                                                            echo "<li><a href='?cod_categoria=".$xCodCatx."&p=$i'>$i</a></li>";
+                                                            echo "<li><a href='/categorias/".$slug."&p=$i'>$i</a></li>";
                                                         }
                                                     }
                                                     if(($pagina+$paginas_mostrar)<$total_paginas){
                                                         echo "<li><a>...</a></li>";
                                                     }
                                                     if($pagina<$total_paginas){
-                                                        echo "<li><a href='?cod_categoria=".$xCodCatx."&p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
+                                                        echo "  <li><a href='/categorias/".$slug."&p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
                                                     }
                                                     echo "</ul>";
                                                 }
@@ -135,6 +136,7 @@ $filCat = mysqli_fetch_array($resCategoria);
                                                     $xCod_principal     = $filaPro['cod_principal'];
                                                     $xCod_categoria     = $filaPro['cod_categoria'];
                                                     $xCod_sub_categoria = $filaPro['cod_sub_categoria'];
+                                                    $xSlugc             = $filaPro['slug'];
                                                     $xNom_producto    = mysqli_real_escape_string($enlaces, $filaPro['nom_producto']);
                                                     $xPrecio_oferta   = number_format($filaPro['precio_oferta'],2);
                                                     $xPrecio_normal   = number_format($filaPro['precio_normal'],2);
@@ -148,15 +150,15 @@ $filCat = mysqli_fetch_array($resCategoria);
                                                     <div class="item-image-wrapper">
                                                         <figure class="item-image-container">
                                                             <a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>">
-                                                                <img src="cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>" class="item-image">
+                                                                <img src="/cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>" class="item-image">
                                                                 <?php
                                                                     if($xHoverImagen!=""){
                                                                 ?>
-                                                                <img src="cms/assets/img/productos/hover/<?php echo $xHoverImagen; ?>" alt="<?php echo $xNom_producto; ?> Hover" class="item-image-hover">
+                                                                <img src="/cms/assets/img/productos/hover/<?php echo $xHoverImagen; ?>" alt="<?php echo $xNom_producto; ?> Hover" class="item-image-hover">
                                                                 <?php
                                                                     }else{
                                                                 ?>
-                                                                <img src="cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?> Hover" class="item-image-hover">
+                                                                <img src="/cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?> Hover" class="item-image-hover">
                                                                 <?php    
                                                                     }
                                                                 ?>
@@ -184,13 +186,13 @@ $filCat = mysqli_fetch_array($resCategoria);
                                                             if($xDescuento==""){
                                                             }else{
                                                         ?>
-                                                        <span class="discount-rect">-25%</span>
+                                                        <span class="discount-rect">-<?php echo $xDescuento; ?>%</span>
                                                         <?php } ?>
                                                     </div><!-- End .item-image-wrapper -->
                                                     <div class="item-meta-container">
-                                                        <h3 class="item-name"><a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>"><?php echo $xNom_producto; ?></a></h3>
+                                                        <h3 class="item-name"><a href="/producto/<?php echo $xSlugp; ?>"><?php echo $xNom_producto; ?></a></h3>
                                                         <div class="item-action">
-                                                            <form name="fcarrito<?php echo $xCodigo; ?>" id="fcarritop" action="verificar.php" method="post">
+                                                            <form name="fcarrito<?php echo $xCodigo; ?>" id="fcarritop" action="/verificar.php" method="post">
                                                                 <input type="hidden" name="cantidad" value="1" />
                                                                 <input type="hidden" name="cod_producto" value="<?php echo $xCod_producto; ?>" />
                                                                 <input type="hidden" name="cod_principal" value="<?php echo $xCod_principal; ?>" />
@@ -219,20 +221,20 @@ $filCat = mysqli_fetch_array($resCategoria);
                                                     echo "
                                                         <ul class='pagination'>";
                                                     if($pagina>1){
-                                                        echo "<li><a href='?cod_categoria=".$xCodCatx."&p=".($pagina-1)."'><i class='fa fa-angle-left'></i></a></li>";
+                                                        echo "<li><a href='/categorias/".$slug."&p=".($pagina-1)."'><i class='fa fa-angle-left'></i></a></li>";
                                                     }
                                                     for($i=$pagina; $i<=$total_paginas && $i<=($pagina+$paginas_mostrar); $i++){
                                                         if($i==$pagina){
                                                             echo "<li class='active'><a>$i</a></li>";
                                                         }else{
-                                                            echo "<li><a href='?cod_categoria=".$xCodCatx."&p=$i'>$i</a></li>";
+                                                            echo "<li><a href='/categorias/".$slug."&p=$i'>$i</a></li>";
                                                         }
                                                     }
                                                     if(($pagina+$paginas_mostrar)<$total_paginas){
                                                         echo "<li><a>...</a></li>";
                                                     }
                                                     if($pagina<$total_paginas){
-                                                        echo "  <li><a href='?cod_categoria=".$xCodCatx."&p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
+                                                        echo "  <li><a href='/categorias/".$slug."&p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
                                                     }
                                                     echo "</ul>";
                                                 }

@@ -15,7 +15,6 @@
   <head>
     <?php include("includes/head.php"); ?>
     <style id="custom-style">
-
     </style>
   </head>
   <body>
@@ -25,7 +24,7 @@
         <div id="breadcrumb-container">
         	<div class="container">
     				<ul class="breadcrumb">
-    					<li><a href="index.php">Inicio</a></li>
+    					<li><a href="/index.php">Inicio</a></li>
     					<li class="active">Login</li>
     				</ul>
         	</div>
@@ -37,11 +36,11 @@
               <p><strong><?php echo utf8_decode($xAlias); ?></strong> Bienvenido al sistema de carrito de compras</p>
               <p>A partir de estos momentos Ud. puede hacer uso del sistema de carrito de compras y el sistema de pedidos en l&iacute;nea. Puede a&ntilde;adir productos. Eliminar Productos, Actualizar datos y cantidades y hacer su pedido en l&iacute;nea a su vez tambi&eacute;n realizar compras.</p>
               <div class="lg-margin"></div>
-              <p><a href="index.php" class="btn btn-custom-alt">Volver al Index</a> <a href="cerrar-sesion.php" class="btn btn-custom-2">Cerrar Sesi&oacute;n</a></p>
+              <p><a href="/index.php" class="btn btn-custom-alt">Volver al Index</a> <a href="/cerrar-sesion.php" class="btn btn-custom-2">Cerrar Sesi&oacute;n</a></p>
               <div class="lg-margin"></div>
             </div><!-- End .col-md-6 -->
           </div><!-- End.row -->
-        </div><!-- End .container -->  
+        </div><!-- End .container -->
       </section><!-- End #content -->
       <?php include("includes/footer.php"); ?>
     </div><!-- End #wrapper -->

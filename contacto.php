@@ -12,7 +12,7 @@
                 valid = validateContact();
                 if(valid) {
                     jQuery.ajax({
-                        url: "contact_form.php",
+                        url: "/contact_form.php",
                         data:'nombres='+$("#nombres").val()+'&email='+$("#email").val()+'&telefono='+$("#telefono").val()+'&mensaje='+$("#mensaje").val()+'&fecha_ingreso='+$("#fecha_ingreso").val(),
                         type: "POST",
                         success:function(data){
@@ -58,7 +58,7 @@
             	<div id="breadcrumb-container">
             		<div class="container">
     					<ul class="breadcrumb">
-    						<li><a href="index.php">Inicio</a></li>
+    						<li><a href="/index.php">Inicio</a></li>
     						<li class="active">Contacto</li>
     					</ul>
             		</div>

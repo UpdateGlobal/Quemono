@@ -6,12 +6,12 @@
                             <div class="header-top-left">
                                 <ul id="top-links" class="clearfix">
                                     <?php if($xAlias!=""){ ?>
-                                    <li><a href="perfil.php" title="Perfil"><span class="top-icon top-icon-user"></span><span class="">Perfil</span></a></li>
-                                    <li><a href="carrito.php" title="Carrito"><span class="top-icon top-icon-cart"></span><span class="">Carrito</span></a></li>
-                                    <li><a href="cerrar_sesion.php" title="Log Out"><span class="top-icon top-icon-check"></span><span class="">Log Out</span></a></li>
+                                    <li><a href="/perfil.php" title="Perfil"><span class="top-icon top-icon-user"></span><span class="">Perfil</span></a></li>
+                                    <li><a href="/carrito.php" title="Carrito"><span class="top-icon top-icon-cart"></span><span class="">Carrito</span></a></li>
+                                    <li><a href="/cerrar_sesion.php" title="Log Out"><span class="top-icon top-icon-check"></span><span class="">Log Out</span></a></li>
                                     <?php }else{ ?>
-                                    <li><a href="login.php" title="Login"><span class="top-icon top-icon-pencil"></span><span class="">Login</span></a></li>
-                                    <li><a href="registrarse.php" title="Registrarse"><span class="top-icon top-icon-user"></span><span class="">Registrarse</span></a></li>
+                                    <li><a href="/login.php" title="Login"><span class="top-icon top-icon-pencil"></span><span class="">Login</span></a></li>
+                                    <li><a href="/registrarse.php" title="Registrarse"><span class="top-icon top-icon-user"></span><span class="">Registrarse</span></a></li>
                                     <?php } ?>
                                 </ul>
                             </div><!-- End .header-top-left -->
@@ -28,7 +28,6 @@
                                         }else{
                                             $varCliente = "";
                                         }
-
                                         $totalM = 0;
                                         $carritoM = "SELECT * FROM productos as p, carrito as c WHERE c.cod_orden='$varOrden' AND c.cod_cliente='$varCliente' AND p.cod_producto=c.cod_producto";
                                         $resultadoM = mysqli_query($enlaces,$carritoM);
@@ -64,7 +63,7 @@
                                                     ?>
                                                     <li class="item clearfix">
                                                         <figure>
-                                                            <a href="producto.php?cod_producto=<?php echo $xCodproM; ?>"><img src="cms/assets/img/productos/<?php echo $xImagenM; ?>" alt="<?php echo $xNombreM; ?>"></a>
+                                                            <a href="producto.php?cod_producto=<?php echo $xCodproM; ?>"><img src="/cms/assets/img/productos/<?php echo $xImagenM; ?>" alt="<?php echo $xNombreM; ?>"></a>
                                                         </figure>
                                                         <div class="dropdown-cart-details">
                                                             <p class="item-name">
@@ -90,8 +89,8 @@
                                                     <li><span class="dropdown-cart-total-title">Total: <?php echo number_format(($totalM+$igvM),2); ?></span></li>
                                                 </ul><!-- .dropdown-cart-total -->
                                                 <div class="dropdown-cart-action">
-                                                    <p><a href="carrito.php" class="btn btn-custom-2 btn-block">Carrito</a></p>
-                                                    <p><a href="#" class="btn btn-custom btn-block">Pagar</a></p>
+                                                    <p><a href="/carrito.php" class="btn btn-custom-2 btn-block">Carrito</a></p>
+                                                    <p><a href="/productos.php" class="btn btn-custom btn-block">Productos</a></p>
                                                 </div><!-- End .dropdown-cart-action --> 
                                             </div><!-- End .dropdown-cart -->
                                             <?php }else{ ?>
@@ -130,7 +129,7 @@
                                         ?> 
                                         <h1 class="logo clearfix">
                                             <span>QueMono</span>
-                                            <a href="index.php" title="<?php echo $xAlt; ?>"><img src="cms/assets/img/meta/<?php echo $xLogo; ?>" alt="<?php echo $xAlt; ?>" width="250" /></a>
+                                            <a href="/index.php" title="<?php echo $xAlt; ?>"><img src="/cms/assets/img/meta/<?php echo $xLogo; ?>" alt="<?php echo $xAlt; ?>" width="250" /></a>
                                         </h1>
                                         <?php
                                             mysqli_free_result($resultadoMet); 
@@ -145,11 +144,11 @@
                                                         document.busca.buscador.focus();
                                                         return;
                                                     }
-                                                    document.busca.action="buscar.php";
+                                                    document.busca.action="/buscar.php";
                                                     document.busca.submit();
                                                 }
                                             </script>
-                                            <form class="form-inline quick-search-form" name="busca" role="form" action="buscar.php">
+                                            <form class="form-inline quick-search-form" name="busca" role="form" action="/buscar.php">
                                                 <div class="form-group">
                                                     <input type="text" name="buscador" class="form-control" placeholder="Buscar producto..." onkeypress="if(event.keyCode==13){ValidarBusca();}" >
                                                 </div><!-- End .form-inline -->
@@ -164,7 +163,7 @@
                                                 </div><!-- responsive-nav-button -->
                                             </div>
                                             <ul class="menu clearfix">
-                                                <li><a class="<?php echo ($menu == "inicio" ? "active" : "")?>" href="index.php">Inicio</a></li>
+                                                <li><a class="<?php echo ($menu == "inicio" ? "active" : "")?>" href="/index.php">Inicio</a></li>
                                                 <?php
                                                     $consultarPrincipal = "SELECT * FROM productos_principal WHERE menu=1 ORDER BY orden";
                                                     $resultadoPrincipal = mysqli_query($enlaces,$consultarPrincipal) or die('Consulta fallida: ' . mysqli_error($enlaces));
@@ -228,8 +227,8 @@
                                                     }
                                                     mysqli_free_result($resultadoPrincipal);
                                                 ?>
-                                                <li><a class="<?php echo ($menu == "promociones" ? "active" : "")?>" href="promociones.php">Promociones</a></li>
-                                                <li><a class="<?php echo ($menu == "contacto" ? "active" : "")?>" href="contacto.php">Contacto</a></li>
+                                                <li><a class="<?php echo ($menu == "promociones" ? "active" : "")?>" href="/promociones.php">Promociones</a></li>
+                                                <li><a class="<?php echo ($menu == "contacto" ? "active" : "")?>" href="/contacto.php">Contacto</a></li>
                                             </ul>
                                         </nav>
                                     </div><!-- End #menu-right-side -->

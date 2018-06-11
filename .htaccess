@@ -1,0 +1,27 @@
+RewriteEngine On
+RewriteCond %{REQUEST_URI} !-d
+RewriteCond %{REQUEST_URI} !-f
+RewriteCond %{REQUEST_URI} !^/catalogos/(.*) [OR]
+RewriteCond %{REQUEST_URI} !^/catalogo/(.*) [OR]
+RewriteCond %{REQUEST_URI} !^/categorias/(.*) [OR]
+RewriteCond %{REQUEST_URI} !^/categoria/(.*) [OR]
+RewriteCond %{REQUEST_URI} !^/subcategorias/(.*) [OR]
+RewriteCond %{REQUEST_URI} !^/subcategoria/(.*) [OR]
+RewriteCond %{REQUEST_URI} !^/marcas/(.*) [OR]
+RewriteCond %{REQUEST_URI} !^/marca/(.*) [OR]
+RewriteRule ^catalogos/([^/]*) productos.php?slug=$1
+RewriteRule ^catalogos/([^/]*) productos.php?slug=$1&p=$2
+RewriteRule ^catalogo/([^/]*) productos-list.php?slug=$1
+RewriteRule ^catalogo/([^/]*) productos-list.php?slug=$1&p=$2
+RewriteRule ^categorias/([^/]*) categorias.php?slug=$1
+RewriteRule ^categorias/([^/]*) categorias.php?slug=$1&p=$2
+RewriteRule ^categoria/([^/]*) categorias-list.php?slug=$1
+RewriteRule ^categoria/([^/]*) categorias-list.php?slug=$1&p=$2
+RewriteRule ^subcategorias/([^/]*) subcategorias.php?slug=$1
+RewriteRule ^subcategorias/([^/]*) subcategorias.php?slug=$1&p=2
+RewriteRule ^subcategoria/([^/]*) subcategorias-list.php?slug=$1
+RewriteRule ^subcategoria/([^/]*) subcategorias-list.php?slug=$1&p=2
+RewriteRule ^marcas/([^/]*) marcas.php?slug=$1
+RewriteRule ^marcas/([^/]*) marcas.php?slug=$1&p=2
+RewriteRule ^marca/([^/]*) marcas-list.php?slug=$1
+RewriteRule ^marca/([^/]*) marcas-list.php?slug=$1&p=2

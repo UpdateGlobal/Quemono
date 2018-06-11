@@ -27,9 +27,9 @@
         <script>
             function Procesar(strAccion){
                 if(strAccion=="Ordenar"){
-                    document.ftienda.action="pedidos-en-linea.php";
+                    document.ftienda.action="/pedidos-en-linea.php";
                 }else{
-                    document.ftienda.action="verifica-carrito.php";
+                    document.ftienda.action="/verifica-carrito.php";
                 }
                 document.ftienda.method="POST";
                 document.ftienda.proceso.value=strAccion;
@@ -47,7 +47,7 @@
             	<div id="breadcrumb-container">
             		<div class="container">
     					<ul class="breadcrumb">
-                            <li><a href="index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                            <li><a href="/index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
                             <li class="active">Carrito</li>
     					</ul>
             		</div>
@@ -116,7 +116,7 @@
                                                     <td>
                                                         <p class="text-center">
                                                             <figure>
-                												<img src="cms/assets/img/productos/<?php echo $xImagenC; ?>" alt="<?php echo $xNombreC; ?>">
+                												<img src="/cms/assets/img/productos/<?php echo $xImagenC; ?>" alt="<?php echo $xNombreC; ?>">
                 											</figure>
                                                         </p>
             										</td>
@@ -147,7 +147,7 @@
                 				<div class="lg-margin"></div><!-- End .space -->
                 				<div class="row">
                 					<div class="col-md-8 col-sm-12 col-xs-12 lg-margin">
-                                        <a class="btn btn-custom-2" href="productos.php"><i class="fa fa-shopping-cart"></i> Seguir Comprando</a>
+                                        <a class="btn btn-custom-2" href="/productos.php"><i class="fa fa-shopping-cart"></i> Seguir Comprando</a>
                                         <a class="btn btn-warning" href="javascript:Procesar('Actualizar')"><i class="fa fa-refresh"></i> Actualizar</a>
                                         <a class="btn btn-danger" href="javascript:Procesar('Eliminar')"><i class="fa fa-trash"></i> Borrar</a>
                                         <a class="btn btn-success" href="javascript:Procesar('Ordenar')"><i class="fa fa-paper-plane"></i> Ordenar Pedido</a>

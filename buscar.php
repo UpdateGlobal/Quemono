@@ -17,7 +17,7 @@ $parametros = "&buscador=$buscador";
                     document.bus.buscador.focus();
                     return;
                 }
-                document.bus.action="buscar.php";
+                document.bus.action="/buscar.php";
                 document.bus.submit();
             }
         </script>

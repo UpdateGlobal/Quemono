@@ -21,7 +21,7 @@ $filCat = mysqli_fetch_array($resCategoria);
                     document.bus.buscador.focus();
                     return;
                 }
-                document.bus.action="buscar.php";
+                document.bus.action="/buscar.php";
                 document.bus.submit();
             }
         </script>
@@ -35,8 +35,8 @@ $filCat = mysqli_fetch_array($resCategoria);
             	<div id="breadcrumb-container">
                     <div class="container">
                         <ul class="breadcrumb">
-                            <li><a href="index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
-                            <li><a href="productos-list.php">Productos</a></li>
+                            <li><a href="/index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                            <li><a href="/productos-list.php">Productos</a></li>
                             <li class="active"><?php echo $xCategoriax; ?></li>
                         </ul>
                     </div>
@@ -147,15 +147,15 @@ $filCat = mysqli_fetch_array($resCategoria);
                                                     <div class="item-image-container">
                                                         <figure>
                                                             <a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>">
-                                                                <img src="cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>" class="item-image">
+                                                                <img src="/cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>" class="item-image">
                                                                 <?php
                                                                     if($xHoverImagen!=""){
                                                                 ?>
-                                                                <img src="cms/assets/img/productos/hover/<?php echo $xHoverImagen; ?>" alt="<?php echo $xNom_producto; ?> Hover" class="item-image-hover">
+                                                                <img src="/cms/assets/img/productos/hover/<?php echo $xHoverImagen; ?>" alt="<?php echo $xNom_producto; ?> Hover" class="item-image-hover">
                                                                 <?php
                                                                     }else{
                                                                 ?>
-                                                                <img src="cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?> Hover" class="item-image-hover">
+                                                                <img src="/cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?> Hover" class="item-image-hover">
                                                                 <?php
                                                                     }
                                                                 ?>

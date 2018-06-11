@@ -27,7 +27,7 @@
                                     $xTexto     = $filaBan['texto'];
                             ?>
                             <li data-transition="random" data-slotamount="10" data-masterspeed="400" data-saveperformance="on" data-title="<?php echo $xTitulo; ?>">
-                                <img src="images/revslider/dummy.png" alt="slidebg2" data-lazyload="cms/assets/img/banner/<?php echo $xImagen; ?>" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat">
+                                <img src="/images/revslider/dummy.png" alt="slidebg2" data-lazyload="/cms/assets/img/banner/<?php echo $xImagen; ?>" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat">
                                 <div class="tp-mask-wrap" data-x="700" data-y="200" data-speed="600" data-start="700" data-easing="Power3.easeIn" data-endspeed="300"></div>
                                 <div class="tp-caption rev-text sfl stl" data-x="720" data-y="190" data-speed="800" data-start="1100" data-easing="Power3.easeIn" data-endspeed="300" style="background-color: rgba(0, 0, 0, 0.5); padding: 8px; color: #fff;"><span class="tp-caption rev-title" style="color: #f1ce9e;"><?php echo $xTitulo; ?></span><br><br><?php echo $xTexto; ?></div>
                                 <div class="tp-caption sfb stb" data-x="720" data-y="400" data-speed="1200" data-start="2000" data-easing="Power3.easeIn" data-endspeed="300">
@@ -61,7 +61,7 @@
                                             $xLink       = $filaCon['link'];
                                         ?>
                                         <div class="col-md-4 col-sm-4 col-xs-12">
-                                            <a href="<?php echo $xLink; ?>"><img src="cms/assets/img/ofertas/<?php echo $xImagen; ?>" class="img-responsive"></a>
+                                            <a href="<?php echo $xLink; ?>"><img src="/cms/assets/img/ofertas/<?php echo $xImagen; ?>" class="img-responsive"></a>
                                         </div><!-- End .col-md-4 -->
                                         <?php
                                           mysqli_free_result($resultadoCon);
@@ -75,7 +75,7 @@
                                             $xLink       = $filaCon['link'];
                                         ?>
                                         <div class="col-md-4 col-sm-4 col-xs-12">
-                                            <a href="<?php echo $xLink; ?>"><img src="cms/assets/img/ofertas/<?php echo $xImagen; ?>" class="img-responsive"></a>
+                                            <a href="<?php echo $xLink; ?>"><img src="/cms/assets/img/ofertas/<?php echo $xImagen; ?>" class="img-responsive"></a>
                                         </div><!-- End .col-md-4 -->
                                         <?php
                                           mysqli_free_result($resultadoCon);
@@ -89,7 +89,7 @@
                                             $xLink       = $filaCon['link'];
                                         ?>
                                         <div class="col-md-4 col-sm-4 col-xs-12">
-                                            <a href="<?php echo $xLink; ?>"><img src="cms/assets/img/ofertas/<?php echo $xImagen; ?>" class="img-responsive"></a>
+                                            <a href="<?php echo $xLink; ?>"><img src="/cms/assets/img/ofertas/<?php echo $xImagen; ?>" class="img-responsive"></a>
                                         </div><!-- End .col-md-4 -->
                                         <?php
                                           mysqli_free_result($resultadoCon);
@@ -132,8 +132,8 @@
                                                 <div class="item-image-wrapper">
                                                     <figure class="item-image-container">
                                                         <a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>">
-                                                            <img src="cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>" class="item-image">
-                                                            <img src="cms/assets/img/productos/hover/<?php echo $xHoverImagen; ?>" alt="<?php echo $xNom_producto; ?> hover" class="item-image-hover">
+                                                            <img src="/cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>" class="item-image">
+                                                            <img src="/cms/assets/img/productos/hover/<?php echo $xHoverImagen; ?>" alt="<?php echo $xNom_producto; ?> hover" class="item-image-hover">
                                                         </a>
                                                     </figure>
                                                     <div class="item-price-container">
@@ -164,7 +164,7 @@
                                                 <div class="item-meta-container">
                                                     <h3 class="item-name"><a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>"><?php echo $xNom_producto; ?></a></h3>
                                                     <div class="item-action">
-                                                        <form name="fcarrito<?php echo $xCodigo; ?>" id="fcarritop" action="verificar.php" method="post">
+                                                        <form name="fcarrito<?php echo $xCodigo; ?>" id="fcarritop" action="/verificar.php" method="post">
                                                             <input type="hidden" name="cantidad" value="1" />
                                                             <input type="hidden" name="cod_producto" value="<?php echo $xCod_producto; ?>" />
                                                             <input type="hidden" name="cod_principal" value="<?php echo $xCod_principal; ?>" />
@@ -210,7 +210,7 @@
                                         </div><!-- End .col-md-6 -->
     									<div class="col-md-6 col-sm-6 col-xs-12">
                                             <div class="sm-margin visible-xs"></div><!-- space -->
-                                            <img src="cms/assets/img/nosotros/<?php echo $xImagen; ?>" alt="Showcase Venedor" class="img-responsive">
+                                            <img src="/cms/assets/img/nosotros/<?php echo $xImagen; ?>" alt="Showcase Venedor" class="img-responsive">
                                         </div><!-- End .col-md-5 -->
     								    <?php
                                             mysqli_free_result($resultadoCon);
@@ -251,8 +251,8 @@
                                                 <div class="item-image-wrapper">
                                                     <figure class="item-image-container">
                                                         <a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>">
-                                                            <img src="cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>" class="item-image">
-                                                            <img src="cms/assets/img/productos/hover/<?php echo $xHoverImagen; ?>" alt="<?php echo $xNom_producto; ?> hover" class="item-image-hover">
+                                                            <img src="/cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>" class="item-image">
+                                                            <img src="/cms/assets/img/productos/hover/<?php echo $xHoverImagen; ?>" alt="<?php echo $xNom_producto; ?> hover" class="item-image-hover">
                                                         </a>
                                                     </figure>
                                                     <div class="item-price-container">
@@ -283,7 +283,7 @@
                                                 <div class="item-meta-container">
                                                     <h3 class="item-name"><a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>"><?php echo $xNom_producto; ?></a></h3>
                                                     <div class="item-action">
-                                                        <form name="fcarrito<?php echo $xCodigo; ?>" id="fcarritop" action="verificar.php" method="post">
+                                                        <form name="fcarrito<?php echo $xCodigo; ?>" id="fcarritop" action="/verificar.php" method="post">
                                                             <input type="hidden" name="cantidad" value="1" />
                                                             <input type="hidden" name="cod_producto" value="<?php echo $xCod_producto; ?>" />
                                                             <input type="hidden" name="cod_principal" value="<?php echo $xCod_principal; ?>" />
@@ -328,7 +328,7 @@
                                                 $xCod_marca = $filaCar['cod_carrusel'];
                                                 $xMarca     = $filaCar['imagen'];
                                         ?>
-                                        <a href="marcas.php?cod_carrusel=<?php echo $xCod_marca; ?>"><img src="cms/assets/img/carrusel/<?php echo $xMarca; ?>" /></a>
+                                        <a href="marcas.php?cod_carrusel=<?php echo $xCod_marca; ?>"><img src="/cms/assets/img/carrusel/<?php echo $xMarca; ?>" /></a>
                                         <?php
                                             }
                                             mysqli_free_result($resultadoCarrusel);
