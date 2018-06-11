@@ -28,7 +28,7 @@
       }
     </script>
   </head>
-    <body>
+  <body>
     <div id="wrapper">
         <?php include("includes/header.php"); ?>
         <section id="content">

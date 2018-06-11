@@ -158,7 +158,7 @@
                                                         if($xDescuento==""){
                                                         }else{
                                                     ?>
-                                                    <span class="discount-rect">-25%</span>
+                                                    <span class="discount-rect"><?php echo $xDescuento; ?></span>
                                                     <?php } ?>
                                                 </div><!-- End .item-image-wrapper -->
                                                 <div class="item-meta-container">
@@ -328,7 +328,7 @@
                                                 $xCod_marca = $filaCar['cod_carrusel'];
                                                 $xMarca     = $filaCar['imagen'];
                                         ?>
-                                        <a href="cod_carrusel=<?php echo $xCod_marca; ?>"><img src="cms/assets/img/carrusel/<?php echo $xMarca; ?>" /></a>
+                                        <a href="marcas.php?cod_carrusel=<?php echo $xCod_marca; ?>"><img src="cms/assets/img/carrusel/<?php echo $xMarca; ?>" /></a>
                                         <?php
                                             }
                                             mysqli_free_result($resultadoCarrusel);

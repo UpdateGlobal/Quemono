@@ -6,6 +6,48 @@
 <!--[if !IE]><!--> <html> <!--<![endif]-->
     <head>
         <?php include("includes/head.php"); ?>
+        <script>
+            function sendContact(){
+                var valid;
+                valid = validateContact();
+                if(valid) {
+                    jQuery.ajax({
+                        url: "contact_form.php",
+                        data:'nombres='+$("#nombres").val()+'&email='+$("#email").val()+'&telefono='+$("#telefono").val()+'&mensaje='+$("#mensaje").val()+'&fecha_ingreso='+$("#fecha_ingreso").val(),
+                        type: "POST",
+                        success:function(data){
+                            $("#mail-status").html(data);
+                            $("#send").html("");
+                        },
+                        error:function (){}
+                    });
+                }
+            }
+            function validateContact() {
+                var valid = true;
+                if(!$("#nombres").val()) {
+                    $("#nombres").css('background-color','#f28282');
+                    valid = false;
+                }
+                if(!$("#email").val()) {
+                    $("#email").css('background-color','#f28282');
+                    valid = false;
+                }
+                if(!$("#email").val().match(/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/)) {
+                    $("#email").css('background-color','#f28282');
+                    valid = false;
+                }
+                if(!$("#telefono").val()) {
+                    $("#telefono").css('background-color','#f28282');
+                    valid = false;
+                }
+                if(!$("#mensaje").val()) {
+                    $("#mensaje").css('background-color','#f28282');
+                    valid = false;
+                }
+                return valid;
+            }
+        </script>
         <style id="custom-style">
         </style>
     </head>
@@ -38,16 +80,17 @@
             				<div class="row">
             					<div class="col-md-12">
                                     <?php echo $xMap; ?>
-            					<div class="lg-margin"></div><!-- space -->
+            					   <div class="lg-margin"></div><!-- space -->
                                 </div><!-- End .col-md-12 -->
-    						<?php mysqli_free_result($resultadoCot); ?>
+                                <?php mysqli_free_result($resultadoCot); ?>
             					<div class="col-md-8 col-sm-8 col-xs-12">
             						<h2 class="sub-title">Cont&aacute;ctenos</h2>
             						<div class="row">
-            							<form action="" id="contact-form">
+            							<div id="contact-form">
+
             								<div class="col-md-6 col-sm-12 col-xs-12">
     											<div class="input-group">
-    												<span class="input-group-addon"><span class="input-icon input-icon-user"></span><span class="input-text">Nombre&#42;</span></span><input type="text" name="nombre" id="nombre" required class="form-control input-lg" placeholder="Su Nombre">
+    												<span class="input-group-addon"><span class="input-icon input-icon-user"></span><span class="input-text">Nombre&#42;</span></span><input type="text" name="nombres" id="nombres" required class="form-control input-lg" placeholder="Su Nombre">
     											</div><!-- End .input-group -->
             									<div class="input-group">
     												<span class="input-group-addon"><span class="input-icon input-icon-email"></span><span class="input-text">Email&#42;</span></span><input type="email" name="email" id="email" required class="form-control input-lg" placeholder="Su Email">
@@ -61,11 +104,18 @@
             								<div class="col-md-6 col-sm-12 col-xs-12">
     											<div class="input-group textarea-container">
     												<span class="input-group-addon"><span class="input-icon input-icon-message"></span><span class="input-text">Su Mensaje</span></span>
-    												<textarea name="contact-message" id="contact-message" class="form-control" cols="30" rows="6" placeholder="Su Mensaje"></textarea>
+    												<textarea name="mensaje" id="mensaje" class="form-control" cols="30" rows="6" placeholder="Su Mensaje"></textarea>
     											</div><!-- End .input-group -->
-            								    <input type="submit" value="Enviar" class="btn btn-custom-2 md-margin">
+                                                <div style="clear:both;"></div>
+                                                <div id="mail-status"></div>
+                                                <?php 
+                                                    $fecha = date("Y-m-d");
+                                                ?>
+                                                <input type="hidden" id="fecha_ingreso" name="fecha_ingreso" value="<?php echo $fecha ?>">
+                                                <button type="button" class="btn btn-custom-2 md-margin" onClick="sendContact();">Enviar</button>
             								</div><!-- End .col-md-6 -->
-            							</form>
+
+            							</div>
             						</div><!-- End .row -->		
             					</div><!-- End .col-md-8 -->
             					

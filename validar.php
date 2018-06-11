@@ -24,6 +24,14 @@ if($proceso == "iniciar"){
     		$_SESSION['xCodCliente'] = $xCodCliente;
     		$_SESSION['xAlias_c'] = $xAlias;
     		$_SESSION['xEmail_c'] = $xEmail;
+
+    		//Borrando registros de la tabla carrito
+			$xCliente = $_SESSION['IdCliente'];
+			$xOrden = $_SESSION['IdOrden'];
+			$borrar = "DELETE FROM carrito WHERE cod_orden='$xOrden' AND cod_cliente='$xCliente'";
+			$resultado = mysqli_query($enlaces, $borrar);
+
+
     		header("Location:bienvenido.php");    
 	    }else{
 	        header("Location:seguridad.php");

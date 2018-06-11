@@ -247,7 +247,7 @@
                                 </div><!-- End .carousel-controllers -->
                                 <div class="purchased-items-slider owl-carousel">
                                     <?php
-                                        $consultaPro = "SELECT * FROM productos WHERE estado='1' ORDER BY orden ASC";
+                                        $consultaPro = "SELECT * FROM productos WHERE estado='1' AND promocion='1' ORDER BY orden ASC";
                                         $resultadoPro = mysqli_query($enlaces, $consultaPro);
                                         while($filaPro = mysqli_fetch_array($resultadoPro)){
                                             $xCod_producto    = $filaPro['cod_producto'];
