@@ -138,7 +138,7 @@ if($proceso=="Registrar"){
           alert("Debes aceptar nuestras políticas de privacidad");
           return;
         }
-        document.fregistro.action="registrarse.php";
+        document.fregistro.action="/registrarse.php";
         document.fregistro.proceso.value="Registrar";
         document.fregistro.submit();
       }
@@ -155,7 +155,7 @@ if($proceso=="Registrar"){
         	<div id="breadcrumb-container">
         		<div class="container">
     					<ul class="breadcrumb">
-    						<li><a href="index.php">Inicio</a></li>
+    						<li><a href="/index.php">Inicio</a></li>
     						<li class="active">Registro</li>
     					</ul>
         		</div>
@@ -218,7 +218,7 @@ if($proceso=="Registrar"){
                   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <p>Gracias por registrarse como cliente a partir de estos momentos Ud. puede hacer uso del sistema de carrito de compras y el sistema de pedidos en l&iacute;nea. Puede a&ntilde;adir productos. Eliminar Productos, Actualizar datos y cantidades y hacer su pedido en l&iacute;nea a su vez tambi&eacute;n realizar compras.</p>
                     <p>Atentamente<br>Dtpo. Ventas</p>
-                    <p><a href="login.php" class="btn btn-custom-alt">Ingresar</a> | <a href="index.php" class="btn btn-custom-2">Volver al Index</a></p>
+                    <p><a href="/login.php" class="btn btn-custom-alt">Ingresar</a> | <a href="/index.php" class="btn btn-custom-2">Volver al Index</a></p>
                   </div>
                 </div>
                 <?php 

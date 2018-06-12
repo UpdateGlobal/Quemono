@@ -13,7 +13,7 @@
                     document.bus.buscador.focus();
                     return;
                 }
-                document.bus.action="buscar.php";
+                document.bus.action="/buscar.php";
                 document.bus.submit();
             }
         </script>
@@ -27,8 +27,8 @@
             	<div id="breadcrumb-container">
                     <div class="container">
                         <ul class="breadcrumb">
-                            <li><a href="index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
-                            <li><a href="productos.php">Productos</a></li>
+                            <li><a href="/index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                            <li><a href="/productos.php">Productos</a></li>
                             <li class="active">Promociones</li>
                         </ul>
                     </div>
@@ -83,8 +83,8 @@
                                                 <span class="separator"><strong>Visualizaci&oacute;n:</strong></span>
                                             </div>
     										<div class="view-box">
-    											<a href="promociones.php" class="active icon-button icon-grid"><i class="fa fa-th-large"></i></a>
-    											<a href="promociones-list.php" class="icon-button icon-list"><i class="fa fa-th-list"></i></a>
+    											<a href="/promociones.php" class="active icon-button icon-grid"><i class="fa fa-th-large"></i></a>
+    											<a href="/promociones-list.php" class="icon-button icon-list"><i class="fa fa-th-list"></i></a>
     										</div><!-- End .view-box -->
     										
     									</div><!-- End .toolbox-filter -->
@@ -128,6 +128,7 @@
                                                     $xCod_principal     = $filaPro['cod_principal'];
                                                     $xCod_categoria     = $filaPro['cod_categoria'];
                                                     $xCod_sub_categoria = $filaPro['cod_sub_categoria'];
+                                                    $xSlugp             = $filaPro['slug'];
                                                     $xNom_producto    = mysqli_real_escape_string($enlaces, $filaPro['nom_producto']);
                                                     $xPrecio_oferta   = number_format($filaPro['precio_oferta'],2);
                                                     $xPrecio_normal   = number_format($filaPro['precio_normal'],2);
@@ -140,16 +141,16 @@
                                                 <div class="item item-hover">
                                                     <div class="item-image-wrapper">
                                                         <figure class="item-image-container">
-                                                            <a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>">
-                                                                <img src="cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>" class="item-image">
+                                                            <a href="/producto/<?php echo $xSlugp; ?>">
+                                                                <img src="/cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>" class="item-image">
                                                                 <?php
                                                                     if($xHoverImagen!=""){
                                                                 ?>
-                                                                <img src="cms/assets/img/productos/hover/<?php echo $xHoverImagen; ?>" alt="<?php echo $xNom_producto; ?> Hover" class="item-image-hover">
+                                                                <img src="/cms/assets/img/productos/hover/<?php echo $xHoverImagen; ?>" alt="<?php echo $xNom_producto; ?> Hover" class="item-image-hover">
                                                                 <?php
                                                                     }else{
                                                                 ?>
-                                                                <img src="cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?> Hover" class="item-image-hover">
+                                                                <img src="/cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?> Hover" class="item-image-hover">
                                                                 <?php    
                                                                     }
                                                                 ?>
@@ -177,13 +178,13 @@
                                                             if($xDescuento==""){
                                                             }else{
                                                         ?>
-                                                        <span class="discount-rect">-25%</span>
+                                                        <span class="discount-rect"><?php echo $xDescuento; ?></span>
                                                         <?php } ?>
                                                     </div><!-- End .item-image-wrapper -->
                                                     <div class="item-meta-container">
-                                                        <h3 class="item-name"><a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>"><?php echo $xNom_producto; ?></a></h3>
+                                                        <h3 class="item-name"><a href="/producto/<?php echo $xCod_producto; ?>"><?php echo $xNom_producto; ?></a></h3>
                                                         <div class="item-action">
-                                                            <form name="fcarrito<?php echo $xCodigo; ?>" id="fcarritop" action="verificar.php" method="post">
+                                                            <form name="fcarrito<?php echo $xCodigo; ?>" id="fcarritop" action="/verificar.php" method="post">
                                                                 <input type="hidden" name="cantidad" value="1" />
                                                                 <input type="hidden" name="cod_producto" value="<?php echo $xCod_producto; ?>" />
                                                                 <input type="hidden" name="cod_principal" value="<?php echo $xCod_principal; ?>" />

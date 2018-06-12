@@ -9,6 +9,7 @@ RewriteCond %{REQUEST_URI} !^/subcategorias/(.*) [OR]
 RewriteCond %{REQUEST_URI} !^/subcategoria/(.*) [OR]
 RewriteCond %{REQUEST_URI} !^/marcas/(.*) [OR]
 RewriteCond %{REQUEST_URI} !^/marca/(.*) [OR]
+RewriteCond %{REQUEST_URI} !^/producto/(.*) [OR]
 RewriteRule ^catalogos/([^/]*) productos.php?slug=$1
 RewriteRule ^catalogos/([^/]*) productos.php?slug=$1&p=$2
 RewriteRule ^catalogo/([^/]*) productos-list.php?slug=$1
@@ -25,3 +26,4 @@ RewriteRule ^marcas/([^/]*) marcas.php?slug=$1
 RewriteRule ^marcas/([^/]*) marcas.php?slug=$1&p=2
 RewriteRule ^marca/([^/]*) marcas-list.php?slug=$1
 RewriteRule ^marca/([^/]*) marcas-list.php?slug=$1&p=2
+RewriteRule ^producto/([^/]*) producto.php?slug=$1

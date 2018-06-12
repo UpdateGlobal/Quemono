@@ -22,7 +22,7 @@ $filaCli = mysqli_fetch_array($resultCli);
         <?php include("includes/head.php"); ?>
         <script>
             function Enviar(){
-                document.ftienda.action="envia-pedido.php";
+                document.ftienda.action="/envia-pedido.php";
                 document.ftienda.metod="POST";
                 document.ftienda.submit();
             }
@@ -38,8 +38,8 @@ $filaCli = mysqli_fetch_array($resultCli);
             	<div id="breadcrumb-container">
             		<div class="container">
     					<ul class="breadcrumb">
-                            <li><a href="index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
-                            <li><a href="carrito-compras.php">Carrito de Compras</a></li>
+                            <li><a href="/index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                            <li><a href="/carrito-compras.php">Carrito de Compras</a></li>
                             <li class="active">Pedidos en L&iacute;nea</li>
     					</ul>
             		</div>
@@ -98,7 +98,7 @@ $filaCli = mysqli_fetch_array($resultCli);
                                                     <td>
                                                         <p class="text-center">
                                                             <figure>
-                												<img src="cms/assets/img/productos/<?php echo $xImagenC; ?>" alt="<?php echo $xNombreC; ?>">
+                												<img src="/cms/assets/img/productos/<?php echo $xImagenC; ?>" alt="<?php echo $xNombreC; ?>">
                 											</figure>
                                                         </p>
             										</td>
@@ -200,7 +200,7 @@ $filaCli = mysqli_fetch_array($resultCli);
                             <div class="sm-margin"></div>
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                    <a class="btn btn-danger" href="cerrar-sesion.php">Cerrar Sesi&oacute;n</a>
+                                    <a class="btn btn-danger" href="/cerrar-sesion.php">Cerrar Sesi&oacute;n</a>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <a class="btn btn-success" href="javascript:Enviar();">Enviar Pedido *</a>

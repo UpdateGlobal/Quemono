@@ -1,12 +1,13 @@
 <?php include("cms/module/conexion.php"); ?>
 <?php include("modules/session-core.php"); ?>
-<?php $cod_principal = $_REQUEST['cod_principal']; ?>
+<?php $slug = $_REQUEST['slug']; ?>
 <?php 
-$conPrincipal = "SELECT * FROM productos_principal WHERE cod_principal='$cod_principal' ORDER BY orden";
+$conPrincipal = "SELECT * FROM productos_principal WHERE slug='$slug' ORDER BY orden";
 $resPrincipal = mysqli_query($enlaces,$conPrincipal) or die('Consulta fallida: ' . mysqli_error($enlaces));
 $filPri = mysqli_fetch_array($resPrincipal);
     $xCodPrix        = $filPri['cod_principal'];
     $xPrincipalx     = $filPri['principal'];
+    $cod_principal   = $xCodPrix; 
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html class="ie8"> <![endif]-->
@@ -91,8 +92,8 @@ $filPri = mysqli_fetch_array($resPrincipal);
                                                     <span class="separator"><strong>Visualizaci&oacute;n:</strong></span>
                                                 </div>
             									<div class="view-box">
-            										<a href="catalogo.php?cod_principal=<?php echo $xCodPrix; ?>" class="icon-button icon-grid"><i class="fa fa-th-large"></i></a>
-            										<a href="catalogo-list.php?cod_principal=<?php echo $xCodPrix; ?>" class="active icon-button icon-list"><i class="fa fa-th-list"></i></a>
+            										<a href="/catalogos/<?php echo $slug; ?>" class="icon-button icon-grid"><i class="fa fa-th-large"></i></a>
+            										<a href="/catalogo/<?php echo $slug; ?>" class="active icon-button icon-list"><i class="fa fa-th-list"></i></a>
             									</div><!-- End .view-box -->
                                             </div><!-- End .toolbox-filter -->
             								<div class="toolbox-pagination clearfix">
@@ -102,20 +103,20 @@ $filPri = mysqli_fetch_array($resPrincipal);
                                                         echo "
                                                             <ul class='pagination'>";
                                                         if($pagina>1){
-                                                            echo "<li><a href='?cod_principal=".$xCodPrix."&p=".($pagina-1)."'><i class='fa fa-angle-left'></i></a></li>";
+                                                            echo "<li><a href='/catalogo/".$slug."&p=".($pagina-1)."'><i class='fa fa-angle-left'></i></a></li>";
                                                         }
                                                         for($i=$pagina; $i<=$total_paginas && $i<=($pagina+$paginas_mostrar); $i++){
                                                             if($i==$pagina){
                                                                 echo "<li class='active'><a>$i</a></li>";
                                                             }else{
-                                                                echo "<li><a href='?cod_principal=".$xCodPrix."&p=$i'>$i</a></li>";
+                                                                echo "<li><a href='/catalogo/".$slug."&p=$i'>$i</a></li>";
                                                             }
                                                         }
                                                         if(($pagina+$paginas_mostrar)<$total_paginas){
                                                             echo "<li><a>...</a></li>";
                                                         }
                                                         if($pagina<$total_paginas){
-                                                            echo "  <li><a href='?cod_principal=".$xCodPrix."&p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
+                                                            echo "  <li><a href='/catalogo/".$slug."&p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
                                                         }
                                                         echo "</ul>";
                                                     }
@@ -134,6 +135,7 @@ $filPri = mysqli_fetch_array($resPrincipal);
                                                         $xCod_principal     = $filaPro['cod_principal'];
                                                         $xCod_categoria     = $filaPro['cod_categoria'];
                                                         $xCod_sub_categoria = $filaPro['cod_sub_categoria'];
+                                                        $xSlugp             = $filaPro['slug'];
                                                         $xNom_producto    = mysqli_real_escape_string($enlaces, $filaPro['nom_producto']);
                                                         $xPrecio_oferta   = number_format($filaPro['precio_oferta'],2);
                                                         $xPrecio_normal   = number_format($filaPro['precio_normal'],2);
@@ -147,7 +149,7 @@ $filPri = mysqli_fetch_array($resPrincipal);
                                                     <div class="item item-list clearfix">
                                                         <div class="item-image-container">
                                                             <figure>
-                                                                <a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>">
+                                                                <a href="/producto/<?php echo $xSlugp; ?>">
                                                                     <img src="/cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>" class="item-image">
                                                                     <?php
                                                                         if($xHoverImagen!=""){
@@ -184,11 +186,11 @@ $filPri = mysqli_fetch_array($resPrincipal);
                                                                 if($xDescuento==""){
                                                                 }else{
                                                             ?>
-                                                            <span class="discount-rect">-25%</span>
+                                                            <span class="discount-rect"><?php echo $xDescuento; ?></span>
                                                             <?php } ?>
                                                         </div><!-- End .item-image -->
                                                         <div class="item-meta-container">
-                                                            <h3 class="item-name"><a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>"><?php echo $xNom_producto; ?></a></h3>
+                                                            <h3 class="item-name"><a href="/producto/<?php echo $xSlugp; ?>"><?php echo $xNom_producto; ?></a></h3>
                                                             <p class="text-justify"><?php
                                                                 $xDescripcion_r = strip_tags($xDescripcion);
                                                                 $strCut = substr($xDescripcion_r,0,280);
@@ -225,20 +227,20 @@ $filPri = mysqli_fetch_array($resPrincipal);
                                                     echo "
                                                         <ul class='pagination'>";
                                                     if($pagina>1){
-                                                        echo "<li><a href='?cod_principal=".$xCodPrix."&p=".($pagina-1)."'><i class='fa fa-angle-left'></i></a></li>";
+                                                        echo "<li><a href='/catalogo/".$slug."&p=".($pagina-1)."'><i class='fa fa-angle-left'></i></a></li>";
                                                     }
                                                     for($i=$pagina; $i<=$total_paginas && $i<=($pagina+$paginas_mostrar); $i++){
                                                         if($i==$pagina){
                                                             echo "<li class='active'><a>$i</a></li>";
                                                         }else{
-                                                            echo "<li><a href='?cod_principal=".$xCodPrix."&p=$i'>$i</a></li>";
+                                                            echo "<li><a href='/catalogo/".$slug."&p=$i'>$i</a></li>";
                                                         }
                                                     }
                                                     if(($pagina+$paginas_mostrar)<$total_paginas){
                                                         echo "<li><a>...</a></li>";
                                                     }
                                                     if($pagina<$total_paginas){
-                                                        echo "  <li><a href='?cod_principal=".$xCodPrix."&p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
+                                                        echo "  <li><a href='/catalogo/".$slug."&p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
                                                     }
                                                     echo "</ul>";
                                                 }

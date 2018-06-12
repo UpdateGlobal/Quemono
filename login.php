@@ -23,7 +23,7 @@
           return;
         }
         document.flogin.proceso.value="iniciar";
-        document.flogin.action="validar.php";
+        document.flogin.action="/validar.php";
         document.flogin.submit();
       }
     </script>
@@ -35,7 +35,7 @@
         	<div id="breadcrumb-container">
         		<div class="container">
     					<ul class="breadcrumb">
-    						<li><a href="index.php">Inicio</a></li>
+    						<li><a href="/index.php">Inicio</a></li>
     						<li class="active">Login</li>
     					</ul>
         		</div>
@@ -46,7 +46,7 @@
                 <h2>&iquest;Nuevo cliente?</h2>
                 <p>Al crear una cuenta en nuestra tienda, podrá avanzar más rápidamente en el proceso de compra, almacenar múltiples direcciones de envío, ver y rastrear sus pedidos en su cuenta y más.</p>
                 <div class="md-margin"></div><!-- space -->
-                <a href="registrarse.php" class="btn btn-custom-2">Crear una Cuenta</a>
+                <a href="/registrarse.php" class="btn btn-custom-2">Crear una Cuenta</a>
                 <div class="lg-margin"></div><!-- space -->
               </div><!-- End .col-md-6 -->
               <div class="col-md-6 col-sm-6 col-xs-12">

@@ -16,7 +16,7 @@
         <div id="breadcrumb-container">
         	<div class="container">
     				<ul class="breadcrumb">
-    					<li><a href="index.php">Inicio</a></li>
+    					<li><a href="/index.php">Inicio</a></li>
     					<li class="active">Seguridad</li>
     				</ul>
         	</div>
@@ -31,9 +31,9 @@
                   <div class="alert alert-danger text-center" role="alert">
                     <h3>Usuario no autorizado</h3>
                     <p>Lo sentimos, ud. no es un usuario registrado en nuestro sistema. Si cree que se trata de un error vuelva a intentarlo ingresando el email y la clave correcta</p>
-                    <p><span class="label label-danger">Si ha olvidado su clave puede pedir que sea enviada a su correo haciendo <a class="alert-span" href="olvida.php">[Click aqu&iacute;]</a></span></p>
+                    <p><span class="label label-danger">Si ha olvidado su clave puede pedir que sea enviada a su correo haciendo <a class="alert-span" href="/olvida.php">[Click aqu&iacute;]</a></span></p>
                   </div>
-                  <p><a class="btn btn-custom-2" href="index.php">Volver al inicio</a></p>
+                  <p><a class="btn btn-custom-2" href="/index.php">Volver al inicio</a></p>
                 </div>
               </div>
             </div><!-- End .col-md-6 -->

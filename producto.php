@@ -1,15 +1,20 @@
 <?php include("cms/module/conexion.php"); ?>
 <?php include("modules/session-core.php"); ?>
 <?php 
-    $cod_producto  = $_REQUEST['cod_producto'];
-    $consultaPro   = "SELECT pp.cod_principal, pp.principal, cp.cod_categoria, cp.categoria, scp.cod_sub_categoria, scp.subcategoria, mp.cod_carrusel, mp.marca, p.* FROM productos_principal as pp, productos_categorias as cp, productos_sub_categorias as scp, carrusel as mp, productos as p WHERE p.cod_principal=pp.cod_principal AND p.cod_categoria=cp.cod_categoria AND p.cod_sub_categoria=scp.cod_sub_categoria AND p.cod_carrusel=mp.cod_carrusel AND cod_producto=$cod_producto ORDER BY orden ASC";
+    $slug = $_REQUEST['slug'];
+    $conProducto = "SELECT * FROM productos WHERE slug='$slug' ORDER BY orden";
+    $resProducto = mysqli_query($enlaces,$conProducto) or die('Consulta fallida: ' . mysqli_error($enlaces));
+    $filProd = mysqli_fetch_array($resProducto);
+        $cod_producto = $filProd['cod_producto'];
+
+    $consultaPro  = "SELECT pp.cod_principal, pp.principal, cp.cod_categoria, cp.categoria, scp.cod_sub_categoria, scp.subcategoria, mp.cod_carrusel, mp.marca, p.* FROM productos_principal as pp, productos_categorias as cp, productos_sub_categorias as scp, carrusel as mp, productos as p WHERE p.cod_principal=pp.cod_principal AND p.cod_categoria=cp.cod_categoria AND p.cod_sub_categoria=scp.cod_sub_categoria AND p.cod_carrusel=mp.cod_carrusel AND cod_producto=$cod_producto ORDER BY orden ASC";
     $resultadoPro  = mysqli_query($enlaces, $consultaPro);
     $filaPro       = mysqli_fetch_array($resultadoPro);
         $xCod_producto      = $filaPro['cod_producto'];
 
         $xCod_principal     = $filaPro['cod_principal'];
         $xPrincipalp        = $filaPro['principal'];
-
+        
         $xCod_categoria     = $filaPro['cod_categoria'];
         $xCategoriap        = $filaPro['categoria'];
 
@@ -47,7 +52,7 @@
         <?php include("includes/head.php"); ?>
         <script>
             function Agregarp(){
-                document.fcarritop.action="verificar.php";
+                document.fcarritop.action="/verificar.php";
                 valor=document.fcarritop.cantidad.value;
                 if(isNaN(valor)||(valor=="")||(valor==0)){
                     alert("Insertar una cantidad valida");
@@ -67,11 +72,11 @@
             	<div id="breadcrumb-container">
             		<div class="container">
     					<ul class="breadcrumb">
-    						<li><a href="index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
-                            <li><a href="productos.php">Productos</a></li>
-                            <li><a href="catalogo.php?cod_principal=<?php echo $xCod_principal; ?>"><?php echo $xPrincipalp; ?></a></li>
-                            <li><a href="categorias.php?cod_categoria=<?php echo $xCod_categoria; ?>"><?php echo $xCategoriap; ?></a></li>
-                            <li><a href="subcategorias.php?cod_sub_categoria=<?php echo $xCod_sub_categoria; ?>"><?php echo $xSubCategoriap; ?></a></li>
+    						<li><a href="/index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                            <li><a href="/productos.php">Productos</a></li>
+                            <li><a href="/catalogos/<?php echo $xSlugPr; ?>"><?php echo $xPrincipalp; ?></a></li>
+                            <li><a href="/categorias/<?php echo $xSlugC; ?>"><?php echo $xCategoriap; ?></a></li>
+                            <li><a href="/subcategorias/<?php echo $xSlugSC; ?>"><?php echo $xSubCategoriap; ?></a></li>
     						<li class="active"><?php echo $xNom_producto; ?></li>
     					</ul>
             		</div>
@@ -80,29 +85,27 @@
             		<div class="row">
             			<div class="col-md-12">
             				<div class="row">
-            				
             				    <div class="col-md-6 col-sm-12 col-xs-12 product-viewer clearfix">
 
                 					<div id="product-image-carousel-container">
                 						<ul id="product-carousel" class="celastislide-list" style="height: 100px;">
-        	        						<li class="active-slide"><a data-rel='prettyPhoto[product]' href="cms/assets/img/productos/<?php echo $xImagen; ?>" data-image="cms/assets/img/productos/<?php echo $xImagen; ?>" data-zoom-image="cms/assets/img/productos/<?php echo $xImagen; ?>" class="product-gallery-item"><img src="cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>"></a></li>
+        	        						<li class="active-slide"><a data-rel='prettyPhoto[product]' href="/cms/assets/img/productos/<?php echo $xImagen; ?>" data-image="/cms/assets/img/productos/<?php echo $xImagen; ?>" data-zoom-image="/cms/assets/img/productos/<?php echo $xImagen; ?>" class="product-gallery-item"><img src="/cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>"></a></li>
                                             <?php 
                                                 $galeria="SELECT * FROM productos_galeria WHERE cod_producto='$cod_producto'";
                                                 $ejecutag=mysqli_query($enlaces, $galeria);
                                                 while($filagp=mysqli_fetch_array($ejecutag)){
                                                     $xImgG = $filagp['imagen'];
                                             ?>
-                                                <li><a data-rel='prettyPhoto[product]' href="cms/assets/img/productos/galeria/<?php echo $xImgG; ?>" data-image="cms/assets/img/productos/galeria/<?php echo $xImgG; ?>" data-zoom-image="cms/assets/img/productos/galeria/<?php echo $xImgG; ?>" class="product-gallery-item"><img src="cms/assets/img/productos/galeria/<?php echo $xImgG; ?>" alt="Phone photo 2"></a></li>
+                                                <li><a data-rel='prettyPhoto[product]' href="/cms/assets/img/productos/galeria/<?php echo $xImgG; ?>" data-image="/cms/assets/img/productos/galeria/<?php echo $xImgG; ?>" data-zoom-image="/cms/assets/img/productos/galeria/<?php echo $xImgG; ?>" class="product-gallery-item"><img src="/cms/assets/img/productos/galeria/<?php echo $xImgG; ?>" alt="Phone photo 2"></a></li>
                                             <?php 
                                                 }
-
                                             ?>
                 					    </ul><!-- End product-carousel -->
                 					</div>
 
                 					<div id="product-image-container">
                 						<figure>
-                                            <img src="cms/assets/img/productos/<?php echo $xImagen; ?>" data-zoom-image="cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>" id="product-image">
+                                            <img src="/cms/assets/img/productos/<?php echo $xImagen; ?>" data-zoom-image="/cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>" id="product-image">
                 							<figcaption class="item-price-container">
                                                 <?php
                                                     if($xPrecio_oferta!=0){
@@ -219,9 +222,7 @@
                                             ?>
                                             <div class="tab-pane" id="video">
                 								<div class="video-container">
-                									<strong>A Video about Product</strong>
-                									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur adipisci esse.</p>
-                									<hr>
+                									<strong>Un V&iacute;deo sobre el Producto:</strong>
                 									<?php echo $xVideo; ?>		
                 								</div><!-- End .video-container -->
                 							</div><!-- End .tab-pane -->
@@ -265,9 +266,9 @@
                                     <div class="item item-hover">
                                         <div class="item-image-wrapper">
                                             <figure class="item-image-container">
-                                                <a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>">
-                                                    <img src="cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>" class="item-image">
-                                                    <img src="cms/assets/img/productos/hover/<?php echo $xHoverImagen; ?>" alt="<?php echo $xNom_producto; ?>" class="item-image-hover">
+                                                <a href="/producto/<?php echo $xSlugp; ?>">
+                                                    <img src="/cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>" class="item-image">
+                                                    <img src="/cms/assets/img/productos/hover/<?php echo $xHoverImagen; ?>" alt="<?php echo $xNom_producto; ?>" class="item-image-hover">
                                                 </a>
                                             </figure>
                                             <div class="item-price-container">
@@ -292,13 +293,13 @@
                                                 if($xDescuento==""){
                                                 }else{
                                             ?>
-                                            <span class="discount-rect">-25%</span>
+                                            <span class="discount-rect"><?php echo $xDescuento; ?></span>
                                             <?php } ?>
                                         </div><!-- End .item-image-wrapper -->
                                         <div class="item-meta-container">
-                                            <h3 class="item-name"><a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>"><?php echo $xNom_producto; ?></a></h3>
+                                            <h3 class="item-name"><a href="/producto/<?php echo $xSlugp; ?>"><?php echo $xNom_producto; ?></a></h3>
                                             <div class="item-action">
-                                                <form name="fcarrito<?php echo $xCodigo; ?>" id="fcarritop" action="verificar.php" method="post">
+                                                <form name="fcarrito<?php echo $xCodigo; ?>" id="fcarritop" action="/verificar.php" method="post">
                                                     <input type="hidden" name="cantidad" value="1" />
                                                     <input type="hidden" name="cod_producto" value="<?php echo $xCod_producto; ?>" />
                                                     <input type="hidden" name="cod_principal" value="<?php echo $xCod_principal; ?>" />

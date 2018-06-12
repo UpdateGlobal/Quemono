@@ -32,12 +32,12 @@ if($proceso == "iniciar"){
 			$resultado = mysqli_query($enlaces, $borrar);
 
 
-    		header("Location:bienvenido.php");    
+    		header("Location:/bienvenido.php");    
 	    }else{
-	        header("Location:seguridad.php");
+	        header("Location:/seguridad.php");
 	    }
 	}else{
-		header("Location:seguridad.php");
+		header("Location:/seguridad.php");
 	}
 	
 }

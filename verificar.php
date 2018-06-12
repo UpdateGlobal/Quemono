@@ -17,13 +17,13 @@ if($varCliente==""){
 	$_SESSION['IdPrincipal']=$varPrincipal;
 	$_SESSION['IdCategoria']=$varCatProducto;
 	$_SESSION['IdSCategoria']=$varSCatProducto;
-	header("Location:login.php");
+	header("Location:/login.php");
 }else{
 	//Iguala a nada y destruye la variable de sesion
 	$_SESSION['IdProducto']="";
 	unset($_SESSION['IdProducto']);
 	//Enviamos el proceso a verificar carrito
-	header("Location:verifica-carrito.php?cod_producto=$varProducto&cantidad=$varCantidad");
+	header("Location:/verifica-carrito.php?cod_producto=$varProducto&cantidad=$varCantidad");
 }
 
 ?>

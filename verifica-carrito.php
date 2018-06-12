@@ -43,7 +43,7 @@ switch ($varAccion) {
 		}
 }
 /*----------------------------------------------------------------*/
-header("Location: carrito.php");
+header("Location:/carrito.php");
 /*----------------------------------------------------------------*/
 function Verifica_Pedido($varCliente,$varOrden,$enlace) {
 	if ($varCliente != "x") {

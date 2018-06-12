@@ -171,15 +171,14 @@
                                                         $xCodigoPri = $filaPri['cod_principal'];
                                                         $xPrincipal = $filaPri['principal'];
                                                         $xMenu      = $filaPri['menu'];
-                                                        $xSlug      = $filaPri['slug'];
+                                                        $xSlugp     = $filaPri['slug'];
                                                 ?>
-                                                <li class="mega-menu-container"><a class="<?php echo ($menu == $xPrincipal ? "active" : "")?>" href="catalogo.php?cod_principal=<?php echo $xCodigoPri; ?>"><?php echo $xPrincipal; ?></a>
+                                                <li class="mega-menu-container"><a class="<?php echo ($menu == $xPrincipal ? "active" : "")?>" href="/catalogos/<?php echo $xSlugp; ?>"><?php echo $xPrincipal; ?></a>
                                                     <?php 
                                                         $consultarCat = "SELECT * FROM productos_categorias WHERE cod_principal='$xCodigoPri'";
                                                         $resultadoCat = mysqli_query($enlaces, $consultarCat);
                                                         $Totalprincipal = mysqli_num_rows($resultadoCat);
                                                         if($Totalprincipal==0){
-
                                                         }else{
                                                     ?>
                                                     <div class="mega-menu clearfix">
@@ -190,10 +189,10 @@
                                                                 $xCodigoCat = $filaCat['cod_categoria'];
                                                                 $xCodigoPri = $filaCat['cod_principal'];
                                                                 $xCategoria = $filaCat['categoria'];
-                                                                $xSlug      = $filaCat['slug'];
+                                                                $xSlugc     = $filaCat['slug'];
                                                         ?>
                                                         <div class="col-5">
-                                                            <a href="categorias.php?cod_categoria=<?php echo $xCodigoCat; ?>" class="mega-menu-title"><?php echo $xCategoria; ?></a><!-- End .mega-menu-title -->
+                                                            <a href="/categorias/<?php echo $xSlugc; ?>" class="mega-menu-title"><?php echo $xCategoria; ?></a><!-- End .mega-menu-title -->
 
                                                             <ul class="mega-menu-list clearfix">
                                                                 <?php
@@ -204,10 +203,10 @@
                                                                         $xCodigoSubC  = $filaSC['cod_sub_categoria'];
                                                                         $xCodigoCat   = $filaSC['cod_categoria'];
                                                                         $xSCategoria  = $filaSC['subcategoria'];
-                                                                        $xSlugc       = $filaSC['slug'];
+                                                                        $xSlugsc      = $filaSC['slug'];
                                                                         $numSubC++;
                                                                 ?>
-                                                                <li><a href="subcategorias.php?cod_sub_categoria=<?php echo $xCodigoSubC; ?>"><?php echo $xSCategoria; ?></a></li>
+                                                                <li><a href="/subcategorias/<?php echo $xSlugsc; ?>"><?php echo $xSCategoria; ?></a></li>
                                                                 <?php
                                                                     }
                                                                     mysqli_free_result($resultadoSubCat);

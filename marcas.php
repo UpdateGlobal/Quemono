@@ -1,6 +1,12 @@
 <?php include("cms/module/conexion.php"); ?>
 <?php include("modules/session-core.php"); ?>
-<?php $cod_carrusel = $_REQUEST['cod_carrusel']; ?>
+<?php $slug = $_REQUEST['slug']; ?>
+<?php 
+$conCarruselS = "SELECT * FROM carrusel WHERE slug='$slug' ORDER BY orden";
+$resCarruselS = mysqli_query($enlaces,$conCarruselS) or die('Consulta fallida: ' . mysqli_error($enlaces));
+$filCarS = mysqli_fetch_array($resCarruselS);
+    $cod_carrusel = $filCarS['cod_carrusel'];
+?>
 <?php 
 $conCarrusel = "SELECT m.cod_carrusel, m.marca, p.* FROM productos as p, carrusel as m WHERE p.cod_carrusel='$cod_carrusel' AND m.cod_carrusel=m.cod_carrusel ORDER BY orden";
 $resCarrusel = mysqli_query($enlaces,$conCarrusel) or die('Consulta fallida: ' . mysqli_error($enlaces));
@@ -21,7 +27,7 @@ $filCar = mysqli_fetch_array($resCarrusel);
                     document.bus.buscador.focus();
                     return;
                 }
-                document.bus.action="buscar.php";
+                document.bus.action="/buscar.php";
                 document.bus.submit();
             }
         </script>
@@ -35,8 +41,8 @@ $filCar = mysqli_fetch_array($resCarrusel);
                 <div id="breadcrumb-container">
                     <div class="container">
                         <ul class="breadcrumb">
-                            <li><a href="index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
-                            <li><a href="productos.php">Productos</a></li>
+                            <li><a href="/index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                            <li><a href="/productos.php">Productos</a></li>
                             <li class="active"><?php echo $xMarcax; ?></li>
                         </ul>
                     </div>
@@ -92,8 +98,8 @@ $filCar = mysqli_fetch_array($resCarrusel);
                                                 <span class="separator"><strong>Visualizaci&oacute;n:</strong></span>
                                             </div>
                                             <div class="view-box">
-                                                <a href="marcas.php?cod_carrusel=<?php echo $xCodCarx; ?>" class="active icon-button icon-grid"><i class="fa fa-th-large"></i></a>
-                                                <a href="marcas-list.php?cod_carrusel=<?php echo $xCodCarx; ?>" class="icon-button icon-list"><i class="fa fa-th-list"></i></a>
+                                                <a href="/marcas/<?php echo $slug; ?>" class="active icon-button icon-grid"><i class="fa fa-th-large"></i></a>
+                                                <a href="/marca/<?php echo $slug; ?>" class="icon-button icon-list"><i class="fa fa-th-list"></i></a>
                                             </div><!-- End .view-box -->
                                         </div><!-- End .toolbox-filter -->
                                         <div class="toolbox-pagination clearfix">
@@ -103,20 +109,20 @@ $filCar = mysqli_fetch_array($resCarrusel);
                                                     echo "
                                                         <ul class='pagination'>";
                                                     if($pagina>1){
-                                                        echo "<li><a href='?cod_carrusel=".$xCodCarx."&p=".($pagina-1)."'><i class='fa fa-angle-left'></i></a></li>";
+                                                        echo "<li><a href='/marcas/".$slug."&p=".($pagina-1)."'><i class='fa fa-angle-left'></i></a></li>";
                                                     }
                                                     for($i=$pagina; $i<=$total_paginas && $i<=($pagina+$paginas_mostrar); $i++){
                                                         if($i==$pagina){
                                                             echo "<li class='active'><a>$i</a></li>";
                                                         }else{
-                                                            echo "<li><a href='?cod_carrusel=".$xCodCarx."&p=$i'>$i</a></li>";
+                                                            echo "<li><a href='/marcas/".$slug."&p=$i'>$i</a></li>";
                                                         }
                                                     }
                                                     if(($pagina+$paginas_mostrar)<$total_paginas){
                                                         echo "<li><a>...</a></li>";
                                                     }
                                                     if($pagina<$total_paginas){
-                                                        echo "<li><a href='?cod_carrusel=".$xCodCarx."&p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
+                                                        echo "<li><a href='/marcas/".$slug."&p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
                                                     }
                                                     echo "</ul>";
                                                 }
@@ -135,29 +141,30 @@ $filCar = mysqli_fetch_array($resCarrusel);
                                                     $xCod_principal     = $filaPro['cod_principal'];
                                                     $xCod_categoria     = $filaPro['cod_categoria'];
                                                     $xCod_sub_categoria = $filaPro['cod_sub_categoria'];
-                                                    $xNom_producto    = mysqli_real_escape_string($enlaces, $filaPro['nom_producto']);
-                                                    $xPrecio_oferta   = number_format($filaPro['precio_oferta'],2);
-                                                    $xPrecio_normal   = number_format($filaPro['precio_normal'],2);
-                                                    $xImagen          = $filaPro['imagen'];
-                                                    $xDescuento       = $filaPro['descuento'];
-                                                    $xHoverImagen     = $filaPro['h_imagen'];
-                                                    $xFecha           = $filaPro['fecha_ing'];
+                                                    $xNom_producto      = mysqli_real_escape_string($enlaces, $filaPro['nom_producto']);
+                                                    $xSlugp             = $filaPro['slug'];
+                                                    $xPrecio_oferta     = number_format($filaPro['precio_oferta'],2);
+                                                    $xPrecio_normal     = number_format($filaPro['precio_normal'],2);
+                                                    $xImagen            = $filaPro['imagen'];
+                                                    $xDescuento         = $filaPro['descuento'];
+                                                    $xHoverImagen       = $filaPro['h_imagen'];
+                                                    $xFecha             = $filaPro['fecha_ing'];
                                             ?>
                                             <div class="col-md-4 col-sm-6 col-xs-12">
                                                 <div class="item item-hover">
                                                     <div class="item-image-wrapper">
                                                         <figure class="item-image-container">
-                                                            <a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>">
-                                                                <img src="cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>" class="item-image">
+                                                            <a href="/producto/<?php echo $xSlugp; ?>">
+                                                                <img src="/cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>" class="item-image">
                                                                 <?php
                                                                     if($xHoverImagen!=""){
                                                                 ?>
-                                                                <img src="cms/assets/img/productos/hover/<?php echo $xHoverImagen; ?>" alt="<?php echo $xNom_producto; ?> Hover" class="item-image-hover">
+                                                                <img src="/cms/assets/img/productos/hover/<?php echo $xHoverImagen; ?>" alt="<?php echo $xNom_producto; ?> Hover" class="item-image-hover">
                                                                 <?php
                                                                     }else{
                                                                 ?>
-                                                                <img src="cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?> Hover" class="item-image-hover">
-                                                                <?php    
+                                                                <img src="/cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?> Hover" class="item-image-hover">
+                                                                <?php
                                                                     }
                                                                 ?>
                                                             </a>
@@ -184,13 +191,13 @@ $filCar = mysqli_fetch_array($resCarrusel);
                                                             if($xDescuento==""){
                                                             }else{
                                                         ?>
-                                                        <span class="discount-rect">-25%</span>
+                                                        <span class="discount-rect"><?php echo $xDescuento; ?></span>
                                                         <?php } ?>
                                                     </div><!-- End .item-image-wrapper -->
                                                     <div class="item-meta-container">
-                                                        <h3 class="item-name"><a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>"><?php echo $xNom_producto; ?></a></h3>
+                                                        <h3 class="item-name"><a href="/producto/<?php echo $slug; ?>"><?php echo $xNom_producto; ?></a></h3>
                                                         <div class="item-action">
-                                                            <form name="fcarrito<?php echo $xCodigo; ?>" id="fcarritop" action="verificar.php" method="post">
+                                                            <form name="fcarrito<?php echo $xCodigo; ?>" id="fcarritop" action="/verificar.php" method="post">
                                                                 <input type="hidden" name="cantidad" value="1" />
                                                                 <input type="hidden" name="cod_producto" value="<?php echo $xCod_producto; ?>" />
                                                                 <input type="hidden" name="cod_principal" value="<?php echo $xCod_principal; ?>" />
@@ -219,26 +226,25 @@ $filCar = mysqli_fetch_array($resCarrusel);
                                                     echo "
                                                         <ul class='pagination'>";
                                                     if($pagina>1){
-                                                        echo "<li><a href='?cod_carrusel=".$xCodCarx."&p=".($pagina-1)."'><i class='fa fa-angle-left'></i></a></li>";
+                                                        echo "<li><a href='/marcas/".$slug."&p=".($pagina-1)."'><i class='fa fa-angle-left'></i></a></li>";
                                                     }
                                                     for($i=$pagina; $i<=$total_paginas && $i<=($pagina+$paginas_mostrar); $i++){
                                                         if($i==$pagina){
                                                             echo "<li class='active'><a>$i</a></li>";
                                                         }else{
-                                                            echo "<li><a href='?cod_carrusel=".$xCodCarx."&p=$i'>$i</a></li>";
+                                                            echo "<li><a href='/marcas/".$slug."&p=$i'>$i</a></li>";
                                                         }
                                                     }
                                                     if(($pagina+$paginas_mostrar)<$total_paginas){
                                                         echo "<li><a>...</a></li>";
                                                     }
                                                     if($pagina<$total_paginas){
-                                                        echo "  <li><a href='?cod_carrusel=".$xCodCarx."&p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
+                                                        echo "  <li><a href='/marcas/".$slug."&p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
                                                     }
                                                     echo "</ul>";
                                                 }
                                             }
                                             ?>
-                                            </ul>
                                         </div><!-- End .pull-right -->
                                     </div><!-- End pagination-container -->
                                 </div><!-- End .col-md-9 -->

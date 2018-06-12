@@ -30,7 +30,7 @@ $telefono       = $filaCli['telefono'];
         	<div id="breadcrumb-container">
         		<div class="container">
     					<ul class="breadcrumb">
-    						<li><a href="index.php">Inicio</a></li>
+    						<li><a href="/index.php">Inicio</a></li>
     						<li class="active">Perfil</li>
     					</ul>
         		</div>
@@ -68,7 +68,7 @@ $telefono       = $filaCli['telefono'];
                 <div class="sm-margin"></div>
                 <div class="row">
                   <div class="col-lg-12">
-                    <a class="btn btn-custom-alt" href="perfil-editar.php?cod_cliente=<?php echo $cod_cliente; ?>">Cambiar Datos de Perfil</a>
+                    <a class="btn btn-custom-alt" href="/perfil-editar.php?cod_cliente=<?php echo $cod_cliente; ?>">Cambiar Datos de Perfil</a>
                   </div>
                 </div>
               </div><!-- End .col-md-6 -->
@@ -94,10 +94,10 @@ $telefono       = $filaCli['telefono'];
                 <div class="sm-margin"></div>
                 <div class="row">
                   <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                    <p class="linea"><a class="btn btn-custom-2" href="clave-editar.php?cod_cliente=<?php echo $cod_cliente; ?>">Cambiar Datos de Cuenta</a></p>
+                    <p class="linea"><a class="btn btn-custom-2" href="/clave-editar.php?cod_cliente=<?php echo $cod_cliente; ?>">Cambiar Datos de Cuenta</a></p>
                   </div>
                   <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                    <p style="float:right;"><a class="btn btn-danger" href="perfil-delete.php">Eliminar Cuenta</a></p>
+                    <p style="float:right;"><a class="btn btn-danger" href="/perfil-delete.php">Eliminar Cuenta</a></p>
                   </div>
                 </div>
                 <div class="sm-margin"></div><!-- space -->

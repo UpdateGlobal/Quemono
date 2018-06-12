@@ -4,11 +4,9 @@
 										<div class="panel">
 											<div class="accordion-header">
 												<div class="accordion-title"><span>Categor&iacute;as</span></div><!-- End .accordion-title -->
-												<a class="accordion-btn opened"  data-toggle="collapse" data-target="#category-list-1"></a>
+												<a class="accordion-btn opened" data-toggle="collapse" data-target="#category-list-1"></a>
 											</div><!-- End .accordion-header -->
-								
 											<div id="category-list-1" class="collapse in">
-
 												<div class="panel-body">
 													<?php
 							                            $consultarPri = "SELECT * FROM productos_principal WHERE estado='1' ORDER BY orden";
@@ -28,7 +26,7 @@
 							                                    $xSlugCat 		= $filaC['slug'];
 							                                    $xCategoria 	= $filaC['categoria'];
 							                            ?>
-														<li><a href="categorias.php?cod_categoria=<?php echo $xCod_categoria; ?>"><?php echo $xCategoria; ?></a>
+														<li><a href="/categorias/<?php echo $xSlugCat; ?>"><?php echo $xCategoria; ?></a>
 															<ul class="subcat">
 																<?php
 						                                            $consultarSubCat = "SELECT * FROM productos_sub_categorias WHERE cod_categoria='$xCod_categoria' AND estado='1' ORDER BY orden";
@@ -39,7 +37,7 @@
 						                                                $xSlugSCat 			= $filaSC['slug'];
 						                                                $xSCategoria 		= $filaSC['subcategoria'];
 						                                        ?>
-																<li><a href="subcategorias.php?cod_sub_categoria=<?php echo $xCod_SCategoria ?>"><?php echo $xSCategoria; ?></a></li>
+																<li><a href="/subcategorias/<?php echo $xSlugSCat; ?>"><?php echo $xSCategoria; ?></a></li>
 																<?php
 																	}
 																	mysqli_free_result($resultadoSubCat); 
@@ -65,7 +63,6 @@
 												<div class="accordion-title"><span>Marcas</span></div><!-- End .accordion-title -->
 												<a class="accordion-btn opened"  data-toggle="collapse" data-target="#category-list-2"></a>
 											</div><!-- End .accordion-header -->
-								
 											<div id="category-list-2" class="collapse in">
 												<div class="panel-body">
 													<ul class="category-filter-list jscrollpane">
@@ -77,7 +74,7 @@
 				                                                $xSlugMar     = $filaC['slug'];
 				                                                $xMarcas      = $filaC['marca'];
 				                                        ?>
-														<li><a href="marcas.php?cod_carrusel=<?php echo $xCodigoMar; ?>"><?php echo $xMarcas; ?></a></li>
+														<li><a href="/marcas/<?php echo $xSlugMar; ?>"><?php echo $xMarcas; ?></a></li>
 														<?php
 				                                            }
 				                                            mysqli_free_result($resultadoCar);
@@ -86,8 +83,6 @@
 												</div><!-- End .panel-body -->
 											</div><!-- #collapse -->
 										</div><!-- End .panel -->
-        							
         							</div><!-- .panel-group -->
         						</div><!-- End .widget -->
-        						
         					</aside><!-- End .col-md-3 -->

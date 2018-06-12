@@ -40,5 +40,5 @@ mail($destino,$encabezada,$mensajea,$mailCabecera);
 session_destroy();
 $eliminar = "DELETE FROM clientes WHERE cod_cliente='$cod_cliente'";
 $resultado = mysqli_query($enlaces,$eliminar);
-header("Location:bye.php");
+header("Location:/bye.php");
 ?>

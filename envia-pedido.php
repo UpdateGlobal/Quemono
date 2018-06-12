@@ -61,7 +61,7 @@ $mensaje.= '
    		<tr>
    		    <td width="80%">&nbsp;</td>
    		    <td width="10%"><strong>Monto Bruto : </strong><br /></td>
-   		    <td width="10%">S/.'.number_format($total,2).'</td>
+   		    <td width="10%">$'.number_format($total,2).'</td>
 	    </tr>
    		<tr>
    		    <td>&nbsp;</td>
@@ -133,7 +133,8 @@ do{
 
 /*----- Borrar contenido de la tabla carrito ----*/
 $borrarCarrito="DELETE FROM carrito WHERE cod_orden='$xOrden' AND cod_cliente='$xCliente'";
-$resulBorrar=mysqli_query(mysqli_connect("localhost", "root", "", "update_quemono"), $borrarCarrito);
+$resulBorrar=mysqli_query(mysqli_connect("localhost", "update_quemono", "k$$#0&YZsIe4", "update_quemono"), $borrarCarrito);
+/* $resulBorrar=mysqli_query(mysqli_connect("localhost", "root", "", "update_quemono"), $borrarCarrito); */
 $_SESSION['IdOrden']="";
 unset($_SESSION['IdOrden']);
 

@@ -1,6 +1,12 @@
 <?php include("cms/module/conexion.php"); ?>
 <?php include("modules/session-core.php"); ?>
-<?php $cod_sub_categoria = $_REQUEST['cod_sub_categoria']; ?>
+<?php 
+$slug = $_REQUEST['slug']; 
+$conSCategoria = "SELECT * FROM productos_sub_categorias WHERE slug='$slug' ORDER BY orden";
+$resSCategoria = mysqli_query($enlaces,$conSCategoria) or die('Consulta fallida: ' . mysqli_error($enlaces));
+$filSCat = mysqli_fetch_array($resSCategoria);
+    $cod_sub_categoria = $filSCat['cod_sub_categoria'];
+?>
 <?php 
 $conCategoria = "SELECT cp.cod_categoria, cp.categoria, scp.* FROM productos_categorias as cp, productos_sub_categorias as scp WHERE scp.cod_sub_categoria='$cod_sub_categoria' AND scp.cod_categoria=cp.cod_categoria ORDER BY orden";
 $resCategoria = mysqli_query($enlaces,$conCategoria) or die('Consulta fallida: ' . mysqli_error($enlaces));
@@ -23,7 +29,7 @@ $filSCat = mysqli_fetch_array($resCategoria);
                     document.bus.buscador.focus();
                     return;
                 }
-                document.bus.action="buscar.php";
+                document.bus.action="/buscar.php";
                 document.bus.submit();
             }
         </script>
@@ -37,9 +43,9 @@ $filSCat = mysqli_fetch_array($resCategoria);
             	<div id="breadcrumb-container">
                     <div class="container">
                         <ul class="breadcrumb">
-                            <li><a href="index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
-                            <li><a href="productos-list.php">Productos</a></li>
-                            <li><a href="categorias-list.php?cod_categoria=<?php echo $xCodCatx; ?>"><?php echo $xCategoriax; ?></a></li>
+                            <li><a href="/index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                            <li><a href="/productos-list.php">Productos</a></li>
+                            <li><a href="/categorias.php?cod_categoria=<?php echo $xCodCatx; ?>"><?php echo $xCategoriax; ?></a></li>
                             <li class="active"><?php echo $xSubCategoriax; ?></li>
                         </ul>
                     </div>
@@ -94,8 +100,8 @@ $filSCat = mysqli_fetch_array($resCategoria);
                                                 <span class="separator"><strong>Visualizaci&oacute;n:</strong></span>
                                             </div>
     										<div class="view-box">
-    											<a href="subcategorias.php?cod_sub_categoria=<?php echo $xCodSCatx; ?>" class="icon-button icon-grid"><i class="fa fa-th-large"></i></a>
-    											<a href="subcategorias-list.php?cod_sub_categoria=<?php echo $xCodSCatx; ?>" class="active icon-button icon-list"><i class="fa fa-th-list"></i></a>
+    											<a href="/subcategorias/<?php echo $slug; ?>" class="icon-button icon-grid"><i class="fa fa-th-large"></i></a>
+    											<a href="/subcategoria/<?php echo $slug; ?>" class="active icon-button icon-list"><i class="fa fa-th-list"></i></a>
     										</div><!-- End .view-box -->
     									</div><!-- End .toolbox-filter -->
     									<div class="toolbox-pagination clearfix">
@@ -105,20 +111,20 @@ $filSCat = mysqli_fetch_array($resCategoria);
                                                     echo "
                                                         <ul class='pagination'>";
                                                     if($pagina>1){
-                                                        echo "<li><a href='?cod_sub_categoria=".$xCodSCatx."&p=".($pagina-1)."'><i class='fa fa-angle-left'></i></a></li>";
+                                                        echo "<li><a href='/subcategoria/".$slug."&p=".($pagina-1)."'><i class='fa fa-angle-left'></i></a></li>";
                                                     }
                                                     for($i=$pagina; $i<=$total_paginas && $i<=($pagina+$paginas_mostrar); $i++){
                                                         if($i==$pagina){
                                                             echo "<li class='active'><a>$i</a></li>";
                                                         }else{
-                                                            echo "<li><a href='?cod_sub_categoria=".$xCodSCatx."&p=$i'>$i</a></li>";
+                                                            echo "<li><a href='/subcategoria/".$slug."&p=$i'>$i</a></li>";
                                                         }
                                                     }
                                                     if(($pagina+$paginas_mostrar)<$total_paginas){
                                                         echo "<li><a>...</a></li>";
                                                     }
                                                     if($pagina<$total_paginas){
-                                                        echo "  <li><a href='?cod_sub_categoria=".$xCodSCatx."&p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
+                                                        echo "  <li><a href='/subcategoria/".$slug."&p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
                                                     }
                                                     echo "</ul>";
                                                 }
@@ -136,6 +142,7 @@ $filSCat = mysqli_fetch_array($resCategoria);
                                                     $xCod_principal     = $filaPro['cod_principal'];
                                                     $xCod_categoria     = $filaPro['cod_categoria'];
                                                     $xCod_sub_categoria = $filaPro['cod_sub_categoria'];
+                                                    $xSlugp             = $filaPro['slug'];
                                                     $xNom_producto    = mysqli_real_escape_string($enlaces, $filaPro['nom_producto']);
                                                     $xPrecio_oferta   = number_format($filaPro['precio_oferta'],2);
                                                     $xPrecio_normal   = number_format($filaPro['precio_normal'],2);
@@ -150,16 +157,16 @@ $filSCat = mysqli_fetch_array($resCategoria);
                                                 <div class="item item-list clearfix">
                                                     <div class="item-image-container">
                                                         <figure>
-                                                            <a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>">
-                                                                <img src="cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>" class="item-image">
+                                                            <a href="/producto/<?php echo $xSlugp; ?>">
+                                                                <img src="/cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>" class="item-image">
                                                                 <?php
                                                                     if($xHoverImagen!=""){
                                                                 ?>
-                                                                <img src="cms/assets/img/productos/hover/<?php echo $xHoverImagen; ?>" alt="<?php echo $xNom_producto; ?> Hover" class="item-image-hover">
+                                                                <img src="/cms/assets/img/productos/hover/<?php echo $xHoverImagen; ?>" alt="<?php echo $xNom_producto; ?> Hover" class="item-image-hover">
                                                                 <?php
                                                                     }else{
                                                                 ?>
-                                                                <img src="cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?> Hover" class="item-image-hover">
+                                                                <img src="/cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?> Hover" class="item-image-hover">
                                                                 <?php    
                                                                     }
                                                                 ?>
@@ -187,11 +194,11 @@ $filSCat = mysqli_fetch_array($resCategoria);
                                                             if($xDescuento==""){
                                                             }else{
                                                         ?>
-                                                        <span class="discount-rect">-25%</span>
+                                                        <span class="discount-rect"><?php echo $xDescuento; ?></span>
                                                         <?php } ?>
                                                     </div><!-- End .item-image -->
                                                     <div class="item-meta-container">
-                                                        <h3 class="item-name"><a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>"><?php echo $xNom_producto; ?></a></h3>
+                                                        <h3 class="item-name"><a href="/producto/<?php echo $xSlugp; ?>"><?php echo $xNom_producto; ?></a></h3>
                                                         <p class="text-justify"><?php
                                                                 $xDescripcion_r = strip_tags($xDescripcion);
                                                                 $strCut = substr($xDescripcion_r,0,280);
@@ -199,7 +206,7 @@ $filSCat = mysqli_fetch_array($resCategoria);
                                                                 echo $xDescripcion_r;
                                                         ?></p>
                                                         <div class="item-action">
-                                                            <form name="fcarrito<?php echo $xCodigo; ?>" id="fcarritop" action="verificar.php" method="post">
+                                                            <form name="fcarrito<?php echo $xCodigo; ?>" id="fcarritop" action="/verificar.php" method="post">
                                                                 <input type="hidden" name="cantidad" value="1" />
                                                                 <input type="hidden" name="cod_producto" value="<?php echo $xCod_producto; ?>" />
                                                                 <input type="hidden" name="cod_principal" value="<?php echo $xCod_principal; ?>" />
@@ -228,20 +235,20 @@ $filSCat = mysqli_fetch_array($resCategoria);
                                                     echo "
                                                         <ul class='pagination'>";
                                                     if($pagina>1){
-                                                        echo "<li><a href='?cod_sub_categoria=".$xCodSCatx."&p=".($pagina-1)."'><i class='fa fa-angle-left'></i></a></li>";
+                                                        echo "<li><a href='/subcategoria/".$slug."&p=".($pagina-1)."'><i class='fa fa-angle-left'></i></a></li>";
                                                     }
                                                     for($i=$pagina; $i<=$total_paginas && $i<=($pagina+$paginas_mostrar); $i++){
                                                         if($i==$pagina){
                                                             echo "<li class='active'><a>$i</a></li>";
                                                         }else{
-                                                            echo "<li><a href='?cod_sub_categoria=".$xCodSCatx."&p=$i'>$i</a></li>";
+                                                            echo "<li><a href='/subcategoria/".$slug."&p=$i'>$i</a></li>";
                                                         }
                                                     }
                                                     if(($pagina+$paginas_mostrar)<$total_paginas){
                                                         echo "<li><a>...</a></li>";
                                                     }
                                                     if($pagina<$total_paginas){
-                                                        echo "  <li><a href='?cod_sub_categoria=".$xCodSCatx."&p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
+                                                        echo "  <li><a href='/subcategoria/".$slug."&p=".($pagina+1)."'><i class='fa fa-angle-right'></i></a></li>";
                                                     }
                                                     echo "</ul>";
                                                 }

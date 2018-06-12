@@ -120,6 +120,7 @@
                                                     $xCod_principal     = $filaPro['cod_principal'];
                                                     $xCod_categoria     = $filaPro['cod_categoria'];
                                                     $xCod_sub_categoria = $filaPro['cod_sub_categoria'];
+                                                    $xSlugp           = $filaPro['slug'];
                                                     $xNom_producto    = mysqli_real_escape_string($enlaces, $filaPro['nom_producto']);
                                                     $xPrecio_oferta   = number_format($filaPro['precio_oferta'],2);
                                                     $xPrecio_normal   = number_format($filaPro['precio_normal'],2);
@@ -162,7 +163,7 @@
                                                     <?php } ?>
                                                 </div><!-- End .item-image-wrapper -->
                                                 <div class="item-meta-container">
-                                                    <h3 class="item-name"><a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>"><?php echo $xNom_producto; ?></a></h3>
+                                                    <h3 class="item-name"><a href="/producto/<?php echo $xSlugp; ?>"><?php echo $xNom_producto; ?></a></h3>
                                                     <div class="item-action">
                                                         <form name="fcarrito<?php echo $xCodigo; ?>" id="fcarritop" action="/verificar.php" method="post">
                                                             <input type="hidden" name="cantidad" value="1" />
@@ -175,7 +176,7 @@
                                                             </button>
                                                         </form>
                                                     </div>
-                                                </div><!-- End .item-meta-container --> 
+                                                </div><!-- End .item-meta-container -->
                                             </div><!-- End .item -->
                                             <?php
                                                 }
@@ -238,19 +239,22 @@
                                                 $resultadoPro = mysqli_query($enlaces, $consultaPro);
                                                 while($filaPro = mysqli_fetch_array($resultadoPro)){
                                                     $xCod_producto    = $filaPro['cod_producto'];
-
+                                                    $xCod_principal     = $filaPro['cod_principal'];
+                                                    $xCod_categoria     = $filaPro['cod_categoria'];
+                                                    $xCod_sub_categoria = $filaPro['cod_sub_categoria'];
+                                                    $xSlugp           = $filaPro['slug'];
                                                     $xNom_producto    = mysqli_real_escape_string($enlaces, $filaPro['nom_producto']);
                                                     $xPrecio_oferta   = number_format($filaPro['precio_oferta'],2);
                                                     $xPrecio_normal   = number_format($filaPro['precio_normal'],2);
                                                     $xImagen          = $filaPro['imagen'];
-                                                    $xDescuento       = $filaPro['descuento'];
                                                     $xHoverImagen     = $filaPro['h_imagen'];
+                                                    $xDescuento       = $filaPro['descuento'];
                                                     $xFecha           = $filaPro['fecha_ing'];
                                             ?>
                                             <div class="item item-hover">
                                                 <div class="item-image-wrapper">
                                                     <figure class="item-image-container">
-                                                        <a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>">
+                                                        <a href="/producto/<?php echo $xSlugp; ?>">
                                                             <img src="/cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>" class="item-image">
                                                             <img src="/cms/assets/img/productos/hover/<?php echo $xHoverImagen; ?>" alt="<?php echo $xNom_producto; ?> hover" class="item-image-hover">
                                                         </a>
@@ -277,11 +281,11 @@
                                                         if($xDescuento==""){
                                                         }else{
                                                     ?>
-                                                    <span class="discount-rect">-25%</span>
+                                                    <span class="discount-rect"><?php echo $xDescuento; ?></span>
                                                     <?php } ?>
                                                 </div><!-- End .item-image-wrapper -->
                                                 <div class="item-meta-container">
-                                                    <h3 class="item-name"><a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>"><?php echo $xNom_producto; ?></a></h3>
+                                                    <h3 class="item-name"><a href="/producto/<?php echo $xSlugp; ?>"><?php echo $xNom_producto; ?></a></h3>
                                                     <div class="item-action">
                                                         <form name="fcarrito<?php echo $xCodigo; ?>" id="fcarritop" action="/verificar.php" method="post">
                                                             <input type="hidden" name="cantidad" value="1" />
@@ -327,8 +331,9 @@
                                             while($filaCar = mysqli_fetch_array($resultadoCarrusel)){
                                                 $xCod_marca = $filaCar['cod_carrusel'];
                                                 $xMarca     = $filaCar['imagen'];
+                                                $xSlugm     = $filaCar['slug'];
                                         ?>
-                                        <a href="marcas.php?cod_carrusel=<?php echo $xCod_marca; ?>"><img src="/cms/assets/img/carrusel/<?php echo $xMarca; ?>" /></a>
+                                        <a href="/marcas/<?php echo $xSlugm; ?>"><img src="/cms/assets/img/carrusel/<?php echo $xMarca; ?>" /></a>
                                         <?php
                                             }
                                             mysqli_free_result($resultadoCarrusel);

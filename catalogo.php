@@ -1,12 +1,13 @@
 <?php include("cms/module/conexion.php"); ?>
 <?php include("modules/session-core.php"); ?>
-<?php $cod_principal = $_REQUEST['cod_principal']; ?>
+<?php $slug = $_REQUEST['slug']; ?>
 <?php 
-$conPrincipal = "SELECT * FROM productos_principal WHERE cod_principal='$cod_principal' ORDER BY orden";
+$conPrincipal = "SELECT * FROM productos_principal WHERE slug='$slug' ORDER BY orden";
 $resPrincipal = mysqli_query($enlaces,$conPrincipal) or die('Consulta fallida: ' . mysqli_error($enlaces));
 $filPri = mysqli_fetch_array($resPrincipal);
     $xCodPrix        = $filPri['cod_principal'];
     $xPrincipalx     = $filPri['principal'];
+    $cod_principal   = $xCodPrix; 
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html class="ie8"> <![endif]-->

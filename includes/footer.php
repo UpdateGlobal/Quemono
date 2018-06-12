@@ -6,10 +6,10 @@
                         <div class="col-md-3 col-sm-4 col-xs-12 widget">
                             <h3>MAPA DEL SITIO</h3>
                             <ul class="links">
-                                <li><a href="index.php">Inicio</a></li>
-                                <li><a href="productos.php">Productos</a></li>
-                                <li><a href="promociones.php">Promociones</a></li>
-                                <li><a href="contacto.php">Contacto</a></li>
+                                <li><a href="/index.php">Inicio</a></li>
+                                <li><a href="/productos.php">Productos</a></li>
+                                <li><a href="/promociones.php">Promociones</a></li>
+                                <li><a href="/contacto.php">Contacto</a></li>
                             </ul>
                         </div><!-- End .widget -->
                         
@@ -22,9 +22,9 @@
                                     while($filaPri = mysqli_fetch_array($resultadoPrincipal)){
                                         $xCod_principal = $filaPri['cod_principal'];
                                         $xPrincipal     = $filaPri['principal'];
-                                        $xSlug          = $filaPri['slug'];
+                                        $xSlugPf        = $filaPri['slug'];
                                 ?>
-                                <li><a href="catalogo.php?cod_principal=<?php echo $xCod_principal; ?>"><?php echo $xPrincipal; ?></a></li>
+                                <li><a href="/catalogos/<?php echo $xSlugPf; ?>"><?php echo $xPrincipal; ?></a></li>
                                 <?php
                                     }
                                     mysqli_free_result($resultadoPrincipal);
@@ -58,7 +58,7 @@
                         <div class="clearfix visible-sm"></div>
                         
                         <div class="col-md-3 col-sm-12 col-xs-12 widget">
-                            <h3>SÍGUENOS EN</h3>
+                            <h3>S&Iacute;GUENOS EN</h3>
                             <div class="facebook-likebox">
                                 <?php
                                     $consultarCot = 'SELECT * FROM contacto';
@@ -108,24 +108,24 @@
         <a href="#" id="scroll-top" title="Scroll to Top"><i class="fa fa-angle-up"></i></a><!-- End #scroll-top -->
     
     <!-- END -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/smoothscroll.js"></script>
-    <script src="js/jquery.debouncedresize.js"></script>
-    <script src="js/retina.min.js"></script>
-    <script src="js/jquery.placeholder.js"></script>
-    <script src="js/jquery.hoverIntent.min.js"></script>
-    <script src="js/jquery.flexslider-min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jflickrfeed.min.js"></script>
-    <script src="js/jquery.prettyPhoto.js"></script>
-    <script src="js/jquery.themepunch.tools.min.js"></script>
-    <script src="js/jquery.themepunch.revolution.min.js"></script>
-    <script src="js/jquery.selectbox.min.js"></script>
-    <script src="js/jquery.fitvids.js"></script>
-    <script src="js/jquery.elastislide.js"></script>
-    <script src="js/jquery.elevateZoom.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/smoothscroll.js"></script>
+    <script src="/js/jquery.debouncedresize.js"></script>
+    <script src="/js/retina.min.js"></script>
+    <script src="/js/jquery.placeholder.js"></script>
+    <script src="/js/jquery.hoverIntent.min.js"></script>
+    <script src="/js/jquery.flexslider-min.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/jflickrfeed.min.js"></script>
+    <script src="/js/jquery.prettyPhoto.js"></script>
+    <script src="/js/jquery.themepunch.tools.min.js"></script>
+    <script src="/js/jquery.themepunch.revolution.min.js"></script>
+    <script src="/js/jquery.selectbox.min.js"></script>
+    <script src="/js/jquery.fitvids.js"></script>
+    <script src="/js/jquery.elastislide.js"></script>
+    <script src="/js/jquery.elevateZoom.min.js"></script>
 
-    <script src="js/main.js"></script>
+    <script src="/js/main.js"></script>
     
     <script>
         $(function() {
@@ -157,7 +157,6 @@
                 shadow:0,
                 hideTimerBar: "on",
                 // navigationStyle:"preview4"
-              });
-
+            });
         });
     </script>
