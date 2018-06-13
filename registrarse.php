@@ -168,7 +168,7 @@ if($proceso=="Registrar"){
                 ?>
                 <header class="content-title">
                   <h1 class="title">Registrar Cuenta</h1>
-                  <p class="title-desc">Si ya tiene un cuenta puede registrarse en: <a href="login.php">login page</a>.</p>
+                  <p class="title-desc">Si ya tiene un cuenta puede registrarse en: <a href="/login.php">login page</a>.</p>
                 </header>
                 <div class="xs-margin"></div><!-- space -->
 						    <form method="POST" action="" name="fregistro" id="fregistro">

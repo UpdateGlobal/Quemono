@@ -1,4 +1,5 @@
-<?php include "cms/modulos/conexion.php"; ?>
+<?php include "cms/module/conexion.php"; ?>
+<?php include "cms/module/verificar.php"; ?>
 <?php 
 session_start();
 session_destroy();
@@ -19,6 +20,8 @@ $xCliente = $_SESSION['IdCliente'];
 $xOrden = $_SESSION['IdOrden'];
 $borrar = "DELETE FROM carrito WHERE cod_orden='$xOrden' AND cod_cliente='$xCliente'";
 $resultado = mysqli_query($enlaces, $borrar);
+$_SESSION['IdOrden']="";
+unset($_SESSION['IdOrden']);
 
 header("Location:/index.php");
 ?>

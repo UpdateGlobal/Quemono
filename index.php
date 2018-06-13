@@ -132,7 +132,7 @@
                                             <div class="item item-hover">
                                                 <div class="item-image-wrapper">
                                                     <figure class="item-image-container">
-                                                        <a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>">
+                                                        <a href="/producto/<?php echo $xSlugp; ?>">
                                                             <img src="/cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>" class="item-image">
                                                             <img src="/cms/assets/img/productos/hover/<?php echo $xHoverImagen; ?>" alt="<?php echo $xNom_producto; ?> hover" class="item-image-hover">
                                                         </a>

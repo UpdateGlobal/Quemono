@@ -2,6 +2,31 @@
 <?php include("modules/session-core.php"); ?>
 <?php 
     $slug = $_REQUEST['slug'];
+    $conSCategoria = "SELECT * FROM productos_sub_categorias WHERE slug='$slug' ORDER BY orden";
+    $resSCategoria = mysqli_query($enlaces,$conSCategoria) or die('Consulta fallida: ' . mysqli_error($enlaces));
+    $filSCat = mysqli_fetch_array($resSCategoria);
+        $cod_principal = $filSCat['cod_principal'];
+        $cod_categoria = $filSCat['cod_categoria'];
+        $cod_sub_categoria = $filSCat['cod_sub_categoria'];
+    ?>
+    <?php 
+    $conPrincipal = "SELECT * FROM productos_principal WHERE cod_principal='$cod_principal' ORDER BY orden";
+    $resPrincipal = mysqli_query($enlaces,$conPrincipal) or die('Consulta fallida: ' . mysqli_error($enlaces));
+    $filPri = mysqli_fetch_array($resPrincipal);
+        $xPrincipalx = $filPri['principal'];
+        $xSlugPri = $filPri['slug'];
+
+    $conCategoria = "SELECT * FROM productos_categorias WHERE cod_categoria='$cod_categoria' ORDER BY orden";
+    $resCategoria = mysqli_query($enlaces,$conCategoria) or die('Consulta fallida: ' . mysqli_error($enlaces));
+    $filCat = mysqli_fetch_array($resCategoria);
+        $xSlugCat = $filCat['slug'];
+
+    $conSubCategoria = "SELECT * FROM productos_sub_categorias WHERE cod_sub_categoria='$cod_sub_categoria' ORDER BY orden";
+    $resSubCategoria = mysqli_query($enlaces,$conSubCategoria) or die('Consulta fallida: ' . mysqli_error($enlaces));
+    $filSCat = mysqli_fetch_array($resSubCategoria);
+        $xSlugSCat = $filSCat['slug'];
+
+
     $conProducto = "SELECT * FROM productos WHERE slug='$slug' ORDER BY orden";
     $resProducto = mysqli_query($enlaces,$conProducto) or die('Consulta fallida: ' . mysqli_error($enlaces));
     $filProd = mysqli_fetch_array($resProducto);
@@ -74,8 +99,8 @@
     					<ul class="breadcrumb">
     						<li><a href="/index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
                             <li><a href="/productos.php">Productos</a></li>
-                            <li><a href="/catalogos/<?php echo $xSlugPr; ?>"><?php echo $xPrincipalp; ?></a></li>
-                            <li><a href="/categorias/<?php echo $xSlugC; ?>"><?php echo $xCategoriap; ?></a></li>
+                            <li><a href="/catalogos/<?php echo $xSlugPri; ?>"><?php echo $xPrincipalp; ?></a></li>
+                            <li><a href="/categorias/<?php echo $xSlugCat; ?>"><?php echo $xCategoriap; ?></a></li>
                             <li><a href="/subcategorias/<?php echo $xSlugSC; ?>"><?php echo $xSubCategoriap; ?></a></li>
     						<li class="active"><?php echo $xNom_producto; ?></li>
     					</ul>
@@ -96,7 +121,7 @@
                                                 while($filagp=mysqli_fetch_array($ejecutag)){
                                                     $xImgG = $filagp['imagen'];
                                             ?>
-                                                <li><a data-rel='prettyPhoto[product]' href="/cms/assets/img/productos/galeria/<?php echo $xImgG; ?>" data-image="/cms/assets/img/productos/galeria/<?php echo $xImgG; ?>" data-zoom-image="/cms/assets/img/productos/galeria/<?php echo $xImgG; ?>" class="product-gallery-item"><img src="/cms/assets/img/productos/galeria/<?php echo $xImgG; ?>" alt="Phone photo 2"></a></li>
+                                                <li><a data-rel='prettyPhoto[product]' href="/cms/assets/img/productos/galeria/<?php echo $xImgG; ?>" data-image="/cms/assets/img/productos/galeria/<?php echo $xImgG; ?>" data-zoom-image="/cms/assets/img/productos/galeria/<?php echo $xImgG; ?>" class="product-gallery-item"><img src="/cms/assets/img/productos/galeria/<?php echo $xImgG; ?>" alt="<?php echo $xNom_producto; ?>"></a></li>
                                             <?php 
                                                 }
                                             ?>
@@ -255,6 +280,7 @@
                                             $xCod_principal     = $filaPro['cod_principal'];
                                             $xCod_categoria     = $filaPro['cod_categoria'];
                                             $xCod_sub_categoria = $filaPro['cod_sub_categoria'];
+                                            $xSlugp             = $filaPro['slug'];
                                             $xNom_producto    = mysqli_real_escape_string($enlaces, $filaPro['nom_producto']);
                                             $xPrecio_oferta   = number_format($filaPro['precio_oferta'],2);
                                             $xPrecio_normal   = number_format($filaPro['precio_normal'],2);

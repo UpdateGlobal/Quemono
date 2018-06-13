@@ -15,8 +15,13 @@ if(isset($_SESSION['IdCliente'])){
   $varCliente = "";
 }
 
-$sql = "DELETE FROM carrito WHERE cod_orden='$varOrden' AND cod_cliente='$varCliente'";
-$result = mysqli_query(mysqli_connect("localhost","root","", "update_quemono"),$sql);
+//Borrando registros de la tabla carrito
+$xCliente = $_SESSION['IdCliente'];
+$xOrden = $_SESSION['IdOrden'];
+$borrar = "DELETE FROM carrito WHERE cod_orden='$xOrden' AND cod_cliente='$xCliente'";
+$resultado = mysqli_query($enlaces, $borrar);
+$_SESSION['IdOrden']="";
+unset($_SESSION['IdOrden']);
 
 header("Location:/index.php");
 ?>

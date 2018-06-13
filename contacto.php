@@ -153,13 +153,10 @@
                                     </ul>
             					</div><!-- End .col-md-4 -->
             				</div><!-- End .row -->
-            				
             			</div><!-- End .col-md-12 -->
             		</div><!-- End .row -->
     			</div><!-- End .container -->
-            
             </section><!-- End #content -->
-        
             <?php include("includes/footer.php"); ?>
         </div><!-- End #wrapper -->
     </body>

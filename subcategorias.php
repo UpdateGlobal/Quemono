@@ -5,9 +5,22 @@ $slug = $_REQUEST['slug'];
 $conSCategoria = "SELECT * FROM productos_sub_categorias WHERE slug='$slug' ORDER BY orden";
 $resSCategoria = mysqli_query($enlaces,$conSCategoria) or die('Consulta fallida: ' . mysqli_error($enlaces));
 $filSCat = mysqli_fetch_array($resSCategoria);
+    $cod_principal = $filSCat['cod_principal'];
+    $cod_categoria = $filSCat['cod_categoria'];
     $cod_sub_categoria = $filSCat['cod_sub_categoria'];
 ?>
 <?php 
+$conPrincipal = "SELECT * FROM productos_principal WHERE cod_principal='$cod_principal' ORDER BY orden";
+$resPrincipal = mysqli_query($enlaces,$conPrincipal) or die('Consulta fallida: ' . mysqli_error($enlaces));
+$filPri = mysqli_fetch_array($resPrincipal);
+    $xPrincipalx = $filPri['principal'];
+    $xSlugPri = $filPri['slug'];
+
+$conCategoria = "SELECT * FROM productos_categorias WHERE cod_categoria='$cod_categoria' ORDER BY orden";
+$resCategoria = mysqli_query($enlaces,$conCategoria) or die('Consulta fallida: ' . mysqli_error($enlaces));
+$filCat = mysqli_fetch_array($resCategoria);
+    $xSlugCat = $filCat['slug'];
+
 $conCategoria = "SELECT cp.cod_categoria, cp.categoria, scp.* FROM productos_categorias as cp, productos_sub_categorias as scp WHERE scp.cod_sub_categoria='$cod_sub_categoria' AND scp.cod_categoria=cp.cod_categoria ORDER BY orden";
 $resCategoria = mysqli_query($enlaces,$conCategoria) or die('Consulta fallida: ' . mysqli_error($enlaces));
 $filSCat = mysqli_fetch_array($resCategoria);
@@ -45,7 +58,8 @@ $filSCat = mysqli_fetch_array($resCategoria);
                         <ul class="breadcrumb">
                             <li><a href="/index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
                             <li><a href="/productos.php">Productos</a></li>
-                            <li><a href="/categorias.php?cod_categoria=<?php echo $xCodCatx; ?>"><?php echo $xCategoriax; ?></a></li>
+                            <li><a href="/catalogos/<?php echo $xSlugPri; ?>"><?php echo $xPrincipalx; ?></a></li>
+                            <li><a href="/categorias/<?php echo $xSlugCat; ?>"><?php echo $xCategoriax; ?></a></li>
                             <li class="active"><?php echo $xSubCategoriax; ?></li>
                         </ul>
                     </div>
@@ -154,7 +168,7 @@ $filSCat = mysqli_fetch_array($resCategoria);
                                                         <div class="item item-hover">
                                                             <div class="item-image-wrapper">
                                                                 <figure class="item-image-container">
-                                                                    <a href="producto.php?cod_producto=<?php echo $xCod_producto; ?>">
+                                                                    <a href="/producto/<?php echo $xSlugp; ?>">
                                                                         <img src="/cms/assets/img/productos/<?php echo $xImagen; ?>" alt="<?php echo $xNom_producto; ?>" class="item-image">
                                                                         <?php
                                                                             if($xHoverImagen!=""){
@@ -195,9 +209,9 @@ $filSCat = mysqli_fetch_array($resCategoria);
                                                                 <?php } ?>
                                                             </div><!-- End .item-image-wrapper -->
                                                             <div class="item-meta-container">
-                                                                <h3 class="item-name"><a href="/producto/<?php echo $slug; ?>"><?php echo $xNom_producto; ?></a></h3>
+                                                                <h3 class="item-name"><a href="/producto/<?php echo $xSlugp; ?>"><?php echo $xNom_producto; ?></a></h3>
                                                                 <div class="item-action">
-                                                                    <form name="fcarrito<?php echo $xCodigo; ?>" id="fcarritop" action="verificar.php" method="post">
+                                                                    <form name="fcarrito<?php echo $xCodigo; ?>" id="fcarritop" action="/verificar.php" method="post">
                                                                         <input type="hidden" name="cantidad" value="1" />
                                                                         <input type="hidden" name="cod_producto" value="<?php echo $xCod_producto; ?>" />
                                                                         <input type="hidden" name="cod_principal" value="<?php echo $xCod_principal; ?>" />

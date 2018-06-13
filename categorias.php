@@ -7,7 +7,15 @@ $resCategoria = mysqli_query($enlaces,$conCategoria) or die('Consulta fallida: '
 $filCat = mysqli_fetch_array($resCategoria);
     $xCodCatx = $filCat['cod_categoria'];
     $xCategoriax = $filCat['categoria'];
+    $xCodPrinx = $filCat['cod_principal'];
     $cod_categoria = $xCodCatx;
+?>
+<?php 
+$conPrincipal = "SELECT * FROM productos_principal WHERE cod_principal='$xCodPrinx' ORDER BY orden";
+$resPrincipal = mysqli_query($enlaces,$conPrincipal) or die('Consulta fallida: ' . mysqli_error($enlaces));
+$filPri = mysqli_fetch_array($resPrincipal);
+    $xPrincipalx = $filPri['principal'];
+    $xSlugPri = $filPri['slug'];
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html class="ie8"> <![endif]-->
@@ -38,6 +46,7 @@ $filCat = mysqli_fetch_array($resCategoria);
                         <ul class="breadcrumb">
                             <li><a href="/index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
                             <li><a href="/productos.php">Productos</a></li>
+                            <li><a href="/catalogos/<?php echo $xSlugPri; ?>"><?php echo $xPrincipalx; ?></a></li>
                             <li class="active"><?php echo $xCategoriax; ?></li>
                         </ul>
                     </div>

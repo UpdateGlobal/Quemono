@@ -132,7 +132,7 @@ $filCar = mysqli_fetch_array($resCarrusel);
                     						<div class="category-item-container">
                     						    <div class="row">
                                                     <?php
-                                                        $consultarPro = "SELECT * FROM productos WHERE estado='1' ORDER BY orden ASC $limite";
+                                                        $consultarPro = "SELECT * FROM productos WHERE estado='1' AND cod_carrusel='$cod_carrusel' ORDER BY orden ASC $limite";
                                                         $resultadoPro = mysqli_query($enlaces, $consultarPro);
                                                         while($filaPro = mysqli_fetch_array($resultadoPro)){
                                                             $xCod_producto      = $filaPro['cod_producto'];
