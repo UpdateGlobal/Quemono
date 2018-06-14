@@ -39,7 +39,7 @@ $observaciones  = $filacli['observaciones'];
       <header class="header bg-ui-general">
         <div class="header-info">
           <h1 class="header-title">
-            <strong>Productos</strong>
+            <strong>Pedidos</strong>
             <small></small>
           </h1>
         </div>
@@ -96,7 +96,7 @@ $observaciones  = $filacli['observaciones'];
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
-                        <td><strong>+ IGV (18%) : </strong></td>
+                        <td><strong>+ IGV (10%) : </strong></td>
                         <td>$. <?php echo number_format($igv,2); ?></td>
                       </tr>
                       <tr>

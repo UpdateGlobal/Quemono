@@ -64,7 +64,7 @@ if($proceso == "Actualizar"){
       <header class="header bg-ui-general">
         <div class="header-info">
           <h1 class="header-title">
-            <strong>Productos</strong>
+            <strong>Pedidos</strong>
             <small></small>
           </h1>
         </div>
