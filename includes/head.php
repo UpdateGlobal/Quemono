@@ -21,6 +21,7 @@
         <meta name="DC.title" content="<?php echo $xTitulo; ?>" />
         <meta name="DC.description" lang="es" content="<?php echo $xDes; ?>" />
         <meta name="geo.region" content="PE-LIM" />
+        
         <meta name="robots" content="INDEX,FOLLOW" />
         <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1" />
 

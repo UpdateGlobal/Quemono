@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <!--[if IE 8]> <html class="ie8"> <![endif]-->
 <!--[if IE 9]> <html class="ie9"> <![endif]-->
-<!--[if !IE]><!--> <html> <!--<![endif]-->
+<!--[if !IE]><!--> <html class="no-js" lang="es"> <!--<![endif]-->
     <head>
         <?php include("includes/head.php"); ?>
         <style id="custom-style">
@@ -29,7 +29,7 @@
                             <li data-transition="random" data-slotamount="10" data-masterspeed="400" data-saveperformance="on" data-title="<?php echo $xTitulo; ?>">
                                 <img src="/images/revslider/dummy.png" alt="slidebg2" data-lazyload="/cms/assets/img/banner/<?php echo $xImagen; ?>" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat">
                                 <div class="tp-mask-wrap" data-x="700" data-y="200" data-speed="600" data-start="700" data-easing="Power3.easeIn" data-endspeed="300"></div>
-                                <div class="tp-caption rev-text sfl stl" data-x="720" data-y="190" data-speed="800" data-start="1100" data-easing="Power3.easeIn" data-endspeed="300" style="background-color: rgba(0, 0, 0, 0.5); padding: 8px; color: #fff;"><span class="tp-caption rev-title" style="color: #f1ce9e;"><?php echo $xTitulo; ?></span><br><br><?php echo $xTexto; ?></div>
+                                <div class="tp-caption rev-text sfl stl" data-x="720" data-y="190" data-speed="800" data-start="1100" data-easing="Power3.easeIn" data-endspeed="300" style="background-color: rgba(0, 0, 0, 0.5); padding: 8px; color: #fff;"><span class="tp-caption rev-title" style="color: #f1ce9e; position: relative;"><?php echo $xTitulo; ?></span><br><?php echo $xTexto; ?></div>
                                 <div class="tp-caption sfb stb" data-x="720" data-y="400" data-speed="1200" data-start="2000" data-easing="Power3.easeIn" data-endspeed="300">
                                     <a href="<?php echo $xLink; ?>" class="btn btn-custom-2">Ver m&aacute;s</a>
                                 </div>

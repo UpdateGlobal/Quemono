@@ -2,11 +2,19 @@
 <?php include("module/verificar.php"); ?>
 <?php
 $mensaje = "";
+$cod_principal = "";
+$cod_categoria = "";
 if (isset($_REQUEST['proceso'])) {
   $proceso = $_POST['proceso'];
 } else {
   $proceso = "";
 }
+
+if($proceso == "Filtrar"){
+  $cod_principal      = $_POST['cod_principal'];
+  if(isset($_POST['cod_principal'])){$cod_principal = $_POST['cod_principal'];}else{$cod_principal = "";}
+}
+
 if($proceso == "Registrar"){
   $cod_principal  = $_POST['cod_principal'];
   $cod_categoria  = $_POST['cod_categoria'];
@@ -44,7 +52,7 @@ if($proceso == "Registrar"){
           return;
         }
         if(document.fcms.cod_categoria.value=="default"){
-          alert("Debe elegir una categoría principal");
+          alert("Debe elegir una categoría");
           return;
         }
         if(document.fcms.subcategoria.value==""){
@@ -56,6 +64,11 @@ if($proceso == "Registrar"){
         document.fcms.proceso.value="Registrar";
         document.fcms.submit();
       } 
+      function Filtrar(){
+        document.fcms.action = "productos-subcategorias-nuevo.php";
+        document.fcms.proceso.value = "Filtrar";
+        document.fcms.submit();
+      }
       function Imagen(codigo){
         url = "agregar-foto.php?id=" + codigo;
         AbrirCentro(url,'Agregar', 475, 180, 'no', 'no');
@@ -90,30 +103,89 @@ if($proceso == "Registrar"){
       </header><!--/.header -->
       <div class="main-content">
         <div class="card">
-          <h4 class="card-title"><strong>Nueva Categor&iacute;a</strong></h4>
+          <h4 class="card-title"><strong>Nueva Sub Categor&iacute;a</strong></h4>
           <form class="fcms" name="fcms" method="post" action="" data-provide="validation" data-disable="false">
             <div class="card-body">
               <?php if(isset($mensaje)){ echo $mensaje; } else {}; ?>
 
               <div class="form-group row">
                 <div class="col-4 col-lg-2">
-                  <label class="col-form-label required" for="categoria">Categor&iacute;a:</label>
+                  <label class="col-form-label required" for="principal">Categor&iacute;a Principal:</label>
                 </div>
                 <div class="col-8 col-lg-10">
-                  <select class="form-control" id="categoria" name="cod_categoria">
+                  <select class="form-control" id="principal" name="cod_principal" onChange="Filtrar();">
                     <option value="0">Sin Categor&iacute;a Principal</option>
-                    <?php
-                      $consultaCat = "SELECT * FROM productos_categorias ORDER BY categoria ASC";
-                      $resultadoCat = mysqli_query($enlaces, $consultaCat);
-                      while($filaCat = mysqli_fetch_array($resultadoCat)){
-                        $xCodcate = $filaCat['cod_categoria'];
-                        $xCategoria = $filaCat['categoria'];
+                    <?php 
+                      if($cod_principal == ""){
+                        $consultaPri = "SELECT * FROM productos_principal WHERE estado='1'";
+                        $resultaPri = mysqli_query($enlaces, $consultaPri);
+                        while($filaPri = mysqli_fetch_array($resultaPri)){
+                          $xcodPri = $filaPri['cod_principal'];
+                          $xnomPri = $filaPri['principal'];
+                          echo '<option value='.$xcodPri.'>'.$xnomPri.'</option>';
+                        }
+                      }else{
+                        $consultaPri = "SELECT * FROM productos_principal WHERE cod_principal='$cod_principal'";
+                        $resultaPri = mysqli_query($enlaces, $consultaPri);
+                        while($filaPri = mysqli_fetch_array($resultaPri)){
+                          $xcodPri = $filaPri['cod_principal'];
+                          $xnomPri = $filaPri['principal'];
+                          echo '<option value='.$xcodPri.' selected="selected">'.$xnomPri.'</option>';
+                        }
+                        $consultaPri = "SELECT * FROM productos_principal WHERE cod_principal!='$cod_principal'";
+                        $resultaPri = mysqli_query($enlaces, $consultaPri);
+                        while($filaPri = mysqli_fetch_array($resultaPri)){
+                          $xcodPri = $filaPri['cod_principal'];
+                          $xnomPri = $filaPri['principal'];
+                          echo '<option value='.$xcodPri.'>'.$xnomPri.'</option>';
+                        }
+                      }
                     ?>
-                    <option value="<?php echo $xCodcate; ?>"><?php echo $xCategoria; ?></option>
-                    <?php } ?>
                   </select>
                 </div>
               </div>
+
+              <div class="form-group row">
+                <div class="col-4 col-lg-2">
+                  <label class="col-form-label" for="categoria">Categor&iacute;a:</label>
+                </div>
+                <div class="col-8 col-lg-10">
+                  <select class="form-control" id="categoria" name="cod_categoria">
+                    <?php 
+                      if($cod_principal==""){
+                        echo '<option value="0">Seleccione una Categor&iacute;a</option>';
+                      }else{
+                        if(($cod_categoria=="")or($cod_categoria=="0")){
+                          $consultaCat = "SELECT * FROM productos_categorias WHERE estado='1' AND cod_principal='$cod_principal'";
+                          $resulCat = mysqli_query($enlaces, $consultaCat);
+                          while($fb=mysqli_fetch_array($resulCat)){
+                            $xcodCat = $fb['cod_categoria'];
+                            $xnomCat = $fb['categoria'];
+                            echo '<option value='.$xcodCat.'>'.$xnomCat.'</option>';
+                          }
+                        }else{
+                          $consultaCat = "SELECT * FROM productos_categorias WHERE estado='1' AND cod_principal='$cod_principal' AND cod_principal='$cod_principal'";
+                          $resulCat = mysqli_query($enlaces, $consultaCat);
+                          while($fb=mysqli_fetch_array($resulCat)){
+                            $xcodCat = $fb['cod_categoria'];
+                            $xnomCat = $fb['categoria'];
+                            echo '<option value='.$xcodCat.'>'.$xnomCat.'</option>';
+                          }
+
+                          $consultaCat = "SELECT * FROM productos_categorias WHERE estado='1' AND cod_principal='$cod_principal' AND cod_categoria!='$cod_categoria'";
+                          $resulCat = mysqli_query($enlaces, $consultaCat);
+                          while($fb=mysqli_fetch_array($resulCat)){
+                            $xcodCat = $fb['cod_categoria'];
+                            $xnomCat = $fb['categoria'];
+                            echo '<option value='.$xcodCat.'>'.$xnomCat.'</option>';
+                          }
+                        }
+                      }
+                    ?>
+                  </select>
+                </div>
+              </div>
+
 
               <div class="form-group row">
                 <div class="col-4 col-lg-2">

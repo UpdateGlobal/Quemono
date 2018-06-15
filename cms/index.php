@@ -1,4 +1,5 @@
 <?php include("module/conexion.php"); ?>
+<?php include("module/clean.php"); ?>
 <!DOCTYPE html>
 <html lang="es">
   <head>

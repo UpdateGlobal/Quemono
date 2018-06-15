@@ -96,7 +96,7 @@ if ($eliminar == "true") {
         <div class="row">
           <div class="col-md-12">
             <div class="card card-bordered">
-              <h4 class="card-title"><strong>Lista de Categor&iacute;as</strong></h4>
+              <h4 class="card-title"><strong>Lista de Sub Categor&iacute;as</strong></h4>
               <div class="card-body">
                 <a class="btn btn-info" href="<?php if($xVisitante=="0"){ ?>productos-subcategorias-nuevo.php<?php }else{ ?>javascript:visitante();<?php } ?>"><i class="fa fa-plus"></i> A&ntilde;adir nuevo</a>
                 <hr>

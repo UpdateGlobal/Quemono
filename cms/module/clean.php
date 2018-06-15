@@ -119,12 +119,12 @@ foreach($Productos as $filename) {
 	}
 }
 
-$result = mysqli_query($enlaces,"SELECT imagen FROM productos_categorias") or die('Consulta fallida: ' . mysqli_error($enlaces));
+$result = mysqli_query($enlaces,"SELECT h_imagen FROM productos") or die('Consulta fallida: ' . mysqli_error($enlaces));
 while($row = mysqli_fetch_assoc($result)) {
-   $do_not_delete[] = "assets/img/productos/categorias/".$row['imagen'];
+   $do_not_delete[] = "assets/img/productos/hover/".$row['h_imagen'];
 }
 
-$directory = "assets/img/productos/categorias/";
+$directory = "assets/img/productos/hover/";
 $ProductosCategorias = glob($directory."*");
 foreach($ProductosCategorias as $filename) {
     if (!in_array($filename, $do_not_delete)){
